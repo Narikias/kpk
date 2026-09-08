@@ -1,973 +1,2963 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#008080">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<meta name="theme-color" content="#0b6bcb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Orders Log">
-<link rel="manifest" href="manifest.json">
+
 <title>Orders Log</title>
+
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+:root{
+    --blue:#0b6bcb;
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#17202a;
+    --muted:#667085;
+    --border:#d9e1ea;
+    --green:#087f5b;
+    --red:#c92a2a;
 }
-body {
-  background: #f4f7f6;
-  padding-bottom: 70px;
-  color: #333;
+
+*{
+    box-sizing:border-box;
 }
-header {
-  background: #008080;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-weight: bold;
+
+html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
-.tab-content {
-  padding: 15px;
-  display: none;
+
+body{
+    padding-bottom:calc(78px + env(safe-area-inset-bottom));
 }
-.tab-content.active {
-  display: block;
+
+header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:var(--blue);
+    color:white;
+    padding:
+        calc(12px + env(safe-area-inset-top))
+        16px
+        14px;
+    box-shadow:0 2px 8px #0002;
 }
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
+
+header h1{
+    margin:0;
+    font-size:21px;
 }
-h3 {
-  margin-bottom: 12px;
-  color: #008080;
+
+header small{
+    opacity:.9;
 }
-.form-group {
-  margin-bottom: 12px;
+
+main{
+    max-width:900px;
+    margin:auto;
+    padding:14px;
 }
-label {
-  display: block;
-  margin-bottom: 4px;
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:14px;
+    box-shadow:0 1px 3px #0000000b;
 }
-input, select {
-  width: 100%;
-  font-size: 16px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+
+h2{
+    font-size:18px;
+    margin:0 0 12px;
 }
-.row {
-  display: flex;
-  gap: 10px;
+
+h3{
+    font-size:15px;
+    margin:16px 0 8px;
 }
-.row .form-group {
-  flex: 1;
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
 }
-button {
-  width: 100%;
-  min-height: 44px;
-  -webkit-appearance: none;
-  appearance: none;
-  touch-action: manipulation;
-  background: #008080;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
 }
-nav .nav-item {
-  appearance: none;
-  -webkit-appearance: none;
-  border: 0;
-  margin: 0;
-  border-radius: 0;
-  width: auto;
-  background: white;
-  color: #666;
-  padding: 10px 0;
+
+.full{
+    grid-column:1/-1;
 }
-button.sec {
-  background: #e0f2f1;
-  color: #008080;
-  margin-top: 5px;
-  margin-bottom: 15px;
+
+label{
+    font-size:13px;
+    font-weight:600;
+    color:#475467;
 }
-.del-btn {
-  background: none;
-  border: none;
-  color: #c62828;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 4px 8px;
-  width: auto;
-  display: inline-block;
+
+input,
+select,
+button,
+textarea{
+    font:inherit;
+    font-size:16px;
+    border-radius:10px;
 }
-.actions-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid var(--border);
+    background:#fff;
+    min-height:44px;
 }
-.stat-card {
-  display: flex;
-  justify-content: 
-  space-between;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  font-weight: bold;
+
+button{
+    border:0;
+    padding:11px 14px;
+    background:var(--blue);
+    color:white;
+    font-weight:700;
+    min-height:44px;
 }
-.profit {
-  background: #e8f5e9;
-  color: #2e7d32;
+
+button.secondary{
+    background:#eef5ff;
+    color:#0755a6;
+    border:1px solid #cfe0f8;
 }
-.loss {
-  background: #ffebee;
-  color: #c62828;
+
+button.danger{
+    background:#fff0f0;
+    color:var(--red);
+    border:1px solid #ffc9c9;
 }
-.neutral {
-  background: #efebe9;
-  color: #4e342e;
+
+button.green{
+    background:var(--green);
 }
-.low-stock {
-  background: #fff3e0 !important;
-  color: #e65100;
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
 }
-ul {
-  list-style: none;
+
+.tabs{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px;
+    background:#e8eef6;
+    padding:4px;
+    border-radius:12px;
+    margin-bottom:14px;
 }
-li {
-  background: white;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: 
-  space-between;
-  align-items: center;
+
+.tab{
+    background:transparent;
+    color:#344054;
+    border-radius:9px;
+    padding:9px 4px;
+    min-height:42px;
+    font-size:13px;
 }
-.item-details {
-  font-size: 0.85rem;
-  color: #666;
+
+.tab.active{
+    background:#fff;
+    color:var(--blue);
+    box-shadow:0 1px 4px #0002;
 }
-.badge {
-  background: #e0f2f1;
-  color: #008080;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-weight: bold;
+
+.tabpage{
+    display:none;
 }
-nav {
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: white;
-  display: flex;
-  border-top: 1px solid #ddd;
-  min-height: 60px;
-  height: calc(60px + env(safe-area-inset-bottom));
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-bottom: constant(safe-area-inset-bottom);
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+
+.tabpage.active{
+    display:block;
 }
-body {
-  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
 }
-.nav-item {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
+
+th,
+td{
+    padding:8px 5px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    vertical-align:top;
 }
-.nav-item {
-  flex: 1;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 0.8rem;
-  color: #666;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+th{
+    background:#f8fafc;
 }
-.nav-item.active {
-  color: #008080;
-  font-weight: bold;
-  background: #f0fdfa;
+
+.tablewrap{
+    overflow:auto;
+}
+
+.badge{
+    display:inline-block;
+    padding:3px 7px;
+    border-radius:20px;
+    background:#eef5ff;
+    color:#0755a6;
+    font-size:12px;
+}
+
+.statgrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.stat{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+}
+
+.stat b{
+    display:block;
+    font-size:18px;
+}
+
+.muted{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.empty{
+    text-align:center;
+    color:var(--muted);
+    padding:18px;
+}
+
+.notice{
+    background:#fff8e6;
+    border:1px solid #ffe08a;
+    padding:10px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+pre{
+    white-space:pre-wrap;
+    background:#f8fafc;
+    padding:10px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.bottomnav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:20;
+    background:#fff;
+    border-top:1px solid var(--border);
+    padding:
+        6px
+        8px
+        calc(6px + env(safe-area-inset-bottom));
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.bottomnav button{
+    background:transparent;
+    color:#667085;
+    padding:6px 2px;
+    min-height:48px;
+    font-size:11px;
+}
+
+.bottomnav button.active{
+    color:var(--blue);
+}
+
+@media(max-width:600px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .statgrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    th,
+    td{
+        font-size:12px;
+    }
 }
 </style>
 </head>
+
 <body>
-<header id="app-title">Orders Log</header>
-<div id="orders-tab" 
-class="tab-content active">
-  <div class="card">
-    <h3>Add Order</h3>
-    <div class="form-group">
-      <label>Item Name</label>
-      <select id="order-item" 
-      onchange="autoCalc()">
-      </select>
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label>Quantity</label>
-        <input type="number" 
-        id="order-qty" 
-        step="any" 
-        value="1" 
-        oninput="autoCalc()">
-      </div>
-      <div class="form-group">
-        <label>Total Price (₹)</label>
-        <input type="number" 
-        id="order-price" 
-        step="any">
-      </div>
-    </div>
-    <div class="form-group">
-      <label>House No</label>
-      <input type="text" 
-      id="order-house">
-    </div>
-    <button onclick="saveOrder()">
-      Save Order
+
+<header>
+    <h1>📋 Orders Log</h1>
+    <small>Offline-first order, stock & finance tracker</small>
+</header>
+
+<main>
+
+<div class="tabs">
+
+    <button class="tab active" data-tab="orders">
+        Orders
     </button>
-  </div>
-  <button class="sec" 
-  onclick="exportExcel()">
-    Export (.csv) 📊
-  </button>
-  <h3>Orders</h3>
-  <ul id="orders-list"></ul>
-</div>
 
-<div id="raw-tab" 
-class="tab-content">
-  <div class="card">
-    <h3>Setup Quantities & Prices</h3>
-    <div class="form-group">
-      <label>Item Name</label>
-      <input type="text" 
-      id="price-name" 
-      placeholder="e.g. Vanilla Cake">
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label>Target Qty</label>
-        <input type="number" 
-        id="price-qty" 
-        value="1">
-      </div>
-      <div class="form-group">
-        <label>Total Price (₹)</label>
-        <input type="number" 
-        id="price-val" 
-        placeholder="e.g. 500">
-      </div>
-    </div>
-    <button onclick="savePrice()">
-      Add / Update Rate Combo
+    <button class="tab" data-tab="raw">
+        Prices / Raw
     </button>
-  </div>
-  <h3>Quantity Price Matrix</h3>
-  <ul id="price-list" 
-      style="margin-bottom:20px;"></ul>
 
-  <div class="card">
-    <h3>Raw Cost Entry</h3>
-    <div class="form-group">
-      <label>Purchase Date</label>
-      <input type="date" 
-      id="raw-date">
-    </div>
-    <div class="form-group">
-      <label>Material Name</label>
-      <input type="text" 
-      id="raw-name"
-      placeholder="e.g. Flour">
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label>Weight</label>
-        <input type="number" 
-        id="raw-qty" 
-        step="any"
-        placeholder="5">
-      </div>
-      <div class="form-group">
-        <label>Unit</label>
-        <select id="raw-unit">
-          <option value="kg">Kg</option>
-          <option value="g">g</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Total Paid (₹)</label>
-      <input type="number" 
-      id="raw-cost"
-      placeholder="150">
-    </div>
-    <div class="stat-card neutral" 
-    id="kg-preview" 
-    style="display:none;">
-      Cost/Kg: ₹0.00
-    </div>
-    <button onclick="saveRaw()">
-      Save Material
+    <button class="tab" data-tab="finance">
+        Finance
     </button>
-  </div>
-  
-  <h3>Raw Inventory</h3>
-  <div style="overflow-x:auto; 
-              background:white; 
-              border-radius:8px; 
-              margin-top:10px;">
-    <table style="width:100%; 
-                  border-collapse:collapse; 
-                  font-size:0.85rem; 
-                  text-align:left;">
-      <thead>
-        <tr style="background:#efebe9; 
-                   color:#4e342e; 
-                   border-bottom:2px solid #ddd;">
-          <th style="padding:10px;">Date</th>
-          <th style="padding:10px;">Item</th>
-          <th style="padding:10px;">Cost/Kg</th>
-          <th style="padding:10px;">Total</th>
-          <th style="padding:10px;">Stock Left</th>
-          <th style="padding:10px;">Action</th>
-        </tr>
-      </thead>
-      <tbody id="raw-table-body">
-      </tbody>
-    </table>
-  </div>
+
+    <button class="tab" data-tab="prep">
+        Prep List
+    </button>
+
 </div>
 
-<div id="financials-tab" 
-class="tab-content">
-  <div class="card">
-    <h3>Business Stats</h3>
-    <div class="stat-card profit">
-      <span>Earned:</span>
-      <span id="fin-earned">₹0.00</span>
+
+<!-- ================= ORDERS ================= -->
+
+<section id="orders" class="tabpage active">
+
+<div class="card">
+
+    <h2>➕ Add Order</h2>
+
+    <div class="grid">
+
+        <div class="field">
+            <label>Date</label>
+            <input id="oDate" type="date">
+        </div>
+
+        <div class="field">
+            <label>House / Customer</label>
+            <input id="oHouse"
+                   placeholder="House number / name">
+        </div>
+
+        <div class="field">
+            <label>Item</label>
+            <select id="oItem"></select>
+        </div>
+
+        <div class="field">
+            <label>Quantity (kg)</label>
+
+            <select id="oQty">
+
+                <option value=".5">0.5</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Price (₹)</label>
+            <input id="oPrice" readonly>
+        </div>
+
+        <div class="field">
+            <label>Notes</label>
+            <input id="oNotes"
+                   placeholder="Optional">
+        </div>
+
     </div>
-    <div class="stat-card loss">
-      <span>Spent:</span>
-      <span id="fin-spent">₹0.00</span>
+
+    <div class="actions">
+
+        <button onclick="addOrder()">
+            Save Order
+        </button>
+
     </div>
-    <div class="stat-card" 
-    id="fin-card">
-      <span>Balance:</span>
-      <span id="fin-balance">₹0.00</span>
-    </div>
-  </div>
+
 </div>
 
-<div id="prep-tab" 
-class="tab-content">
-  <div class="card">
-    <h3>Items to Prepare Today</h3>
-    <ul id="prep-list"></ul>
-  </div>
+
+<div class="card">
+
+    <h2>📦 Orders</h2>
+
+    <div class="statgrid" id="orderStats"></div>
+
+    <div class="actions">
+
+        <button class="secondary"
+                onclick="exportOrdersCSV()">
+            Export Orders CSV
+        </button>
+
+        <label class="secondary"
+               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
+
+            Import Orders CSV
+
+            <input id="orderImport"
+                   type="file"
+                   accept=".csv,text/csv"
+                   style="display:none"
+                   onchange="importOrdersCSV(this)">
+
+        </label>
+
+    </div>
+
+    <div class="tablewrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Date</th>
+                    <th>House</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>₹</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+
+            <tbody id="ordersBody"></tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
-<nav id="bottom-nav" aria-label="Main navigation">
-  <button type="button" class="nav-item active" data-tab="orders" aria-selected="true">
-    📋<br>Orders
-  </button>
-  <button type="button" class="nav-item" data-tab="raw" aria-selected="false">
-    ⚖️<br>Prices/Raw
-  </button>
-  <button type="button" class="nav-item" data-tab="financials" aria-selected="false">
-    📊<br>Finance
-  </button>
-  <button type="button" class="nav-item" data-tab="prep" aria-selected="false">
-    🍳<br>Prep List
-  </button>
+</section>
+
+
+<!-- ================= PRICES / RAW ================= -->
+
+<section id="raw" class="tabpage">
+
+<div class="card">
+
+    <h2>💰 Price Setup</h2>
+
+    <div class="grid">
+
+        <div class="field">
+
+            <label>Item</label>
+
+            <input id="pName"
+                   placeholder="Idly / Dosa batter">
+
+        </div>
+
+        <div class="field">
+
+            <label>Target Qty (kg)</label>
+
+            <input id="pQty"
+                   type="number"
+                   step=".5"
+                   value="1">
+
+        </div>
+
+        <div class="field">
+
+            <label>Total Price (₹)</label>
+
+            <input id="pPrice"
+                   type="number"
+                   step="1">
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button onclick="savePrice()">
+            Add / Update
+        </button>
+
+    </div>
+
+    <div class="tablewrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+
+            <tbody id="pricesBody"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>🧺 Raw Materials</h2>
+
+    <div class="grid">
+
+        <div class="field">
+
+            <label>Purchase Date</label>
+
+            <input id="rDate"
+                   type="date">
+
+        </div>
+
+        <div class="field">
+
+            <label>Material</label>
+
+            <input id="rMat"
+                   placeholder="Rice / dal / ravva">
+
+        </div>
+
+        <div class="field">
+
+            <label>Quantity</label>
+
+            <input id="rQty"
+                   type="number"
+                   step=".001">
+
+        </div>
+
+        <div class="field">
+
+            <label>Unit</label>
+
+            <select id="rUnit">
+
+                <option value="kg">
+                    kg
+                </option>
+
+                <option value="g">
+                    g
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>Total Paid (₹)</label>
+
+            <input id="rPaid"
+                   type="number"
+                   step=".01">
+
+        </div>
+
+        <div class="field">
+
+            <label>Cost / kg</label>
+
+            <input id="rCost"
+                   readonly>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button onclick="addRaw()">
+            Save Purchase
+        </button>
+
+    </div>
+
+    <div class="tablewrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Date</th>
+                    <th>Material</th>
+                    <th>Qty</th>
+                    <th>Paid</th>
+                    <th>₹/kg</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+
+            <tbody id="rawBody"></tbody>
+
+        </table>
+
+    </div>
+
+    <div class="actions">
+
+        <button class="secondary"
+                onclick="exportRawCSV()">
+            Export Raw CSV
+        </button>
+
+        <label class="secondary"
+               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
+
+            Import Raw CSV
+
+            <input id="rawImport"
+                   type="file"
+                   accept=".csv,text/csv"
+                   style="display:none"
+                   onchange="importRawCSV(this)">
+
+        </label>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FINANCE ================= -->
+
+<section id="finance" class="tabpage">
+
+<div class="card">
+
+    <h2>📊 Finance</h2>
+
+    <div class="statgrid"
+         id="financeStats"></div>
+
+    <div class="notice"
+         style="margin-top:12px">
+
+        All data is stored on this device using
+        localStorage.
+
+        Use Backup regularly before changing phones
+        or clearing Safari data.
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>💾 Backup & Restore</h2>
+
+    <p class="muted">
+
+        Backup saves Orders, Raw Materials,
+        Prices and Recipes into one JSON file.
+
+    </p>
+
+    <div class="actions">
+
+        <button class="green"
+                onclick="backupAllData()">
+
+            Backup All Data
+
+        </button>
+
+
+        <label class="secondary"
+               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
+
+            Restore Backup
+
+            <input id="restoreInput"
+                   type="file"
+                   accept=".json,application/json"
+                   style="display:none"
+                   onchange="restoreAllData(this)">
+
+        </label>
+
+
+        <button class="secondary"
+                onclick="exportAllCSVs()">
+
+            Export All CSVs
+
+        </button>
+
+    </div>
+
+    <p id="backupInfo"
+       class="muted"></p>
+
+</div>
+
+</section>
+
+
+<!-- ================= PREP ================= -->
+
+<section id="prep" class="tabpage">
+
+<div class="card">
+
+    <h2>🍚 Prep List</h2>
+
+    <div id="prepList"></div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>📝 Recipe Setup</h2>
+
+    <div class="grid">
+
+        <div class="field">
+
+            <label>Recipe Item</label>
+
+            <input id="recName"
+                   placeholder="Idly / Dosa batter">
+
+        </div>
+
+        <div class="field">
+
+            <label>Base Qty (kg)</label>
+
+            <input id="recBase"
+                   type="number"
+                   step=".1"
+                   value="1">
+
+        </div>
+
+        <div class="field full">
+
+            <label>
+                Formula / Steps
+            </label>
+
+            <textarea id="recText"
+                      rows="4"
+                      placeholder="Example: 700g idly ravva + 300g urad dal..."></textarea>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button onclick="saveRecipe()">
+            Save Recipe
+        </button>
+
+    </div>
+
+    <div id="recipesList"></div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- ================= BOTTOM NAV ================= -->
+
+<nav class="bottomnav">
+
+    <button class="active"
+            data-tab="orders">
+
+        📋<br>
+        Orders
+
+    </button>
+
+    <button data-tab="raw">
+
+        💰<br>
+        Prices/Raw
+
+    </button>
+
+    <button data-tab="finance">
+
+        📊<br>
+        Finance
+
+    </button>
+
+    <button data-tab="prep">
+
+        🍚<br>
+        Prep
+
+    </button>
+
 </nav>
+
+
 <script>
-let orders = JSON.parse(
-  localStorage.getItem('b_ord')
-) || [];
-let raws = JSON.parse(
-  localStorage.getItem('b_raw')
-) || [];
-let prices = JSON.parse(
-  localStorage.getItem('b_prc2')
-) || [];
 
-function tab(tabId, el) {
-  document.querySelectorAll('.tab-content').forEach(function(t) {
-    t.classList.remove('active');
-  });
+"use strict";
 
-  document.querySelectorAll('.nav-item').forEach(function(i) {
-    i.classList.remove('active');
-    i.setAttribute('aria-selected', 'false');
-  });
 
-  var target = document.getElementById(tabId + '-tab');
-  if (!target) return;
+/* =========================================
+   STORAGE
+========================================= */
 
-  target.classList.add('active');
+const KEYS = {
 
-  if (el) {
-    el.classList.add('active');
-    el.setAttribute('aria-selected', 'true');
-  }
+    orders:"b_ord",
 
-  var titles = {
-    orders: 'Orders Log',
-    raw: 'Prices & Materials',
-    financials: 'Stats',
-    prep: 'Prep List'
-  };
+    raws:"b_raw",
 
-  document.getElementById('app-title').textContent = titles[tabId] || 'Orders Log';
+    prices:"b_prc2",
 
-  if (tabId === 'orders') popDropdown();
-  if (tabId === 'raw') renderPrices();
-  if (tabId === 'financials') calcFin();
-  if (tabId === 'prep') buildPrep();
+    recipes:"b_recipes"
 
-  window.scrollTo(0, 0);
-}
+};
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#bottom-nav .nav-item').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      tab(this.getAttribute('data-tab'), this);
-    }, false);
-  });
 
-  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    navigator.serviceWorker.register('./sw.js').catch(function(err) {
-      console.log('Service worker registration skipped:', err);
-    });
-  }
-});
+let orders = load(
+    KEYS.orders,
+    []
+);
 
-function popDropdown() {
-  let s = document.getElementById(
-    'order-item'
-  );
-  s.innerHTML = 
-  '<option value="">' +
-  '-- Choose Item --' +
-  '</option>';
-  
-  let names = [];
-  prices.forEach(p => {
-    if(!names.includes(p.name)) {
-      names.push(p.name);
+
+let raws = load(
+    KEYS.raws,
+    []
+);
+
+
+let prices = load(
+    KEYS.prices,
+    [
+
+        {
+            name:"Idly / Dosa batter",
+            qty:1,
+            price:99
+        },
+
+        {
+            name:"Vada batter",
+            qty:1,
+            price:175
+        },
+
+        {
+            name:"Pesarettu batter",
+            qty:1,
+            price:159
+        }
+
+    ]
+);
+
+
+let recipes = load(
+    KEYS.recipes,
+    []
+);
+
+
+function load(key, defaultValue){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(key)
+        ) ?? defaultValue;
+
+    }catch(e){
+
+        return defaultValue;
+
     }
-  });
-  
-  names.sort().forEach(n => {
-    s.innerHTML += 
-    `<option value="${n}">${n}</option>`;
-  });
+
 }
 
-function autoCalc() {
-  let item = document.getElementById(
-    'order-item'
-  ).value;
-  let qty = parseFloat(
-    document.getElementById(
-      'order-qty'
-    ).value
-  ) || 0;
-  let pInput = 
-  document.getElementById(
-    'order-price'
-  );
 
-  if(!item || qty <= 0) {
-    pInput.value = '';
-    return;
-  }
+function save(key,value){
 
-  let match = prices.find(p => 
-    p.name === item && 
-    parseFloat(p.qty) === qty
-  );
-
-  if(match) {
-    pInput.value = match.price.toFixed(2);
-  } else {
-    let baseItem = prices.find(p => 
-      p.name === item && 
-      parseFloat(p.qty) === 1
-    );
-    if(baseItem) {
-      let unitCost = baseItem.price;
-      pInput.value = (unitCost * qty).toFixed(2);
-    } else {
-      let fallback = prices.find(p => p.name === item);
-      if(fallback) {
-        let unitCost = fallback.price / fallback.qty;
-        pInput.value = (unitCost * qty).toFixed(2);
-      } else {
-        pInput.value = '';
-      }
-    }
-  }
-}
-
-function savePrice() {
-  let n = document.getElementById(
-    'price-name'
-  ).value.trim();
-  let q = parseFloat(
-    document.getElementById(
-      'price-qty'
-    ).value
-  ) || 0;
-  let p = parseFloat(
-    document.getElementById(
-      'price-val'
-    ).value
-  ) || 0;
-
-  if(!n || q <= 0 || p <= 0) {
-    return alert('Enter details.');
-  }
-
-  prices = prices.filter(item => 
-    !(item.name === n && item.qty === q)
-  );
-
-  prices.push({ name: n, qty: q, price: p });
-  localStorage.setItem(
-    'b_prc2', 
-    JSON.stringify(prices)
-  );
-
-  document.getElementById(
-    'price-name'
-  ).value = '';
-  document.getElementById(
-    'price-qty'
-  ).value = '1';
-  document.getElementById(
-    'price-val'
-  ).value = '';
-  
-  alert('Saved.');
-  renderPrices();
-  popDropdown();
-}
-
-function removePrice(index) {
-  if(confirm("Delete this?")) {
-    prices.splice(index, 1);
     localStorage.setItem(
-      'b_prc2',
-      JSON.stringify(prices)
+        key,
+        JSON.stringify(value)
     );
-    renderPrices();
-    popDropdown();
-  }
+
 }
 
-function renderPrices() {
-  let list = document.getElementById(
-    'price-list'
-  );
-  list.innerHTML = '';
-  
-  prices.sort((a, b) => 
-    a.name.localeCompare(b.name)
-  )
-  .forEach((p, index) => {
-    list.innerHTML += `<li>
-      <div>
-        <strong>${p.name}</strong>
-        <div class="item-details">
-          For Qty: ${p.qty}
-        </div>
-      </div>
-      <div class="actions-right">
-        <span class="badge">
-          ₹${p.price}
-        </span>
-        <button class="del-btn" 
-        onclick="removePrice(${index})">
-          X
-        </button>
-      </div>
-    </li>`;
-  });
-}
-let fields = [
-  'raw-qty', 
-  'raw-unit', 
-  'raw-cost'
-];
-fields.forEach(id => {
-  document.getElementById(id)
-  .addEventListener('input', () => {
-    let q = parseFloat(
-      document.getElementById(
-        'raw-qty'
-      ).value
-    ) || 0;
-    let c = parseFloat(
-      document.getElementById(
-        'raw-cost'
-      ).value
-    ) || 0;
-    let u = document.getElementById(
-      'raw-unit'
-    ).value;
-    let prev = document.getElementById(
-      'kg-preview'
-    );
-    if (q > 0 && c > 0) {
-      let pkg = (u === 'g') 
-        ? (c / q) * 1000 
-        : (c / q);
-      prev.style.display = 'block';
-      prev.innerText = 
-        'Cost/Kg: ₹' + 
-        pkg.toFixed(2);
-    } else {
-      prev.style.display = 'none';
-    }
-  });
-});
 
-document.getElementById('raw-date').valueAsDate = new Date();
+function money(value){
 
-function saveOrder() {
-  let item = document.getElementById(
-    'order-item'
-  ).value;
-  let qty = parseFloat(
-    document.getElementById(
-      'order-qty'
-    ).value
-  ) || 0;
-  let price = parseFloat(
-    document.getElementById(
-      'order-price'
-    ).value
-  ) || 0;
-  let house = document.getElementById(
-    'order-house'
-  ).value.trim();
-  let today = new Date()
-    .toLocaleDateString();
-  if(!item || qty <= 0 || !house) {
-    return alert('Fill entries');
-  }
-  orders.push({ 
-    id: Date.now(),
-    item, qty, price, house, 
-    date: today 
-  });
-  localStorage.setItem(
-    'b_ord', 
-    JSON.stringify(orders)
-  );
-  document.getElementById(
-    'order-item'
-  ).value = '';
-  document.getElementById(
-    'order-qty'
-  ).value = '1';
-  document.getElementById(
-    'order-price'
-  ).value = '';
-  document.getElementById(
-    'order-house'
-  ).value = '';
-  renderOrders();
+    return "₹" +
+        Number(value || 0).toFixed(0);
+
 }
 
-function removeOrder(id) {
-  if(confirm("Delete this order?")) {
-    orders = orders.filter(
-      o => o.id !== id
-    );
-    localStorage.setItem(
-      'b_ord',
-      JSON.stringify(orders)
-    );
-    renderOrders();
-  }
+
+function esc(value){
+
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            function(match){
+
+                return {
+
+                    "&":"&amp;",
+                    "<":"&lt;",
+                    ">":"&gt;",
+                    '"':"&quot;",
+                    "'":"&#39;"
+
+                }[match];
+
+            }
+        );
+
 }
 
-function saveRaw() {
-  let d = document.getElementById('raw-date').value;
-  let n = document.getElementById('raw-name').value.trim();
-  let q = parseFloat(document.getElementById('raw-qty').value) || 0;
-  let u = document.getElementById('raw-unit').value;
-  let c = parseFloat(document.getElementById('raw-cost').value) || 0;
 
-  if(!d || !n || q <= 0 || c <= 0) {
-    return alert('Fill all fields correctly.');
-  }
-  let pkg = (u === 'g') ? (c / q) * 1000 : (c / q);
-  
-  raws.push({ 
-    id: Date.now(),
-    name: n, 
-    qty: q, 
-    unit: u, 
-    cost: c, 
-    perKg: pkg, 
-    date: new Date(d).toLocaleDateString(),
-    availQty: q
-  });
-  
-  localStorage.setItem('b_raw', JSON.stringify(raws));
-  document.getElementById('raw-name').value = '';
-  document.getElementById('raw-qty').value = '';
-  document.getElementById('raw-cost').value = '';
-  document.getElementById('raw-date').valueAsDate = new Date();
-  document.getElementById('kg-preview').style.display = 'none';
-  renderRaws();
+function today(){
+
+    return new Date()
+        .toISOString()
+        .slice(0,10);
+
 }
 
-function updateStock(id, newStockVal) {
-  let target = raws.find(r => r.id === id);
-  if(target) {
-    let stockNum = parseFloat(newStockVal);
-    target.availQty = isNaN(stockNum) || stockNum <= 0 ? 0 : stockNum;
-    localStorage.setItem('b_raw', JSON.stringify(raws));
-    renderRaws();
-  }
+
+function uid(){
+
+    return Date.now().toString(36) +
+        Math.random()
+        .toString(36)
+        .slice(2,7);
+
 }
 
-function markCompleted(id) {
-  let target = raws.find(r => r.id === id);
-  if(target) {
-    target.availQty = 0;
-    localStorage.setItem('b_raw', JSON.stringify(raws));
-    renderRaws();
-  }
-}
 
-function removeRaw(id) {
-  if(confirm("Delete this entry?")) {
-    raws = raws.filter(
-      r => r.id !== id
-    );
-    localStorage.setItem(
-      'b_raw',
-      JSON.stringify(raws)
-    );
-    renderRaws();
-  }
-}
+/* =========================================
+   INITIAL VALUES
+========================================= */
 
-function renderOrders() {
-  let list = document.getElementById(
-    'orders-list'
-  );
-  list.innerHTML = '';
-  orders.slice().reverse()
-  .forEach(o => {
-    let orderId = o.id || 0;
-    list.innerHTML += `<li>
-      <div>
-        <strong>${o.item}</strong> 
-        (Qty: ${o.qty})
-        <div class="item-details">
-          H: ${o.house} | ${o.date}
-        </div>
-      </div>
-      <div class="actions-right">
-        <span class="badge">
-          ₹${o.price.toFixed(2)}
-        </span>
-        <button class="del-btn" 
-        onclick="removeOrder(${orderId})">
-          X
-        </button>
-      </div>
-    </li>`;
-  });
-}
+document.getElementById("oDate")
+    .value = today();
 
-function renderRaws() {
-  let tbody = document.getElementById('raw-table-body');
-  tbody.innerHTML = '';
-  
-  raws.slice().reverse().forEach(r => {
-    let rawId = r.id || 0;
-    let currentStock = r.availQty !== undefined ? r.availQty : r.qty;
-    
-    // Warning Color check if item drops below 1 unit scale (1kg or 1g base depending on purchase)
-    let trClass = (currentStock > 0 && currentStock < 1) ? 'class="low-stock"' : '';
-    
-    let statusDisplay = '';
-    if(currentStock <= 0) {
-      statusDisplay = '<span style="color:#2e7d32; font-weight:bold;">Done ✅</span>';
-    } else {
-      statusDisplay = `<input type="number" step="any" value="${currentStock}" 
-                     style="width:55px; padding:2px; font-size:0.8rem; display:inline;" 
-                     onchange="updateStock(${rawId}, this.value)"> ${r.unit}`;
-    }
+document.getElementById("rDate")
+    .value = today();
 
-    tbody.innerHTML += `<tr ${trClass} style="border-bottom:1px solid #eee;">
-      <td style="padding:10px; color:#666;">${r.date}</td>
-      <td style="padding:10px;"><strong>${r.name}</strong><br><span style="color:#888; font-size:0.7rem;">Total: ${r.qty}${r.unit}</span></td>
-      <td style="padding:10px;">₹${r.perKg.toFixed(2)}</td>
-      <td style="padding:10px;">₹${r.cost}</td>
-      <td style="padding:10px;">${statusDisplay}</td>
-      <td style="padding:10px;">
-        ${currentStock > 0 ? `<button onclick="markCompleted(${rawId})" style="padding:2px 4px; font-size:0.7rem; background:#efebe9; color:#4e342e; width:auto; margin-bottom:4px; border:1px solid #ccc; border-radius:4px;">Finish</button><br>` : ''}
-        <button class="del-btn" onclick="removeRaw(${rawId})" style="padding:0; font-size:0.75rem;">Del</button>
-      </td>
-    </tr>`;
-  });
-}
 
-function calcFin() {
-  let earned = orders.reduce(
-    (s, o) => s + o.price, 0
-  );
-  let spent = raws.reduce(
-    (s, r) => s + r.cost, 0
-  );
-  let bal = earned - spent;
-  document.getElementById(
-    'fin-earned'
-  ).innerText = `₹${earned.toFixed(2)}`;
-  document.getElementById(
-    'fin-spent'
-  ).innerText = `₹${spent.toFixed(2)}`;
-  document.getElementById(
-    'fin-balance'
-  ).innerText = 
-  `₹${Math.abs(bal).toFixed(2)}`;
-  let card = document.getElementById(
-    'fin-card'
-  );
-  card.className = 'stat-card ' + 
-  (bal >= 0 ? 'profit' : 'loss');
-}
+/* =========================================
+   ITEMS
+========================================= */
 
-function buildPrep() {
-  let pMap = {};
-  orders.forEach(o => {
-    let k = `${o.date} | ${o.item}`;
-    pMap[k] = (pMap[k] || 0) + o.qty;
-  });
-  let list = document.getElementById(
-    'prep-list'
-  );
-  list.innerHTML = '';
-  
-  Object.keys(pMap)
-  .sort((a, b) => b.localeCompare(a))
-  .forEach(k => {
-    let parts = k.split(' | ');
-    let dateVal = parts[0];
-    let itemVal = parts[1];
-    let qtyVal = pMap[k];
-    
-    list.innerHTML += `<li>
-      <div>
-        <strong style="color:#008080;">
-          ${itemVal}
-        </strong>
-        <div class="item-details">
-          Date: ${dateVal}
-        </div>
-      </div>
-      <span class="badge" 
-      style="background:#f3e5f5; 
-      color:#7b1fa2;
-      font-size: 0.95rem;">
-        Qty: ${qtyVal}
-      </span>
-    </li>`;
-  });
-}
+function renderItems(){
 
-function exportExcel() {
-  if (orders.length === 0) {
-    return alert('No data.');
-  }
+    const select =
+        document.getElementById("oItem");
 
-  var csv = "Date,Item,Qty,House,Price\n";
-  orders.forEach(function(o) {
-    csv += '"' + String(o.date).replace(/"/g, '""') + '",' +
-           '"' + String(o.item).replace(/"/g, '""') + '",' +
-           o.qty + ',' +
-           '"' + String(o.house).replace(/"/g, '""') + '",' +
-           o.price + '\n';
-  });
+    if(!prices.length){
 
-  var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
-  var filename = 'Orders_' + new Date().toISOString().slice(0,10) + '.csv';
+        select.innerHTML =
+            "<option>No prices set</option>";
 
-  if (navigator.share && navigator.canShare) {
-    try {
-      var file = new File([blob], filename, {type: 'text/csv'});
-      if (navigator.canShare({files: [file]})) {
-        navigator.share({
-          files: [file],
-          title: 'Orders Export',
-          text: 'Orders CSV'
-        }).catch(function(){});
         return;
-      }
-    } catch (e) {}
-  }
 
-  var url = URL.createObjectURL(blob);
-  var link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.target = '_blank';
-  document.body.appendChild(link);
-  link.click();
-  setTimeout(function() {
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }, 1000);
+    }
+
+    select.innerHTML =
+        prices
+        .map(function(price){
+
+            return `
+                <option value="${esc(price.name)}">
+                    ${esc(price.name)}
+                </option>
+            `;
+
+        })
+        .join("");
+
+    updateOrderPrice();
+
 }
 
-popDropdown();
-renderOrders();
-renderPrices();
-renderRaws();
-</script>
 
-<script>
-(function () {
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isStandalone = window.navigator.standalone === true ||
-                     window.matchMedia('(display-mode: standalone)').matches;
+function priceFor(item,qty){
 
-  if (isIOS && !isStandalone) {
-    var tip = document.createElement('div');
-    tip.id = 'ios-install-tip';
-    tip.innerHTML = '<strong>📱 Add to Home Screen</strong><br>In Safari, tap <b>Share</b> → <b>Add to Home Screen</b>.';
-    tip.style.cssText =
-      'position:fixed;left:10px;right:10px;bottom:calc(70px + env(safe-area-inset-bottom));' +
-      'z-index:10000;background:#fff;padding:12px 14px;border-radius:10px;' +
-      'box-shadow:0 3px 15px rgba(0,0,0,.2);font-size:14px;line-height:1.4;';
-    document.body.appendChild(tip);
-    setTimeout(function(){ if (tip.parentNode) tip.remove(); }, 10000);
-  }
-})();
+    const price =
+        prices.find(
+            function(x){
+                return x.name === item;
+            }
+        );
+
+    if(!price){
+
+        return 0;
+
+    }
+
+    return price.price *
+        (
+            Number(qty) /
+            Number(price.qty)
+        );
+
+}
+
+
+function updateOrderPrice(){
+
+    const item =
+        document.getElementById("oItem").value;
+
+    const qty =
+        document.getElementById("oQty").value;
+
+    document.getElementById("oPrice")
+        .value =
+        priceFor(item,qty)
+        .toFixed(0);
+
+}
+
+
+document.getElementById("oItem")
+    .onchange =
+    updateOrderPrice;
+
+
+document.getElementById("oQty")
+    .onchange =
+    updateOrderPrice;
+
+
+/* =========================================
+   ADD ORDER
+========================================= */
+
+function addOrder(){
+
+    const item =
+        document.getElementById("oItem").value;
+
+    const qty =
+        Number(
+            document.getElementById("oQty").value
+        );
+
+    if(!item || !prices.length){
+
+        alert(
+            "Please add a price first."
+        );
+
+        return;
+
+    }
+
+    orders.unshift({
+
+        id:uid(),
+
+        date:
+            document.getElementById("oDate")
+                .value || today(),
+
+        house:
+            document.getElementById("oHouse")
+                .value
+                .trim(),
+
+        item:item,
+
+        qty:qty,
+
+        price:
+            priceFor(item,qty),
+
+        notes:
+            document.getElementById("oNotes")
+                .value
+                .trim()
+
+    });
+
+
+    save(
+        KEYS.orders,
+        orders
+    );
+
+
+    document.getElementById("oHouse")
+        .value = "";
+
+    document.getElementById("oNotes")
+        .value = "";
+
+
+    renderAll();
+
+}
+
+
+/* =========================================
+   DELETE ORDER
+========================================= */
+
+function deleteOrder(id){
+
+    if(!confirm(
+        "Delete this order?"
+    )){
+
+        return;
+
+    }
+
+    orders =
+        orders.filter(
+            function(order){
+
+                return order.id !== id;
+
+            }
+        );
+
+    save(
+        KEYS.orders,
+        orders
+    );
+
+    renderAll();
+
+}
+
+
+/* =========================================
+   ORDERS TABLE
+========================================= */
+
+function renderOrders(){
+
+    const body =
+        document.getElementById(
+            "ordersBody"
+        );
+
+
+    if(!orders.length){
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="6"
+                    class="empty">
+                    No orders yet.
+                </td>
+            </tr>
+        `;
+
+    }else{
+
+        body.innerHTML =
+            orders
+            .map(function(order){
+
+                return `
+                    <tr>
+
+                        <td>
+                            ${esc(order.date)}
+                        </td>
+
+                        <td>
+                            ${esc(order.house)}
+                        </td>
+
+                        <td>
+                            ${esc(order.item)}
+                        </td>
+
+                        <td>
+                            ${order.qty}
+                        </td>
+
+                        <td>
+                            ${money(order.price)}
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="danger"
+                                onclick="deleteOrder('${order.id}')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
+
+    }
+
+
+    const total =
+        orders.reduce(
+            function(sum,order){
+
+                return sum +
+                    Number(order.price || 0);
+
+            },
+            0
+        );
+
+
+    const quantity =
+        orders.reduce(
+            function(sum,order){
+
+                return sum +
+                    Number(order.qty || 0);
+
+            },
+            0
+        );
+
+
+    document.getElementById("orderStats")
+        .innerHTML = `
+
+            <div class="stat">
+
+                <span class="muted">
+                    Orders
+                </span>
+
+                <b>
+                    ${orders.length}
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="muted">
+                    Qty
+                </span>
+
+                <b>
+                    ${quantity.toFixed(1)} kg
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="muted">
+                    Sales
+                </span>
+
+                <b>
+                    ${money(total)}
+                </b>
+
+            </div>
+
+        `;
+
+}
+
+
+/* =========================================
+   PRICE SETUP
+========================================= */
+
+function savePrice(){
+
+    const name =
+        document.getElementById("pName")
+            .value
+            .trim();
+
+    const qty =
+        Number(
+            document.getElementById("pQty")
+                .value
+        );
+
+    const price =
+        Number(
+            document.getElementById("pPrice")
+                .value
+        );
+
+
+    if(!name || !qty || !price){
+
+        alert(
+            "Enter item, quantity and price."
+        );
+
+        return;
+
+    }
+
+
+    const index =
+        prices.findIndex(
+            function(x){
+
+                return x.name.toLowerCase() ===
+                    name.toLowerCase();
+
+            }
+        );
+
+
+    const object = {
+
+        name:name,
+
+        qty:qty,
+
+        price:price
+
+    };
+
+
+    if(index >= 0){
+
+        prices[index] = object;
+
+    }else{
+
+        prices.push(object);
+
+    }
+
+
+    save(
+        KEYS.prices,
+        prices
+    );
+
+
+    document.getElementById("pName")
+        .value = "";
+
+    document.getElementById("pPrice")
+        .value = "";
+
+
+    renderAll();
+
+}
+
+
+function deletePrice(index){
+
+    if(!confirm(
+        "Delete this price?"
+    )){
+
+        return;
+
+    }
+
+    prices.splice(
+        index,
+        1
+    );
+
+    save(
+        KEYS.prices,
+        prices
+    );
+
+    renderAll();
+
+}
+
+
+function renderPrices(){
+
+    const body =
+        document.getElementById(
+            "pricesBody"
+        );
+
+
+    if(!prices.length){
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="4"
+                    class="empty">
+                    No prices set.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        prices
+        .map(function(price,index){
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${esc(price.name)}
+                    </td>
+
+                    <td>
+                        ${price.qty} kg
+                    </td>
+
+                    <td>
+                        ${money(price.price)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="danger"
+                            onclick="deletePrice(${index})">
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =========================================
+   RAW MATERIALS
+========================================= */
+
+function addRaw(){
+
+    const date =
+        document.getElementById("rDate")
+            .value || today();
+
+    const material =
+        document.getElementById("rMat")
+            .value
+            .trim();
+
+    const quantity =
+        Number(
+            document.getElementById("rQty")
+                .value
+        );
+
+    const unit =
+        document.getElementById("rUnit")
+            .value;
+
+    const paid =
+        Number(
+            document.getElementById("rPaid")
+                .value
+        );
+
+
+    if(!material ||
+       !quantity ||
+       paid < 0){
+
+        alert(
+            "Enter material, quantity and amount."
+        );
+
+        return;
+
+    }
+
+
+    const kg =
+        unit === "g"
+            ? quantity / 1000
+            : quantity;
+
+
+    raws.unshift({
+
+        id:uid(),
+
+        date:date,
+
+        mat:material,
+
+        qty:quantity,
+
+        unit:unit,
+
+        kg:kg,
+
+        paid:paid,
+
+        cost:
+            kg
+                ? paid / kg
+                : 0
+
+    });
+
+
+    save(
+        KEYS.raws,
+        raws
+    );
+
+
+    document.getElementById("rMat")
+        .value = "";
+
+    document.getElementById("rQty")
+        .value = "";
+
+    document.getElementById("rPaid")
+        .value = "";
+
+
+    renderAll();
+
+}
+
+
+function updateRawCost(){
+
+    const quantity =
+        Number(
+            document.getElementById("rQty")
+                .value
+        );
+
+    const paid =
+        Number(
+            document.getElementById("rPaid")
+                .value
+        );
+
+
+    const unit =
+        document.getElementById("rUnit")
+            .value;
+
+
+    const kg =
+        unit === "g"
+            ? quantity / 1000
+            : quantity;
+
+
+    document.getElementById("rCost")
+        .value =
+        kg
+            ? (paid / kg).toFixed(2)
+            : "";
+
+}
+
+
+document.getElementById("rQty")
+    .oninput =
+    updateRawCost;
+
+
+document.getElementById("rPaid")
+    .oninput =
+    updateRawCost;
+
+
+document.getElementById("rUnit")
+    .onchange =
+    updateRawCost;
+
+
+function deleteRaw(id){
+
+    if(!confirm(
+        "Delete this purchase?"
+    )){
+
+        return;
+
+    }
+
+    raws =
+        raws.filter(
+            function(raw){
+
+                return raw.id !== id;
+
+            }
+        );
+
+
+    save(
+        KEYS.raws,
+        raws
+    );
+
+
+    renderAll();
+
+}
+
+
+function renderRaw(){
+
+    const body =
+        document.getElementById(
+            "rawBody"
+        );
+
+
+    if(!raws.length){
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="6"
+                    class="empty">
+
+                    No purchases yet.
+
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    body.innerHTML =
+        raws
+        .map(function(raw){
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${esc(raw.date)}
+                    </td>
+
+                    <td>
+                        ${esc(raw.mat)}
+                    </td>
+
+                    <td>
+                        ${raw.qty}
+                        ${raw.unit}
+                    </td>
+
+                    <td>
+                        ${money(raw.paid)}
+                    </td>
+
+                    <td>
+                        ₹${Number(
+                            raw.cost || 0
+                        ).toFixed(2)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="danger"
+                            onclick="deleteRaw('${raw.id}')">
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =========================================
+   FINANCE
+========================================= */
+
+function renderFinance(){
+
+    const earned =
+        orders.reduce(
+            function(sum,order){
+
+                return sum +
+                    Number(order.price || 0);
+
+            },
+            0
+        );
+
+
+    const spent =
+        raws.reduce(
+            function(sum,raw){
+
+                return sum +
+                    Number(raw.paid || 0);
+
+            },
+            0
+        );
+
+
+    const balance =
+        earned - spent;
+
+
+    document.getElementById(
+        "financeStats"
+    ).innerHTML = `
+
+        <div class="stat">
+
+            <span class="muted">
+                Earned
+            </span>
+
+            <b>
+                ${money(earned)}
+            </b>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="muted">
+                Spent
+            </span>
+
+            <b>
+                ${money(spent)}
+            </b>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="muted">
+                Balance
+            </span>
+
+            <b>
+                ${
+                    balance < 0
+                        ? "-₹"
+                        : "₹"
+                }${Math.abs(balance).toFixed(0)}
+            </b>
+
+        </div>
+
+    `;
+
+
+    const last =
+        localStorage.getItem(
+            "b_last_backup"
+        );
+
+
+    document.getElementById(
+        "backupInfo"
+    ).textContent = last
+        ? "Last backup: " +
+          new Date(last)
+            .toLocaleString()
+        : "No backup recorded yet.";
+
+}
+
+
+/* =========================================
+   PREP / RECIPES
+========================================= */
+
+function renderPrep(){
+
+    const grouped = {};
+
+
+    orders.forEach(
+        function(order){
+
+            grouped[order.item] =
+                (
+                    grouped[order.item] || 0
+                ) +
+                Number(order.qty || 0);
+
+        }
+    );
+
+
+    const names =
+        Object.keys(grouped);
+
+
+    if(!names.length){
+
+        document.getElementById(
+            "prepList"
+        ).innerHTML = `
+
+            <div class="empty">
+
+                No orders to prepare.
+
+            </div>
+
+        `;
+
+    }else{
+
+        document.getElementById(
+            "prepList"
+        ).innerHTML =
+            names
+            .map(function(name){
+
+                const recipe =
+                    recipes.find(
+                        function(item){
+
+                            return item.name ===
+                                name;
+
+                        }
+                    );
+
+
+                const text =
+                    recipe
+                        ? scaleRecipe(
+                            recipe,
+                            grouped[name]
+                        )
+                        : "No recipe saved for this item.";
+
+
+                return `
+
+                    <div class="card"
+                         style="margin:0 0 8px">
+
+                        <b>
+                            ${esc(name)}
+                        </b>
+
+                        <div class="muted">
+
+                            Total order qty:
+                            ${grouped[name].toFixed(1)}
+                            kg
+
+                        </div>
+
+                        <pre>
+${esc(text)}
+                        </pre>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+    }
+
+
+    const recipeContainer =
+        document.getElementById(
+            "recipesList"
+        );
+
+
+    if(!recipes.length){
+
+        recipeContainer.innerHTML = `
+
+            <div class="empty">
+
+                No recipes saved.
+
+            </div>
+
+        `;
+
+    }else{
+
+        recipeContainer.innerHTML =
+            recipes
+            .map(function(recipe,index){
+
+                return `
+
+                    <div class="card"
+                         style="margin:8px 0">
+
+                        <b>
+                            ${esc(recipe.name)}
+                        </b>
+
+                        <div class="muted">
+
+                            Base:
+                            ${recipe.base}
+                            kg
+
+                        </div>
+
+                        <pre>
+${esc(recipe.text)}
+                        </pre>
+
+                        <button
+                            class="danger"
+                            onclick="deleteRecipe(${index})">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+    }
+
+}
+
+
+function scaleRecipe(recipe,total){
+
+    const factor =
+        total /
+        Number(recipe.base || 1);
+
+
+    return `
+Scale factor: ${factor.toFixed(2)}×
+
+${recipe.text}
+`;
+
+}
+
+
+function saveRecipe(){
+
+    const name =
+        document.getElementById("recName")
+            .value
+            .trim();
+
+    const base =
+        Number(
+            document.getElementById("recBase")
+                .value
+        );
+
+    const text =
+        document.getElementById("recText")
+            .value
+            .trim();
+
+
+    if(!name || !base || !text){
+
+        alert(
+            "Enter recipe details."
+        );
+
+        return;
+
+    }
+
+
+    const index =
+        recipes.findIndex(
+            function(recipe){
+
+                return recipe.name.toLowerCase() ===
+                    name.toLowerCase();
+
+            }
+        );
+
+
+    const object = {
+
+        name:name,
+
+        base:base,
+
+        text:text
+
+    };
+
+
+    if(index >= 0){
+
+        recipes[index] = object;
+
+    }else{
+
+        recipes.push(object);
+
+    }
+
+
+    save(
+        KEYS.recipes,
+        recipes
+    );
+
+
+    document.getElementById("recName")
+        .value = "";
+
+    document.getElementById("recText")
+        .value = "";
+
+
+    renderAll();
+
+}
+
+
+function deleteRecipe(index){
+
+    if(!confirm(
+        "Delete this recipe?"
+    )){
+
+        return;
+
+    }
+
+
+    recipes.splice(
+        index,
+        1
+    );
+
+
+    save(
+        KEYS.recipes,
+        recipes
+    );
+
+
+    renderAll();
+
+}
+
+
+/* =========================================
+   CSV
+========================================= */
+
+function csvEscape(value){
+
+    return '"' +
+        String(value ?? "")
+            .replace(/"/g,'""') +
+        '"';
+
+}
+
+
+function makeCSV(rows){
+
+    return rows
+        .map(
+            function(row){
+
+                return row
+                    .map(csvEscape)
+                    .join(",");
+
+            }
+        )
+        .join("\r\n");
+
+}
+
+
+function download(
+    filename,
+    text,
+    type="text/plain"
+){
+
+    const blob =
+        new Blob(
+            [text],
+            {
+                type:
+                    type +
+                    ";charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download = filename;
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+        function(){
+
+            URL.revokeObjectURL(url);
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================================
+   EXPORT ORDERS CSV
+========================================= */
+
+function exportOrdersCSV(){
+
+    const rows = [
+
+        [
+            "Date",
+            "House",
+            "Item",
+            "Qty kg",
+            "Price",
+            "Notes"
+        ]
+
+    ];
+
+
+    orders.forEach(
+        function(order){
+
+            rows.push([
+
+                order.date,
+
+                order.house,
+
+                order.item,
+
+                order.qty,
+
+                order.price,
+
+                order.notes
+
+            ]);
+
+        }
+    );
+
+
+    download(
+        "orders.csv",
+        makeCSV(rows),
+        "text/csv"
+    );
+
+}
+
+
+/* =========================================
+   EXPORT RAW CSV
+========================================= */
+
+function exportRawCSV(){
+
+    const rows = [
+
+        [
+            "Date",
+            "Material",
+            "Quantity",
+            "Unit",
+            "Kg",
+            "Paid",
+            "Cost per kg"
+        ]
+
+    ];
+
+
+    raws.forEach(
+        function(raw){
+
+            rows.push([
+
+                raw.date,
+
+                raw.mat,
+
+                raw.qty,
+
+                raw.unit,
+
+                raw.kg,
+
+                raw.paid,
+
+                raw.cost
+
+            ]);
+
+        }
+    );
+
+
+    download(
+        "raw-materials.csv",
+        makeCSV(rows),
+        "text/csv"
+    );
+
+}
+
+
+/* =========================================
+   EXPORT ALL CSV
+========================================= */
+
+function exportAllCSVs(){
+
+    exportOrdersCSV();
+
+    setTimeout(
+        function(){
+
+            exportRawCSV();
+
+        },
+        500
+    );
+
+}
+
+
+/* =========================================
+   CSV PARSER
+========================================= */
+
+function parseCSV(text){
+
+    const rows = [];
+
+    let row = [];
+
+    let cell = "";
+
+    let quoted = false;
+
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        const character =
+            text[i];
+
+        const next =
+            text[i+1];
+
+
+        if(character === '"'){
+
+            if(
+                quoted &&
+                next === '"'
+            ){
+
+                cell += '"';
+
+                i++;
+
+            }else{
+
+                quoted = !quoted;
+
+            }
+
+        }
+
+        else if(
+            character === "," &&
+            !quoted
+        ){
+
+            row.push(cell);
+
+            cell = "";
+
+        }
+
+        else if(
+            (
+                character === "\n" ||
+                character === "\r"
+            ) &&
+            !quoted
+        ){
+
+            if(
+                character === "\r" &&
+                next === "\n"
+            ){
+
+                i++;
+
+            }
+
+
+            row.push(cell);
+
+
+            if(
+                row.some(
+                    function(x){
+                        return x !== "";
+                    }
+                )
+            ){
+
+                rows.push(row);
+
+            }
+
+
+            row = [];
+
+            cell = "";
+
+        }
+
+        else{
+
+            cell += character;
+
+        }
+
+    }
+
+
+    if(
+        cell !== "" ||
+        row.length
+    ){
+
+        row.push(cell);
+
+        rows.push(row);
+
+    }
+
+
+    return rows;
+
+}
+
+
+/* =========================================
+   IMPORT ORDERS CSV
+========================================= */
+
+function importOrdersCSV(input){
+
+    const file =
+        input.files[0];
+
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(){
+
+            const rows =
+                parseCSV(
+                    reader.result
+                )
+                .slice(1);
+
+
+            orders =
+                rows
+                .filter(
+                    function(row){
+
+                        return row.length >= 5;
+
+                    }
+                )
+                .map(
+                    function(row){
+
+                        return {
+
+                            id:uid(),
+
+                            date:
+                                row[0] ||
+                                today(),
+
+                            house:
+                                row[1] || "",
+
+                            item:
+                                row[2] || "",
+
+                            qty:
+                                Number(row[3]) || 0,
+
+                            price:
+                                Number(row[4]) || 0,
+
+                            notes:
+                                row[5] || ""
+
+                        };
+
+                    }
+                );
+
+
+            save(
+                KEYS.orders,
+                orders
+            );
+
+
+            renderAll();
+
+            input.value = "";
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================
+   IMPORT RAW CSV
+========================================= */
+
+function importRawCSV(input){
+
+    const file =
+        input.files[0];
+
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(){
+
+            const rows =
+                parseCSV(
+                    reader.result
+                )
+                .slice(1);
+
+
+            raws =
+                rows
+                .filter(
+                    function(row){
+
+                        return row.length >= 6;
+
+                    }
+                )
+                .map(
+                    function(row){
+
+                        return {
+
+                            id:uid(),
+
+                            date:
+                                row[0] ||
+                                today(),
+
+                            mat:
+                                row[1] || "",
+
+                            qty:
+                                Number(row[2]) || 0,
+
+                            unit:
+                                row[3] || "kg",
+
+                            kg:
+                                Number(row[4]) || 0,
+
+                            paid:
+                                Number(row[5]) || 0,
+
+                            cost:
+                                Number(row[6]) || 0
+
+                        };
+
+                    }
+                );
+
+
+            save(
+                KEYS.raws,
+                raws
+            );
+
+
+            renderAll();
+
+            input.value = "";
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================
+   BACKUP ALL DATA
+========================================= */
+
+function backupAllData(){
+
+    const backup = {
+
+        app:"Orders Log",
+
+        version:2,
+
+        backupDate:
+            new Date()
+                .toISOString(),
+
+        orders:orders,
+
+        raws:raws,
+
+        prices:prices,
+
+        recipes:recipes
+
+    };
+
+
+    const filename =
+        "OrdersLog_Backup_" +
+        today() +
+        ".json";
+
+
+    download(
+        filename,
+
+        JSON.stringify(
+            backup,
+            null,
+            2
+        ),
+
+        "application/json"
+    );
+
+
+    localStorage.setItem(
+        "b_last_backup",
+        new Date().toISOString()
+    );
+
+
+    renderFinance();
+
+}
+
+
+/* =========================================
+   RESTORE
+========================================= */
+
+function restoreAllData(input){
+
+    const file =
+        input.files[0];
+
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(){
+
+            try{
+
+                const data =
+                    JSON.parse(
+                        reader.result
+                    );
+
+
+                if(
+                    !data ||
+                    !Array.isArray(data.orders) ||
+                    !Array.isArray(data.raws) ||
+                    !Array.isArray(data.prices) ||
+                    !Array.isArray(data.recipes)
+                ){
+
+                    throw new Error(
+                        "Invalid backup"
+                    );
+
+                }
+
+
+                if(
+                    !confirm(
+                        "Restore this backup? Current data will be replaced."
+                    )
+                ){
+
+                    return;
+
+                }
+
+
+                orders =
+                    data.orders;
+
+                raws =
+                    data.raws;
+
+                prices =
+                    data.prices;
+
+                recipes =
+                    data.recipes;
+
+
+                save(
+                    KEYS.orders,
+                    orders
+                );
+
+
+                save(
+                    KEYS.raws,
+                    raws
+                );
+
+
+                save(
+                    KEYS.prices,
+                    prices
+                );
+
+
+                save(
+                    KEYS.recipes,
+                    recipes
+                );
+
+
+                renderAll();
+
+
+                alert(
+                    "Backup restored successfully."
+                );
+
+
+            }catch(error){
+
+                alert(
+                    "Could not restore: invalid backup file."
+                );
+
+            }
+
+
+            input.value = "";
+
+        };
+
+
+    reader.readAsText(file);
+
+}
+
+
+/* =========================================
+   TAB NAVIGATION
+========================================= */
+
+document
+    .querySelectorAll("[data-tab]")
+    .forEach(
+        function(button){
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    const tab =
+                        button.dataset.tab;
+
+
+                    document
+                        .querySelectorAll(
+                            ".tabpage"
+                        )
+                        .forEach(
+                            function(page){
+
+                                page.classList.toggle(
+                                    "active",
+                                    page.id === tab
+                                );
+
+                            }
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".tab"
+                        )
+                        .forEach(
+                            function(item){
+
+                                item.classList.toggle(
+                                    "active",
+                                    item.dataset.tab === tab
+                                );
+
+                            }
+                        );
+
+
+                    document
+                        .querySelectorAll(
+                            ".bottomnav button"
+                        )
+                        .forEach(
+                            function(item){
+
+                                item.classList.toggle(
+                                    "active",
+                                    item.dataset.tab === tab
+                                );
+
+                            }
+                        );
+
+
+                    window.scrollTo({
+                        top:0,
+                        behavior:"smooth"
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================
+   RENDER EVERYTHING
+========================================= */
+
+function renderAll(){
+
+    renderItems();
+
+    renderOrders();
+
+    renderPrices();
+
+    renderRaw();
+
+    renderFinance();
+
+    renderPrep();
+
+}
+
+
+renderAll();
+
 </script>
 
 </body>
