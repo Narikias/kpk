@@ -2,2963 +2,1646 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover">
-
-<meta name="theme-color" content="#0b6bcb">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d6efd">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Orders Log">
-
-<title>Orders Log</title>
-
+<title>KPK Batter House - Orders</title>
 <style>
-:root{
-    --blue:#0b6bcb;
-    --bg:#f4f7fb;
-    --card:#ffffff;
-    --text:#17202a;
-    --muted:#667085;
-    --border:#d9e1ea;
-    --green:#087f5b;
-    --red:#c92a2a;
-}
-
 *{
     box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
-
 html,body{
     margin:0;
     padding:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:#f5f7fa;
+    color:#222;
 }
-
 body{
-    padding-bottom:calc(78px + env(safe-area-inset-bottom));
+    padding-bottom:80px;
 }
-
 header{
     position:sticky;
     top:0;
-    z-index:10;
-    background:var(--blue);
+    z-index:100;
+    background:#0d6efd;
     color:white;
     padding:
         calc(12px + env(safe-area-inset-top))
         16px
-        14px;
-    box-shadow:0 2px 8px #0002;
+        12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-
 header h1{
     margin:0;
-    font-size:21px;
+    font-size:20px;
 }
-
-header small{
+header p{
+    margin:3px 0 0;
+    font-size:12px;
     opacity:.9;
 }
-
-main{
-    max-width:900px;
+.container{
+    max-width:1100px;
     margin:auto;
     padding:14px;
 }
-
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px;
-    margin-bottom:14px;
-    box-shadow:0 1px 3px #0000000b;
+.tab{
+    display:none;
 }
-
+.tab.active{
+    display:block;
+}
+.card{
+    background:white;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:14px;
+    box-shadow:0 1px 5px rgba(0,0,0,.08);
+}
 h2{
     font-size:18px;
-    margin:0 0 12px;
+    margin:0 0 14px;
 }
-
 h3{
-    font-size:15px;
-    margin:16px 0 8px;
+    font-size:16px;
+    margin:15px 0 10px;
 }
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
-}
-
-.field{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-}
-
-.full{
-    grid-column:1/-1;
-}
-
 label{
-    font-size:13px;
+    display:block;
     font-weight:600;
-    color:#475467;
+    font-size:13px;
+    margin-bottom:5px;
 }
-
 input,
 select,
-button,
-textarea{
+textarea,
+button{
     font:inherit;
-    font-size:16px;
-    border-radius:10px;
 }
-
 input,
 select,
 textarea{
     width:100%;
-    padding:11px;
-    border:1px solid var(--border);
-    background:#fff;
-    min-height:44px;
+    min-height:46px;
+    padding:10px 12px;
+    border:1px solid #ccd2d8;
+    border-radius:8px;
+    background:white;
+    font-size:16px;
 }
-
+textarea{
+    min-height:80px;
+    resize:vertical;
+}
 button{
-    border:0;
-    padding:11px 14px;
-    background:var(--blue);
-    color:white;
-    font-weight:700;
     min-height:44px;
+    border:0;
+    border-radius:8px;
+    padding:9px 14px;
+    background:#0d6efd;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
 }
-
 button.secondary{
-    background:#eef5ff;
-    color:#0755a6;
-    border:1px solid #cfe0f8;
+    background:#6c757d;
 }
-
+button.success{
+    background:#198754;
+}
+button.warning{
+    background:#f0ad00;
+    color:#111;
+}
 button.danger{
-    background:#fff0f0;
-    color:var(--red);
-    border:1px solid #ffc9c9;
+    background:#dc3545;
 }
-
-button.green{
-    background:var(--green);
+button.light{
+    background:#e9ecef;
+    color:#222;
 }
-
+button:active{
+    transform:scale(.98);
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+.grid3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+@media(max-width:600px){
+    .grid,
+    .grid3{
+        grid-template-columns:1fr;
+    }
+}
 .actions{
     display:flex;
-    gap:8px;
     flex-wrap:wrap;
+    gap:8px;
     margin-top:12px;
 }
-
-.tabs{
+.actions button{
+    flex:1 1 auto;
+}
+.stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:4px;
-    background:#e8eef6;
-    padding:4px;
-    border-radius:12px;
-    margin-bottom:14px;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
 }
-
-.tab{
-    background:transparent;
-    color:#344054;
-    border-radius:9px;
-    padding:9px 4px;
-    min-height:42px;
-    font-size:13px;
+.stat{
+    background:#f1f5f9;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
 }
-
-.tab.active{
-    background:#fff;
-    color:var(--blue);
-    box-shadow:0 1px 4px #0002;
+.stat .number{
+    font-size:20px;
+    font-weight:700;
 }
-
-.tabpage{
-    display:none;
+.stat .label{
+    font-size:11px;
+    color:#666;
+    margin-top:3px;
 }
-
-.tabpage.active{
-    display:block;
+.table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
 }
-
 table{
     width:100%;
     border-collapse:collapse;
-    font-size:13px;
+    min-width:650px;
 }
-
 th,
 td{
-    padding:8px 5px;
-    border-bottom:1px solid var(--border);
+    padding:9px 8px;
+    border-bottom:1px solid #e2e6ea;
     text-align:left;
-    vertical-align:top;
+    font-size:13px;
+    vertical-align:middle;
 }
-
 th{
-    background:#f8fafc;
+    background:#f1f3f5;
+    font-weight:700;
+    position:sticky;
+    top:0;
 }
-
-.tablewrap{
-    overflow:auto;
+.price-table{
+    min-width:400px;
 }
-
+.price-table th,
+.price-table td{
+    text-align:center;
+}
+.price-table th:first-child,
+.price-table td:first-child{
+    text-align:left;
+}
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+.small{
+    font-size:12px;
+    color:#666;
+}
+.highlight{
+    background:#fff8dc;
+}
+.prep-table{
+    min-width:420px;
+}
+.prep-table td:last-child,
+.prep-table th:last-child{
+    text-align:right;
+}
+.bottom-nav{
+    position:fixed;
+    z-index:200;
+    left:0;
+    right:0;
+    bottom:0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    background:white;
+    border-top:1px solid #ddd;
+    padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -2px 8px rgba(0,0,0,.08);
+}
+.bottom-nav button{
+    min-height:58px;
+    border-radius:0;
+    background:white;
+    color:#555;
+    font-size:11px;
+    padding:5px;
+}
+.bottom-nav button.active{
+    color:#0d6efd;
+    font-weight:700;
+}
+.bottom-nav span{
+    display:block;
+    font-size:20px;
+    line-height:22px;
+}
+.notice{
+    padding:10px 12px;
+    border-radius:8px;
+    background:#e7f1ff;
+    color:#064b9b;
+    font-size:13px;
+    margin-bottom:12px;
+}
+.danger-note{
+    background:#fff0f0;
+    color:#a30000;
+}
+.file-input{
+    display:none;
+}
 .badge{
     display:inline-block;
     padding:3px 7px;
     border-radius:20px;
-    background:#eef5ff;
-    color:#0755a6;
-    font-size:12px;
-}
-
-.statgrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:8px;
-}
-
-.stat{
-    background:#f8fafc;
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:10px;
-}
-
-.stat b{
-    display:block;
-    font-size:18px;
-}
-
-.muted{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.empty{
-    text-align:center;
-    color:var(--muted);
-    padding:18px;
-}
-
-.notice{
-    background:#fff8e6;
-    border:1px solid #ffe08a;
-    padding:10px;
-    border-radius:10px;
-    font-size:13px;
-}
-
-pre{
-    white-space:pre-wrap;
-    background:#f8fafc;
-    padding:10px;
-    border-radius:10px;
-    font-size:13px;
-}
-
-.bottomnav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index:20;
-    background:#fff;
-    border-top:1px solid var(--border);
-    padding:
-        6px
-        8px
-        calc(6px + env(safe-area-inset-bottom));
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-}
-
-.bottomnav button{
-    background:transparent;
-    color:#667085;
-    padding:6px 2px;
-    min-height:48px;
+    background:#e9ecef;
     font-size:11px;
 }
-
-.bottomnav button.active{
-    color:var(--blue);
-}
-
-@media(max-width:600px){
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .full{
-        grid-column:auto;
-    }
-
-    .statgrid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    th,
-    td{
-        font-size:12px;
-    }
+.right{
+    text-align:right;
 }
 </style>
 </head>
-
 <body>
-
 <header>
-    <h1>📋 Orders Log</h1>
-    <small>Offline-first order, stock & finance tracker</small>
+    <h1>KPK Batter House</h1>
+    <p>Orders • Prices • Finance • Preparation</p>
 </header>
-
-<main>
-
-<div class="tabs">
-
-    <button class="tab active" data-tab="orders">
-        Orders
-    </button>
-
-    <button class="tab" data-tab="raw">
-        Prices / Raw
-    </button>
-
-    <button class="tab" data-tab="finance">
-        Finance
-    </button>
-
-    <button class="tab" data-tab="prep">
-        Prep List
-    </button>
-
-</div>
-
-
+<div class="container">
 <!-- ================= ORDERS ================= -->
-
-<section id="orders" class="tabpage active">
-
+<section id="ordersTab" class="tab active">
 <div class="card">
-
-    <h2>➕ Add Order</h2>
-
-    <div class="grid">
-
-        <div class="field">
-            <label>Date</label>
-            <input id="oDate" type="date">
-        </div>
-
-        <div class="field">
-            <label>House / Customer</label>
-            <input id="oHouse"
-                   placeholder="House number / name">
-        </div>
-
-        <div class="field">
-            <label>Item</label>
-            <select id="oItem"></select>
-        </div>
-
-        <div class="field">
-            <label>Quantity (kg)</label>
-
-            <select id="oQty">
-
-                <option value=".5">0.5</option>
-                <option value="1">1</option>
-                <option value="1.5">1.5</option>
-                <option value="2">2</option>
-
-            </select>
-        </div>
-
-        <div class="field">
-            <label>Price (₹)</label>
-            <input id="oPrice" readonly>
-        </div>
-
-        <div class="field">
-            <label>Notes</label>
-            <input id="oNotes"
-                   placeholder="Optional">
-        </div>
-
-    </div>
-
-    <div class="actions">
-
-        <button onclick="addOrder()">
-            Save Order
-        </button>
-
-    </div>
-
+<h2>Add Order</h2>
+<div class="grid">
+<div>
+<label>Date</label>
+<input type="date" id="orderDate">
 </div>
-
-
+<div>
+<label>House / Customer</label>
+<input type="text" id="orderCustomer" placeholder="Customer / House">
+</div>
+<div>
+<label>Item</label>
+<select id="orderItem"></select>
+</div>
+<div>
+<label>Quantity</label>
+<select id="orderQty">
+<option value="0.5">0.5 kg</option>
+<option value="1">1 kg</option>
+<option value="1.5">1.5 kg</option>
+<option value="2">2 kg</option>
+</select>
+</div>
+<div>
+<label>Price</label>
+<input type="number" id="orderPrice" readonly>
+</div>
+<div>
+<label>Notes</label>
+<input type="text" id="orderNotes" placeholder="Optional">
+</div>
+</div>
+<div class="actions">
+<button onclick="addOrder()">Add Order</button>
+</div>
+</div>
 <div class="card">
-
-    <h2>📦 Orders</h2>
-
-    <div class="statgrid" id="orderStats"></div>
-
-    <div class="actions">
-
-        <button class="secondary"
-                onclick="exportOrdersCSV()">
-            Export Orders CSV
-        </button>
-
-        <label class="secondary"
-               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
-
-            Import Orders CSV
-
-            <input id="orderImport"
-                   type="file"
-                   accept=".csv,text/csv"
-                   style="display:none"
-                   onchange="importOrdersCSV(this)">
-
-        </label>
-
-    </div>
-
-    <div class="tablewrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Date</th>
-                    <th>House</th>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>₹</th>
-                    <th></th>
-                </tr>
-
-            </thead>
-
-            <tbody id="ordersBody"></tbody>
-
-        </table>
-
-    </div>
-
+<h2>Orders</h2>
+<div class="grid">
+<div>
+<label>View Date</label>
+<input type="date" id="ordersViewDate" onchange="renderOrders()">
 </div>
-
+<div>
+<label>Filter Item</label>
+<select id="ordersFilterItem" onchange="renderOrders()">
+<option value="">All Items</option>
+</select>
+</div>
+</div>
+<div class="stats" style="margin-top:12px">
+<div class="stat">
+<div class="number" id="orderCount">0</div>
+<div class="label">Orders</div>
+</div>
+<div class="stat">
+<div class="number" id="orderKg">0</div>
+<div class="label">Total KG</div>
+</div>
+<div class="stat">
+<div class="number" id="orderRevenue">₹0</div>
+<div class="label">Revenue</div>
+</div>
+</div>
+<div class="actions">
+<button class="success" onclick="exportOrdersCSV()">Export Orders CSV</button>
+<label style="margin:0;flex:1">
+<input class="file-input" type="file" accept=".csv,text/csv" onchange="importOrdersCSV(this)">
+<button class="secondary" type="button"
+onclick="this.previousElementSibling.click()">
+Import Orders CSV
+</button>
+</label>
+<button class="danger" onclick="clearAllOrders()">
+Clear All Orders
+</button>
+</div>
+<div class="notice danger-note">
+<strong>Clear All Orders</strong> removes only orders. Prices, raw materials and recipes will not be affected.
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Customer / House</th>
+<th>Item</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Notes</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="ordersBody"></tbody>
+</table>
+</div>
+</div>
 </section>
-
-
-<!-- ================= PRICES / RAW ================= -->
-
-<section id="raw" class="tabpage">
-
+<!-- ================= PRICES ================= -->
+<section id="pricesTab" class="tab">
 <div class="card">
-
-    <h2>💰 Price Setup</h2>
-
-    <div class="grid">
-
-        <div class="field">
-
-            <label>Item</label>
-
-            <input id="pName"
-                   placeholder="Idly / Dosa batter">
-
-        </div>
-
-        <div class="field">
-
-            <label>Target Qty (kg)</label>
-
-            <input id="pQty"
-                   type="number"
-                   step=".5"
-                   value="1">
-
-        </div>
-
-        <div class="field">
-
-            <label>Total Price (₹)</label>
-
-            <input id="pPrice"
-                   type="number"
-                   step="1">
-
-        </div>
-
-    </div>
-
-    <div class="actions">
-
-        <button onclick="savePrice()">
-            Add / Update
-        </button>
-
-    </div>
-
-    <div class="tablewrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th></th>
-                </tr>
-
-            </thead>
-
-            <tbody id="pricesBody"></tbody>
-
-        </table>
-
-    </div>
-
+<h2>Price List</h2>
+<div class="table-wrap">
+<table class="price-table">
+<thead>
+<tr>
+<th>Item</th>
+<th>1/2 kg</th>
+<th>1 kg</th>
+</tr>
+</thead>
+<tbody id="priceListBody"></tbody>
+</table>
 </div>
-
-
+</div>
 <div class="card">
-
-    <h2>🧺 Raw Materials</h2>
-
-    <div class="grid">
-
-        <div class="field">
-
-            <label>Purchase Date</label>
-
-            <input id="rDate"
-                   type="date">
-
-        </div>
-
-        <div class="field">
-
-            <label>Material</label>
-
-            <input id="rMat"
-                   placeholder="Rice / dal / ravva">
-
-        </div>
-
-        <div class="field">
-
-            <label>Quantity</label>
-
-            <input id="rQty"
-                   type="number"
-                   step=".001">
-
-        </div>
-
-        <div class="field">
-
-            <label>Unit</label>
-
-            <select id="rUnit">
-
-                <option value="kg">
-                    kg
-                </option>
-
-                <option value="g">
-                    g
-                </option>
-
-            </select>
-
-        </div>
-
-        <div class="field">
-
-            <label>Total Paid (₹)</label>
-
-            <input id="rPaid"
-                   type="number"
-                   step=".01">
-
-        </div>
-
-        <div class="field">
-
-            <label>Cost / kg</label>
-
-            <input id="rCost"
-                   readonly>
-
-        </div>
-
-    </div>
-
-    <div class="actions">
-
-        <button onclick="addRaw()">
-            Save Purchase
-        </button>
-
-    </div>
-
-    <div class="tablewrap">
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Date</th>
-                    <th>Material</th>
-                    <th>Qty</th>
-                    <th>Paid</th>
-                    <th>₹/kg</th>
-                    <th></th>
-                </tr>
-
-            </thead>
-
-            <tbody id="rawBody"></tbody>
-
-        </table>
-
-    </div>
-
-    <div class="actions">
-
-        <button class="secondary"
-                onclick="exportRawCSV()">
-            Export Raw CSV
-        </button>
-
-        <label class="secondary"
-               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
-
-            Import Raw CSV
-
-            <input id="rawImport"
-                   type="file"
-                   accept=".csv,text/csv"
-                   style="display:none"
-                   onchange="importRawCSV(this)">
-
-        </label>
-
-    </div>
-
+<h2>Price Setup</h2>
+<div class="notice">
+The same item can have separate prices for different quantities.
+For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 kg.
 </div>
-
+<div class="grid">
+<div>
+<label>Item</label>
+<input type="text" id="priceItem" placeholder="Item name">
+</div>
+<div>
+<label>Quantity</label>
+<select id="priceQty">
+<option value="0.5">0.5 kg</option>
+<option value="1">1 kg</option>
+</select>
+</div>
+<div>
+<label>Price</label>
+<input type="number" id="priceValue" placeholder="Price">
+</div>
+</div>
+<div class="actions">
+<button onclick="savePrice()">Add / Update Price</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="pricesBody"></tbody>
+</table>
+</div>
+</div>
 </section>
-
-
 <!-- ================= FINANCE ================= -->
-
-<section id="finance" class="tabpage">
-
+<section id="financeTab" class="tab">
 <div class="card">
-
-    <h2>📊 Finance</h2>
-
-    <div class="statgrid"
-         id="financeStats"></div>
-
-    <div class="notice"
-         style="margin-top:12px">
-
-        All data is stored on this device using
-        localStorage.
-
-        Use Backup regularly before changing phones
-        or clearing Safari data.
-
-    </div>
-
+<h2>Finance</h2>
+<div class="stats">
+<div class="stat">
+<div class="number" id="financeEarned">₹0</div>
+<div class="label">Earned</div>
 </div>
-
-
+<div class="stat">
+<div class="number" id="financeSpent">₹0</div>
+<div class="label">Spent</div>
+</div>
+<div class="stat">
+<div class="number" id="financeBalance">₹0</div>
+<div class="label">Balance</div>
+</div>
+</div>
+</div>
 <div class="card">
-
-    <h2>💾 Backup & Restore</h2>
-
-    <p class="muted">
-
-        Backup saves Orders, Raw Materials,
-        Prices and Recipes into one JSON file.
-
-    </p>
-
-    <div class="actions">
-
-        <button class="green"
-                onclick="backupAllData()">
-
-            Backup All Data
-
-        </button>
-
-
-        <label class="secondary"
-               style="display:flex;align-items:center;padding:0 12px;cursor:pointer">
-
-            Restore Backup
-
-            <input id="restoreInput"
-                   type="file"
-                   accept=".json,application/json"
-                   style="display:none"
-                   onchange="restoreAllData(this)">
-
-        </label>
-
-
-        <button class="secondary"
-                onclick="exportAllCSVs()">
-
-            Export All CSVs
-
-        </button>
-
-    </div>
-
-    <p id="backupInfo"
-       class="muted"></p>
-
+<h2>Raw Material Purchase</h2>
+<div class="grid">
+<div>
+<label>Date</label>
+<input type="date" id="rawDate">
 </div>
-
+<div>
+<label>Material</label>
+<input type="text" id="rawMaterial" placeholder="Rice / Dal / etc.">
+</div>
+<div>
+<label>Quantity</label>
+<input type="number" id="rawQty" step="0.001">
+</div>
+<div>
+<label>Unit</label>
+<select id="rawUnit">
+<option value="kg">kg</option>
+<option value="g">g</option>
+</select>
+</div>
+<div>
+<label>Total Paid</label>
+<input type="number" id="rawPaid" step="0.01">
+</div>
+</div>
+<div class="actions">
+<button onclick="addRaw()">Add Purchase</button>
+</div>
+</div>
+<div class="card">
+<h2>Raw Material Purchases</h2>
+<div class="actions">
+<button class="success" onclick="exportRawCSV()">Export Raw Materials CSV</button>
+<label style="margin:0;flex:1">
+<input class="file-input" type="file" accept=".csv,text/csv" onchange="importRawCSV(this)">
+<button class="secondary" type="button"
+onclick="this.previousElementSibling.click()">
+Import Raw CSV
+</button>
+</label>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Material</th>
+<th>Qty</th>
+<th>Paid</th>
+<th>Cost / kg</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="rawBody"></tbody>
+</table>
+</div>
+</div>
 </section>
-
-
-<!-- ================= PREP ================= -->
-
-<section id="prep" class="tabpage">
-
+<!-- ================= PREPARATION ================= -->
+<section id="prepTab" class="tab">
 <div class="card">
-
-    <h2>🍚 Prep List</h2>
-
-    <div id="prepList"></div>
-
+<h2>Preparation List</h2>
+<div class="grid">
+<div>
+<label>Preparation Date</label>
+<input type="date" id="prepDate" onchange="renderPrep()">
 </div>
-
-
+</div>
+<div class="notice" style="margin-top:12px">
+All orders for the selected day are automatically combined by item.
+If multiple customers order the same batter, their quantities are added together.
+</div>
+<div class="table-wrap">
+<table class="prep-table">
+<thead>
+<tr>
+<th>Item</th>
+<th>Total Quantity</th>
+</tr>
+</thead>
+<tbody id="prepBody"></tbody>
+</table>
+</div>
+</div>
 <div class="card">
-
-    <h2>📝 Recipe Setup</h2>
-
-    <div class="grid">
-
-        <div class="field">
-
-            <label>Recipe Item</label>
-
-            <input id="recName"
-                   placeholder="Idly / Dosa batter">
-
-        </div>
-
-        <div class="field">
-
-            <label>Base Qty (kg)</label>
-
-            <input id="recBase"
-                   type="number"
-                   step=".1"
-                   value="1">
-
-        </div>
-
-        <div class="field full">
-
-            <label>
-                Formula / Steps
-            </label>
-
-            <textarea id="recText"
-                      rows="4"
-                      placeholder="Example: 700g idly ravva + 300g urad dal..."></textarea>
-
-        </div>
-
-    </div>
-
-    <div class="actions">
-
-        <button onclick="saveRecipe()">
-            Save Recipe
-        </button>
-
-    </div>
-
-    <div id="recipesList"></div>
-
+<h2>Recipe Setup</h2>
+<div class="grid">
+<div>
+<label>Item</label>
+<input type="text" id="recipeItem" placeholder="Item">
 </div>
-
+<div>
+<label>Base Quantity (kg)</label>
+<input type="number" id="recipeBaseKg" step="0.1">
+</div>
+<div>
+<label>Ingredients / Instructions</label>
+<textarea id="recipeText" placeholder="Rice, dal, water, fermentation etc."></textarea>
+</div>
+</div>
+<div class="actions">
+<button onclick="saveRecipe()">Add / Update Recipe</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Base KG</th>
+<th>Recipe</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="recipesBody"></tbody>
+</table>
+</div>
+</div>
+<div class="card">
+<h2>Backup & Restore</h2>
+<div class="notice">
+Backup contains Orders, Raw Materials, Prices and Recipes.
+Keep a backup before major changes or before clearing/importing orders.
+</div>
+<div class="actions">
+<button class="success" onclick="backupAllData()">
+Backup All Data
+</button>
+<label style="margin:0;flex:1">
+<input class="file-input" type="file" accept=".json,application/json" onchange="restoreAllData(this)">
+<button class="secondary" type="button"
+onclick="this.previousElementSibling.click()">
+Restore Backup
+</button>
+</label>
+<button class="light" onclick="exportAllCSVs()">
+Export All CSVs
+</button>
+</div>
+<div class="small" id="lastBackup"></div>
+</div>
 </section>
-
-</main>
-
-
+</div>
 <!-- ================= BOTTOM NAV ================= -->
-
-<nav class="bottomnav">
-
-    <button class="active"
-            data-tab="orders">
-
-        📋<br>
-        Orders
-
-    </button>
-
-    <button data-tab="raw">
-
-        💰<br>
-        Prices/Raw
-
-    </button>
-
-    <button data-tab="finance">
-
-        📊<br>
-        Finance
-
-    </button>
-
-    <button data-tab="prep">
-
-        🍚<br>
-        Prep
-
-    </button>
-
+<nav class="bottom-nav">
+<button class="active" onclick="showTab('ordersTab',this)">
+<span>📋</span>
+Orders
+</button>
+<button onclick="showTab('pricesTab',this)">
+<span>💰</span>
+Prices
+</button>
+<button onclick="showTab('financeTab',this)">
+<span>₹</span>
+Finance
+</button>
+<button onclick="showTab('prepTab',this)">
+<span>🍚</span>
+Preparation
+</button>
 </nav>
-
-
 <script>
-
-"use strict";
-
-
-/* =========================================
+/* =========================================================
    STORAGE
-========================================= */
-
-const KEYS = {
-
-    orders:"b_ord",
-
-    raws:"b_raw",
-
-    prices:"b_prc2",
-
-    recipes:"b_recipes"
-
-};
-
-
-let orders = load(
-    KEYS.orders,
-    []
-);
-
-
-let raws = load(
-    KEYS.raws,
-    []
-);
-
-
-let prices = load(
-    KEYS.prices,
-    [
-
-        {
-            name:"Idly / Dosa batter",
-            qty:1,
-            price:99
-        },
-
-        {
-            name:"Vada batter",
-            qty:1,
-            price:175
-        },
-
-        {
-            name:"Pesarettu batter",
-            qty:1,
-            price:159
-        }
-
-    ]
-);
-
-
-let recipes = load(
-    KEYS.recipes,
-    []
-);
-
-
-function load(key, defaultValue){
-
+========================================================= */
+const ORDERS_KEY = "b_ord";
+const RAW_KEY = "b_raw";
+const PRICE_KEY = "b_prc2";
+const RECIPE_KEY = "b_recipes";
+const LAST_BACKUP_KEY = "b_last_backup";
+let orders = loadJSON(ORDERS_KEY, []);
+let raws = loadJSON(RAW_KEY, []);
+let prices = loadJSON(PRICE_KEY, [
+    {
+        id: crypto.randomUUID(),
+        item: "Idly / Dosa batter",
+        qty: 0.5,
+        price: 59
+    },
+    {
+        id: crypto.randomUUID(),
+        item: "Idly / Dosa batter",
+        qty: 1,
+        price: 99
+    },
+    {
+        id: crypto.randomUUID(),
+        item: "Vada batter",
+        qty: 0.5,
+        price: 95
+    },
+    {
+        id: crypto.randomUUID(),
+        item: "Vada batter",
+        qty: 1,
+        price: 175
+    },
+    {
+        id: crypto.randomUUID(),
+        item: "Pesarettu batter",
+        qty: 0.5,
+        price: 89
+    },
+    {
+        id: crypto.randomUUID(),
+        item: "Pesarettu batter",
+        qty: 1,
+        price: 159
+    }
+]);
+let recipes = loadJSON(RECIPE_KEY, []);
+/* =========================================================
+   HELPERS
+========================================================= */
+function loadJSON(key, fallback){
     try{
-
-        return JSON.parse(
-            localStorage.getItem(key)
-        ) ?? defaultValue;
-
-    }catch(e){
-
-        return defaultValue;
-
-    }
-
-}
-
-
-function save(key,value){
-
-    localStorage.setItem(
-        key,
-        JSON.stringify(value)
-    );
-
-}
-
-
-function money(value){
-
-    return "₹" +
-        Number(value || 0).toFixed(0);
-
-}
-
-
-function esc(value){
-
-    return String(value ?? "")
-        .replace(
-            /[&<>"']/g,
-            function(match){
-
-                return {
-
-                    "&":"&amp;",
-                    "<":"&lt;",
-                    ">":"&gt;",
-                    '"':"&quot;",
-                    "'":"&#39;"
-
-                }[match];
-
-            }
-        );
-
-}
-
-
-function today(){
-
-    return new Date()
-        .toISOString()
-        .slice(0,10);
-
-}
-
-
-function uid(){
-
-    return Date.now().toString(36) +
-        Math.random()
-        .toString(36)
-        .slice(2,7);
-
-}
-
-
-/* =========================================
-   INITIAL VALUES
-========================================= */
-
-document.getElementById("oDate")
-    .value = today();
-
-document.getElementById("rDate")
-    .value = today();
-
-
-/* =========================================
-   ITEMS
-========================================= */
-
-function renderItems(){
-
-    const select =
-        document.getElementById("oItem");
-
-    if(!prices.length){
-
-        select.innerHTML =
-            "<option>No prices set</option>";
-
-        return;
-
-    }
-
-    select.innerHTML =
-        prices
-        .map(function(price){
-
-            return `
-                <option value="${esc(price.name)}">
-                    ${esc(price.name)}
-                </option>
-            `;
-
-        })
-        .join("");
-
-    updateOrderPrice();
-
-}
-
-
-function priceFor(item,qty){
-
-    const price =
-        prices.find(
-            function(x){
-                return x.name === item;
-            }
-        );
-
-    if(!price){
-
-        return 0;
-
-    }
-
-    return price.price *
-        (
-            Number(qty) /
-            Number(price.qty)
-        );
-
-}
-
-
-function updateOrderPrice(){
-
-    const item =
-        document.getElementById("oItem").value;
-
-    const qty =
-        document.getElementById("oQty").value;
-
-    document.getElementById("oPrice")
-        .value =
-        priceFor(item,qty)
-        .toFixed(0);
-
-}
-
-
-document.getElementById("oItem")
-    .onchange =
-    updateOrderPrice;
-
-
-document.getElementById("oQty")
-    .onchange =
-    updateOrderPrice;
-
-
-/* =========================================
-   ADD ORDER
-========================================= */
-
-function addOrder(){
-
-    const item =
-        document.getElementById("oItem").value;
-
-    const qty =
-        Number(
-            document.getElementById("oQty").value
-        );
-
-    if(!item || !prices.length){
-
-        alert(
-            "Please add a price first."
-        );
-
-        return;
-
-    }
-
-    orders.unshift({
-
-        id:uid(),
-
-        date:
-            document.getElementById("oDate")
-                .value || today(),
-
-        house:
-            document.getElementById("oHouse")
-                .value
-                .trim(),
-
-        item:item,
-
-        qty:qty,
-
-        price:
-            priceFor(item,qty),
-
-        notes:
-            document.getElementById("oNotes")
-                .value
-                .trim()
-
-    });
-
-
-    save(
-        KEYS.orders,
-        orders
-    );
-
-
-    document.getElementById("oHouse")
-        .value = "";
-
-    document.getElementById("oNotes")
-        .value = "";
-
-
-    renderAll();
-
-}
-
-
-/* =========================================
-   DELETE ORDER
-========================================= */
-
-function deleteOrder(id){
-
-    if(!confirm(
-        "Delete this order?"
-    )){
-
-        return;
-
-    }
-
-    orders =
-        orders.filter(
-            function(order){
-
-                return order.id !== id;
-
-            }
-        );
-
-    save(
-        KEYS.orders,
-        orders
-    );
-
-    renderAll();
-
-}
-
-
-/* =========================================
-   ORDERS TABLE
-========================================= */
-
-function renderOrders(){
-
-    const body =
-        document.getElementById(
-            "ordersBody"
-        );
-
-
-    if(!orders.length){
-
-        body.innerHTML = `
-            <tr>
-                <td colspan="6"
-                    class="empty">
-                    No orders yet.
-                </td>
-            </tr>
-        `;
-
-    }else{
-
-        body.innerHTML =
-            orders
-            .map(function(order){
-
-                return `
-                    <tr>
-
-                        <td>
-                            ${esc(order.date)}
-                        </td>
-
-                        <td>
-                            ${esc(order.house)}
-                        </td>
-
-                        <td>
-                            ${esc(order.item)}
-                        </td>
-
-                        <td>
-                            ${order.qty}
-                        </td>
-
-                        <td>
-                            ${money(order.price)}
-                        </td>
-
-                        <td>
-
-                            <button
-                                class="danger"
-                                onclick="deleteOrder('${order.id}')">
-
-                                Delete
-
-                            </button>
-
-                        </td>
-
-                    </tr>
-                `;
-
-            })
-            .join("");
-
-    }
-
-
-    const total =
-        orders.reduce(
-            function(sum,order){
-
-                return sum +
-                    Number(order.price || 0);
-
-            },
-            0
-        );
-
-
-    const quantity =
-        orders.reduce(
-            function(sum,order){
-
-                return sum +
-                    Number(order.qty || 0);
-
-            },
-            0
-        );
-
-
-    document.getElementById("orderStats")
-        .innerHTML = `
-
-            <div class="stat">
-
-                <span class="muted">
-                    Orders
-                </span>
-
-                <b>
-                    ${orders.length}
-                </b>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="muted">
-                    Qty
-                </span>
-
-                <b>
-                    ${quantity.toFixed(1)} kg
-                </b>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="muted">
-                    Sales
-                </span>
-
-                <b>
-                    ${money(total)}
-                </b>
-
-            </div>
-
-        `;
-
-}
-
-
-/* =========================================
-   PRICE SETUP
-========================================= */
-
-function savePrice(){
-
-    const name =
-        document.getElementById("pName")
-            .value
-            .trim();
-
-    const qty =
-        Number(
-            document.getElementById("pQty")
-                .value
-        );
-
-    const price =
-        Number(
-            document.getElementById("pPrice")
-                .value
-        );
-
-
-    if(!name || !qty || !price){
-
-        alert(
-            "Enter item, quantity and price."
-        );
-
-        return;
-
-    }
-
-
-    const index =
-        prices.findIndex(
-            function(x){
-
-                return x.name.toLowerCase() ===
-                    name.toLowerCase();
-
-            }
-        );
-
-
-    const object = {
-
-        name:name,
-
-        qty:qty,
-
-        price:price
-
-    };
-
-
-    if(index >= 0){
-
-        prices[index] = object;
-
-    }else{
-
-        prices.push(object);
-
-    }
-
-
-    save(
-        KEYS.prices,
-        prices
-    );
-
-
-    document.getElementById("pName")
-        .value = "";
-
-    document.getElementById("pPrice")
-        .value = "";
-
-
-    renderAll();
-
-}
-
-
-function deletePrice(index){
-
-    if(!confirm(
-        "Delete this price?"
-    )){
-
-        return;
-
-    }
-
-    prices.splice(
-        index,
-        1
-    );
-
-    save(
-        KEYS.prices,
-        prices
-    );
-
-    renderAll();
-
-}
-
-
-function renderPrices(){
-
-    const body =
-        document.getElementById(
-            "pricesBody"
-        );
-
-
-    if(!prices.length){
-
-        body.innerHTML = `
-            <tr>
-                <td colspan="4"
-                    class="empty">
-                    No prices set.
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        prices
-        .map(function(price,index){
-
-            return `
-
-                <tr>
-
-                    <td>
-                        ${esc(price.name)}
-                    </td>
-
-                    <td>
-                        ${price.qty} kg
-                    </td>
-
-                    <td>
-                        ${money(price.price)}
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="danger"
-                            onclick="deletePrice(${index})">
-
-                            Delete
-
-                        </button>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        })
-        .join("");
-
-}
-
-
-/* =========================================
-   RAW MATERIALS
-========================================= */
-
-function addRaw(){
-
-    const date =
-        document.getElementById("rDate")
-            .value || today();
-
-    const material =
-        document.getElementById("rMat")
-            .value
-            .trim();
-
-    const quantity =
-        Number(
-            document.getElementById("rQty")
-                .value
-        );
-
-    const unit =
-        document.getElementById("rUnit")
-            .value;
-
-    const paid =
-        Number(
-            document.getElementById("rPaid")
-                .value
-        );
-
-
-    if(!material ||
-       !quantity ||
-       paid < 0){
-
-        alert(
-            "Enter material, quantity and amount."
-        );
-
-        return;
-
-    }
-
-
-    const kg =
-        unit === "g"
-            ? quantity / 1000
-            : quantity;
-
-
-    raws.unshift({
-
-        id:uid(),
-
-        date:date,
-
-        mat:material,
-
-        qty:quantity,
-
-        unit:unit,
-
-        kg:kg,
-
-        paid:paid,
-
-        cost:
-            kg
-                ? paid / kg
-                : 0
-
-    });
-
-
-    save(
-        KEYS.raws,
-        raws
-    );
-
-
-    document.getElementById("rMat")
-        .value = "";
-
-    document.getElementById("rQty")
-        .value = "";
-
-    document.getElementById("rPaid")
-        .value = "";
-
-
-    renderAll();
-
-}
-
-
-function updateRawCost(){
-
-    const quantity =
-        Number(
-            document.getElementById("rQty")
-                .value
-        );
-
-    const paid =
-        Number(
-            document.getElementById("rPaid")
-                .value
-        );
-
-
-    const unit =
-        document.getElementById("rUnit")
-            .value;
-
-
-    const kg =
-        unit === "g"
-            ? quantity / 1000
-            : quantity;
-
-
-    document.getElementById("rCost")
-        .value =
-        kg
-            ? (paid / kg).toFixed(2)
-            : "";
-
-}
-
-
-document.getElementById("rQty")
-    .oninput =
-    updateRawCost;
-
-
-document.getElementById("rPaid")
-    .oninput =
-    updateRawCost;
-
-
-document.getElementById("rUnit")
-    .onchange =
-    updateRawCost;
-
-
-function deleteRaw(id){
-
-    if(!confirm(
-        "Delete this purchase?"
-    )){
-
-        return;
-
-    }
-
-    raws =
-        raws.filter(
-            function(raw){
-
-                return raw.id !== id;
-
-            }
-        );
-
-
-    save(
-        KEYS.raws,
-        raws
-    );
-
-
-    renderAll();
-
-}
-
-
-function renderRaw(){
-
-    const body =
-        document.getElementById(
-            "rawBody"
-        );
-
-
-    if(!raws.length){
-
-        body.innerHTML = `
-            <tr>
-                <td colspan="6"
-                    class="empty">
-
-                    No purchases yet.
-
-                </td>
-            </tr>
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        raws
-        .map(function(raw){
-
-            return `
-
-                <tr>
-
-                    <td>
-                        ${esc(raw.date)}
-                    </td>
-
-                    <td>
-                        ${esc(raw.mat)}
-                    </td>
-
-                    <td>
-                        ${raw.qty}
-                        ${raw.unit}
-                    </td>
-
-                    <td>
-                        ${money(raw.paid)}
-                    </td>
-
-                    <td>
-                        ₹${Number(
-                            raw.cost || 0
-                        ).toFixed(2)}
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="danger"
-                            onclick="deleteRaw('${raw.id}')">
-
-                            Delete
-
-                        </button>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        })
-        .join("");
-
-}
-
-
-/* =========================================
-   FINANCE
-========================================= */
-
-function renderFinance(){
-
-    const earned =
-        orders.reduce(
-            function(sum,order){
-
-                return sum +
-                    Number(order.price || 0);
-
-            },
-            0
-        );
-
-
-    const spent =
-        raws.reduce(
-            function(sum,raw){
-
-                return sum +
-                    Number(raw.paid || 0);
-
-            },
-            0
-        );
-
-
-    const balance =
-        earned - spent;
-
-
-    document.getElementById(
-        "financeStats"
-    ).innerHTML = `
-
-        <div class="stat">
-
-            <span class="muted">
-                Earned
-            </span>
-
-            <b>
-                ${money(earned)}
-            </b>
-
-        </div>
-
-
-        <div class="stat">
-
-            <span class="muted">
-                Spent
-            </span>
-
-            <b>
-                ${money(spent)}
-            </b>
-
-        </div>
-
-
-        <div class="stat">
-
-            <span class="muted">
-                Balance
-            </span>
-
-            <b>
-                ${
-                    balance < 0
-                        ? "-₹"
-                        : "₹"
-                }${Math.abs(balance).toFixed(0)}
-            </b>
-
-        </div>
-
-    `;
-
-
-    const last =
-        localStorage.getItem(
-            "b_last_backup"
-        );
-
-
-    document.getElementById(
-        "backupInfo"
-    ).textContent = last
-        ? "Last backup: " +
-          new Date(last)
-            .toLocaleString()
-        : "No backup recorded yet.";
-
-}
-
-
-/* =========================================
-   PREP / RECIPES
-========================================= */
-
-function renderPrep(){
-
-    const grouped = {};
-
-
-    orders.forEach(
-        function(order){
-
-            grouped[order.item] =
-                (
-                    grouped[order.item] || 0
-                ) +
-                Number(order.qty || 0);
-
+        const value = localStorage.getItem(key);
+        if(!value){
+            return fallback;
         }
-    );
-
-
-    const names =
-        Object.keys(grouped);
-
-
-    if(!names.length){
-
-        document.getElementById(
-            "prepList"
-        ).innerHTML = `
-
-            <div class="empty">
-
-                No orders to prepare.
-
-            </div>
-
-        `;
-
-    }else{
-
-        document.getElementById(
-            "prepList"
-        ).innerHTML =
-            names
-            .map(function(name){
-
-                const recipe =
-                    recipes.find(
-                        function(item){
-
-                            return item.name ===
-                                name;
-
-                        }
-                    );
-
-
-                const text =
-                    recipe
-                        ? scaleRecipe(
-                            recipe,
-                            grouped[name]
-                        )
-                        : "No recipe saved for this item.";
-
-
-                return `
-
-                    <div class="card"
-                         style="margin:0 0 8px">
-
-                        <b>
-                            ${esc(name)}
-                        </b>
-
-                        <div class="muted">
-
-                            Total order qty:
-                            ${grouped[name].toFixed(1)}
-                            kg
-
-                        </div>
-
-                        <pre>
-${esc(text)}
-                        </pre>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
-
+        return JSON.parse(value);
+    }catch(e){
+        return fallback;
     }
-
-
-    const recipeContainer =
-        document.getElementById(
-            "recipesList"
-        );
-
-
-    if(!recipes.length){
-
-        recipeContainer.innerHTML = `
-
-            <div class="empty">
-
-                No recipes saved.
-
-            </div>
-
-        `;
-
-    }else{
-
-        recipeContainer.innerHTML =
-            recipes
-            .map(function(recipe,index){
-
-                return `
-
-                    <div class="card"
-                         style="margin:8px 0">
-
-                        <b>
-                            ${esc(recipe.name)}
-                        </b>
-
-                        <div class="muted">
-
-                            Base:
-                            ${recipe.base}
-                            kg
-
-                        </div>
-
-                        <pre>
-${esc(recipe.text)}
-                        </pre>
-
-                        <button
-                            class="danger"
-                            onclick="deleteRecipe(${index})">
-
-                            Delete
-
-                        </button>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
-
-    }
-
 }
-
-
-function scaleRecipe(recipe,total){
-
-    const factor =
-        total /
-        Number(recipe.base || 1);
-
-
-    return `
-Scale factor: ${factor.toFixed(2)}×
-
-${recipe.text}
-`;
-
+function saveAll(){
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+    localStorage.setItem(RAW_KEY, JSON.stringify(raws));
+    localStorage.setItem(PRICE_KEY, JSON.stringify(prices));
+    localStorage.setItem(RECIPE_KEY, JSON.stringify(recipes));
 }
-
-
-function saveRecipe(){
-
-    const name =
-        document.getElementById("recName")
-            .value
-            .trim();
-
-    const base =
-        Number(
-            document.getElementById("recBase")
-                .value
-        );
-
-    const text =
-        document.getElementById("recText")
-            .value
-            .trim();
-
-
-    if(!name || !base || !text){
-
-        alert(
-            "Enter recipe details."
-        );
-
-        return;
-
-    }
-
-
-    const index =
-        recipes.findIndex(
-            function(recipe){
-
-                return recipe.name.toLowerCase() ===
-                    name.toLowerCase();
-
-            }
-        );
-
-
-    const object = {
-
-        name:name,
-
-        base:base,
-
-        text:text
-
-    };
-
-
-    if(index >= 0){
-
-        recipes[index] = object;
-
-    }else{
-
-        recipes.push(object);
-
-    }
-
-
-    save(
-        KEYS.recipes,
-        recipes
+function esc(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+function today(){
+    const d = new Date();
+    const month = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${d.getFullYear()}-${month}-${day}`;
+}
+function money(value){
+    return "₹" + Number(value || 0).toFixed(0);
+}
+function getPrice(item, qty){
+    const exact = prices.find(p =>
+        p.item === item &&
+        Number(p.qty) === Number(qty)
     );
-
-
-    document.getElementById("recName")
-        .value = "";
-
-    document.getElementById("recText")
-        .value = "";
-
-
+    if(exact){
+        return Number(exact.price);
+    }
+    /*
+      For quantities such as 1.5kg and 2kg:
+      use the 1kg price proportionally if available.
+    */
+    const oneKg = prices.find(p =>
+        p.item === item &&
+        Number(p.qty) === 1
+    );
+    if(oneKg){
+        return Number(oneKg.price) * Number(qty);
+    }
+    return 0;
+}
+/* =========================================================
+   INITIALIZE
+========================================================= */
+document.addEventListener("DOMContentLoaded", function(){
+    document.getElementById("orderDate").value = today();
+    document.getElementById("ordersViewDate").value = today();
+    document.getElementById("rawDate").value = today();
+    document.getElementById("prepDate").value = today();
     renderAll();
-
+});
+function renderAll(){
+    populateItemSelectors();
+    updateOrderPrice();
+    renderOrders();
+    renderPrices();
+    renderPriceList();
+    renderRaw();
+    renderFinance();
+    renderPrep();
+    renderRecipes();
+    renderLastBackup();
 }
-
-
-function deleteRecipe(index){
-
-    if(!confirm(
-        "Delete this recipe?"
-    )){
-
-        return;
-
+/* =========================================================
+   TABS
+========================================================= */
+function showTab(tabId, button){
+    document.querySelectorAll(".tab").forEach(tab =>
+        tab.classList.remove("active")
+    );
+    document.getElementById(tabId).classList.add("active");
+    document.querySelectorAll(".bottom-nav button").forEach(btn =>
+        btn.classList.remove("active")
+    );
+    button.classList.add("active");
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+/* =========================================================
+   ITEMS / PRICE
+========================================================= */
+function getItems(){
+    return [...new Set(
+        prices
+            .map(p => p.item)
+            .filter(Boolean)
+    )].sort();
+}
+function populateItemSelectors(){
+    const items = getItems();
+    const orderItem = document.getElementById("orderItem");
+    const filter = document.getElementById("ordersFilterItem");
+    const currentOrder = orderItem.value;
+    const currentFilter = filter.value;
+    orderItem.innerHTML = items.map(item =>
+        `<option value="${esc(item)}">${esc(item)}</option>`
+    ).join("");
+    filter.innerHTML =
+        `<option value="">All Items</option>` +
+        items.map(item =>
+            `<option value="${esc(item)}">${esc(item)}</option>`
+        ).join("");
+    if(items.includes(currentOrder)){
+        orderItem.value = currentOrder;
     }
-
-
-    recipes.splice(
-        index,
-        1
-    );
-
-
-    save(
-        KEYS.recipes,
-        recipes
-    );
-
-
+    if(items.includes(currentFilter)){
+        filter.value = currentFilter;
+    }
+}
+document.getElementById("orderItem").addEventListener("change",updateOrderPrice);
+document.getElementById("orderQty").addEventListener("change",updateOrderPrice);
+function updateOrderPrice(){
+    const item = document.getElementById("orderItem").value;
+    const qty = Number(document.getElementById("orderQty").value);
+    document.getElementById("orderPrice").value =
+        getPrice(item,qty);
+}
+/* =========================================================
+   ADD ORDER
+========================================================= */
+function addOrder(){
+    const date = document.getElementById("orderDate").value;
+    const customer = document.getElementById("orderCustomer").value.trim();
+    const item = document.getElementById("orderItem").value;
+    const qty = Number(document.getElementById("orderQty").value);
+    const price = Number(document.getElementById("orderPrice").value);
+    const notes = document.getElementById("orderNotes").value.trim();
+    if(!date){
+        alert("Please select order date.");
+        return;
+    }
+    if(!customer){
+        alert("Please enter customer / house.");
+        return;
+    }
+    if(!item){
+        alert("Please select item.");
+        return;
+    }
+    orders.push({
+        id: crypto.randomUUID(),
+        date,
+        customer,
+        item,
+        qty,
+        price,
+        notes,
+        createdAt:new Date().toISOString()
+    });
+    saveAll();
+    document.getElementById("orderCustomer").value = "";
+    document.getElementById("orderNotes").value = "";
     renderAll();
-
+    alert("Order added successfully.");
 }
-
-
-/* =========================================
-   CSV
-========================================= */
-
-function csvEscape(value){
-
-    return '"' +
-        String(value ?? "")
-            .replace(/"/g,'""') +
-        '"';
-
-}
-
-
-function makeCSV(rows){
-
-    return rows
-        .map(
-            function(row){
-
-                return row
-                    .map(csvEscape)
-                    .join(",");
-
-            }
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
+function renderOrders(){
+    const date = document.getElementById("ordersViewDate").value;
+    const filterItem = document.getElementById("ordersFilterItem").value;
+    let list = orders.filter(o => {
+        if(date && o.date !== date){
+            return false;
+        }
+        if(filterItem && o.item !== filterItem){
+            return false;
+        }
+        return true;
+    });
+    list.sort((a,b) =>
+        String(a.createdAt || "").localeCompare(
+            String(b.createdAt || "")
         )
-        .join("\r\n");
-
+    );
+    const body = document.getElementById("ordersBody");
+    if(!list.length){
+        body.innerHTML =
+            `<tr><td colspan="7" class="empty">No orders found.</td></tr>`;
+    }else{
+        body.innerHTML = list.map(o => `
+        <tr>
+        <td>${esc(o.date)}</td>
+        <td>${esc(o.customer)}</td>
+        <td>${esc(o.item)}</td>
+        <td>${Number(o.qty).toFixed(2).replace(/\.00$/,"")} kg</td>
+        <td>${money(o.price)}</td>
+        <td>${esc(o.notes || "")}</td>
+        <td>
+        <button class="danger" onclick="deleteOrder('${o.id}')">
+        Delete
+        </button>
+        </td>
+        </tr>
+        `).join("");
+    }
+    const totalKg = list.reduce(
+        (sum,o)=>sum + Number(o.qty || 0),
+        0
+    );
+    const revenue = list.reduce(
+        (sum,o)=>sum + Number(o.price || 0),
+        0
+    );
+    document.getElementById("orderCount").textContent = list.length;
+    document.getElementById("orderKg").textContent =
+        totalKg.toFixed(2).replace(/\.00$/,"");
+    document.getElementById("orderRevenue").textContent =
+        money(revenue);
 }
-
-
-function download(
-    filename,
-    text,
-    type="text/plain"
-){
-
-    const blob =
-        new Blob(
-            [text],
-            {
-                type:
-                    type +
-                    ";charset=utf-8"
-            }
+function deleteOrder(id){
+    if(!confirm("Delete this order?")){
+        return;
+    }
+    orders = orders.filter(o => o.id !== id);
+    saveAll();
+    renderAll();
+}
+/* =========================================================
+   CLEAR ALL ORDERS
+========================================================= */
+function clearAllOrders(){
+    if(!orders.length){
+        alert("There are no orders to clear.");
+        return;
+    }
+    const confirmed = confirm(
+        "Are you sure you want to DELETE ALL ORDERS?\n\n" +
+        "This will remove all order records from this device.\n\n" +
+        "Prices, Raw Materials and Recipes will NOT be deleted.\n\n" +
+        "Please make a Backup first if you may need these orders later."
+    );
+    if(!confirmed){
+        return;
+    }
+    const secondConfirm = confirm(
+        "FINAL CONFIRMATION\n\n" +
+        "Delete ALL " + orders.length + " orders?"
+    );
+    if(!secondConfirm){
+        return;
+    }
+    orders = [];
+    saveAll();
+    renderAll();
+    alert("All orders have been cleared.");
+}
+/* =========================================================
+   PRICE SETUP
+========================================================= */
+function savePrice(){
+    const item = document.getElementById("priceItem").value.trim();
+    const qty = Number(document.getElementById("priceQty").value);
+    const price = Number(document.getElementById("priceValue").value);
+    if(!item){
+        alert("Please enter item.");
+        return;
+    }
+    if(!price || price < 0){
+        alert("Please enter a valid price.");
+        return;
+    }
+    const existing = prices.find(p =>
+        p.item.toLowerCase() === item.toLowerCase() &&
+        Number(p.qty) === qty
+    );
+    if(existing){
+        existing.item = item;
+        existing.price = price;
+    }else{
+        prices.push({
+            id:crypto.randomUUID(),
+            item,
+            qty,
+            price
+        });
+    }
+    saveAll();
+    document.getElementById("priceItem").value = "";
+    document.getElementById("priceValue").value = "";
+    renderAll();
+}
+function editPrice(id){
+    const p = prices.find(x => x.id === id);
+    if(!p){
+        return;
+    }
+    document.getElementById("priceItem").value = p.item;
+    document.getElementById("priceQty").value = p.qty;
+    document.getElementById("priceValue").value = p.price;
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+function deletePrice(id){
+    if(!confirm("Delete this price entry?")){
+        return;
+    }
+    prices = prices.filter(p => p.id !== id);
+    saveAll();
+    renderAll();
+}
+function renderPrices(){
+    const body = document.getElementById("pricesBody");
+    const list = [...prices].sort((a,b)=>{
+        const itemCompare =
+            a.item.localeCompare(b.item);
+        if(itemCompare !== 0){
+            return itemCompare;
+        }
+        return Number(a.qty)-Number(b.qty);
+    });
+    if(!list.length){
+        body.innerHTML =
+            `<tr><td colspan="4" class="empty">No prices configured.</td></tr>`;
+        return;
+    }
+    body.innerHTML = list.map(p => `
+    <tr>
+    <td>${esc(p.item)}</td>
+    <td>${Number(p.qty)} kg</td>
+    <td>${money(p.price)}</td>
+    <td>
+    <button class="light"
+    onclick="editPrice('${p.id}')">
+    Edit
+    </button>
+    <button class="danger"
+    onclick="deletePrice('${p.id}')">
+    Delete
+    </button>
+    </td>
+    </tr>
+    `).join("");
+}
+/* =========================================================
+   PRICE LIST
+========================================================= */
+function renderPriceList(){
+    const items = getItems();
+    const body = document.getElementById("priceListBody");
+    body.innerHTML = items.map(item => {
+        const half = prices.find(p =>
+            p.item === item &&
+            Number(p.qty) === 0.5
         );
-
-
-    const url =
-        URL.createObjectURL(blob);
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href = url;
-
-    link.download = filename;
-
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-
-    setTimeout(
-        function(){
-
-            URL.revokeObjectURL(url);
-
-        },
+        const one = prices.find(p =>
+            p.item === item &&
+            Number(p.qty) === 1
+        );
+        return `
+        <tr>
+        <td><strong>${esc(item)}</strong></td>
+        <td>${half ? money(half.price) : "-"}</td>
+        <td>${one ? money(one.price) : "-"}</td>
+        </tr>
+        `;
+    }).join("");
+}
+/* =========================================================
+   RAW MATERIALS
+========================================================= */
+function addRaw(){
+    const date = document.getElementById("rawDate").value;
+    const material = document.getElementById("rawMaterial").value.trim();
+    const qty = Number(document.getElementById("rawQty").value);
+    const unit = document.getElementById("rawUnit").value;
+    const paid = Number(document.getElementById("rawPaid").value);
+    if(!date || !material || !qty || !paid){
+        alert("Please enter all purchase details.");
+        return;
+    }
+    const kg =
+        unit === "g"
+        ? qty / 1000
+        : qty;
+    raws.push({
+        id:crypto.randomUUID(),
+        date,
+        material,
+        qty,
+        unit,
+        paid,
+        kg,
+        costPerKg: paid / kg
+    });
+    saveAll();
+    document.getElementById("rawMaterial").value = "";
+    document.getElementById("rawQty").value = "";
+    document.getElementById("rawPaid").value = "";
+    renderAll();
+}
+function deleteRaw(id){
+    if(!confirm("Delete this purchase?")){
+        return;
+    }
+    raws = raws.filter(r => r.id !== id);
+    saveAll();
+    renderAll();
+}
+function renderRaw(){
+    const body = document.getElementById("rawBody");
+    if(!raws.length){
+        body.innerHTML =
+            `<tr><td colspan="6" class="empty">No purchases recorded.</td></tr>`;
+        return;
+    }
+    const list = [...raws].sort((a,b) =>
+        String(b.date).localeCompare(String(a.date))
+    );
+    body.innerHTML = list.map(r => `
+    <tr>
+    <td>${esc(r.date)}</td>
+    <td>${esc(r.material)}</td>
+    <td>${r.qty} ${esc(r.unit)}</td>
+    <td>${money(r.paid)}</td>
+    <td>${money(r.costPerKg)}</td>
+    <td>
+    <button class="danger"
+    onclick="deleteRaw('${r.id}')">
+    Delete
+    </button>
+    </td>
+    </tr>
+    `).join("");
+}
+/* =========================================================
+   FINANCE
+========================================================= */
+function renderFinance(){
+    const earned = orders.reduce(
+        (sum,o)=>sum + Number(o.price || 0),
+        0
+    );
+    const spent = raws.reduce(
+        (sum,r)=>sum + Number(r.paid || 0),
+        0
+    );
+    const balance = earned - spent;
+    document.getElementById("financeEarned").textContent =
+        money(earned);
+    document.getElementById("financeSpent").textContent =
+        money(spent);
+    document.getElementById("financeBalance").textContent =
+        money(balance);
+}
+/* =========================================================
+   PREPARATION LIST
+========================================================= */
+function renderPrep(){
+    const date = document.getElementById("prepDate").value;
+    const list = orders.filter(o =>
+        !date || o.date === date
+    );
+    /*
+      Combine all orders having the same item.
+      Example:
+      Customer A -> Idly/Dosa -> 1kg
+      Customer B -> Idly/Dosa -> 0.5kg
+      Customer C -> Idly/Dosa -> 1kg
+      Result:
+      Idly/Dosa -> 2.5kg
+    */
+    const grouped = {};
+    list.forEach(o => {
+        const item = o.item;
+        if(!grouped[item]){
+            grouped[item] = 0;
+        }
+        grouped[item] += Number(o.qty || 0);
+    });
+    const body = document.getElementById("prepBody");
+    const items = Object.keys(grouped).sort();
+    if(!items.length){
+        body.innerHTML =
+            `<tr><td colspan="2" class="empty">
+            No orders for this date.
+            </td></tr>`;
+        return;
+    }
+    body.innerHTML = items.map(item => `
+    <tr>
+    <td>
+    <strong>${esc(item)}</strong>
+    </td>
+    <td>
+    <strong>
+    ${formatKg(grouped[item])}
+    </strong>
+    </td>
+    </tr>
+    `).join("");
+}
+function formatKg(value){
+    return Number(value)
+        .toFixed(2)
+        .replace(/\.00$/,"")
+        .replace(/(\.\d)0$/,"$1")
+        + " kg";
+}
+/* =========================================================
+   RECIPES
+========================================================= */
+function saveRecipe(){
+    const item = document.getElementById("recipeItem").value.trim();
+    const baseKg = Number(document.getElementById("recipeBaseKg").value);
+    const text = document.getElementById("recipeText").value.trim();
+    if(!item){
+        alert("Please enter recipe item.");
+        return;
+    }
+    const existing = recipes.find(r =>
+        r.item.toLowerCase() === item.toLowerCase()
+    );
+    if(existing){
+        existing.item = item;
+        existing.baseKg = baseKg;
+        existing.text = text;
+    }else{
+        recipes.push({
+            id:crypto.randomUUID(),
+            item,
+            baseKg,
+            text
+        });
+    }
+    saveAll();
+    document.getElementById("recipeItem").value = "";
+    document.getElementById("recipeBaseKg").value = "";
+    document.getElementById("recipeText").value = "";
+    renderRecipes();
+}
+function editRecipe(id){
+    const r = recipes.find(x => x.id === id);
+    if(!r){
+        return;
+    }
+    document.getElementById("recipeItem").value = r.item;
+    document.getElementById("recipeBaseKg").value = r.baseKg;
+    document.getElementById("recipeText").value = r.text;
+}
+function deleteRecipe(id){
+    if(!confirm("Delete this recipe?")){
+        return;
+    }
+    recipes = recipes.filter(r => r.id !== id);
+    saveAll();
+    renderRecipes();
+}
+function renderRecipes(){
+    const body = document.getElementById("recipesBody");
+    if(!recipes.length){
+        body.innerHTML =
+            `<tr><td colspan="4" class="empty">No recipes configured.</td></tr>`;
+        return;
+    }
+    body.innerHTML = recipes.map(r => `
+    <tr>
+    <td>${esc(r.item)}</td>
+    <td>${esc(r.baseKg)}</td>
+    <td>${esc(r.text)}</td>
+    <td>
+    <button class="light"
+    onclick="editRecipe('${r.id}')">
+    Edit
+    </button>
+    <button class="danger"
+    onclick="deleteRecipe('${r.id}')">
+    Delete
+    </button>
+    </td>
+    </tr>
+    `).join("");
+}
+/* =========================================================
+   CSV HELPERS
+========================================================= */
+function csvEscape(value){
+    const str = String(value ?? "");
+    if(
+        str.includes(",") ||
+        str.includes('"') ||
+        str.includes("\n")
+    ){
+        return '"' +
+            str.replace(/"/g,'""') +
+            '"';
+    }
+    return str;
+}
+function downloadText(filename,text,type){
+    const blob = new Blob(
+        [text],
+        {type}
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() =>
+        URL.revokeObjectURL(url),
         1000
     );
-
 }
-
-
-/* =========================================
-   EXPORT ORDERS CSV
-========================================= */
-
-function exportOrdersCSV(){
-
-    const rows = [
-
-        [
-            "Date",
-            "House",
-            "Item",
-            "Qty kg",
-            "Price",
-            "Notes"
-        ]
-
-    ];
-
-
-    orders.forEach(
-        function(order){
-
-            rows.push([
-
-                order.date,
-
-                order.house,
-
-                order.item,
-
-                order.qty,
-
-                order.price,
-
-                order.notes
-
-            ]);
-
-        }
-    );
-
-
-    download(
-        "orders.csv",
-        makeCSV(rows),
-        "text/csv"
-    );
-
-}
-
-
-/* =========================================
-   EXPORT RAW CSV
-========================================= */
-
-function exportRawCSV(){
-
-    const rows = [
-
-        [
-            "Date",
-            "Material",
-            "Quantity",
-            "Unit",
-            "Kg",
-            "Paid",
-            "Cost per kg"
-        ]
-
-    ];
-
-
-    raws.forEach(
-        function(raw){
-
-            rows.push([
-
-                raw.date,
-
-                raw.mat,
-
-                raw.qty,
-
-                raw.unit,
-
-                raw.kg,
-
-                raw.paid,
-
-                raw.cost
-
-            ]);
-
-        }
-    );
-
-
-    download(
-        "raw-materials.csv",
-        makeCSV(rows),
-        "text/csv"
-    );
-
-}
-
-
-/* =========================================
-   EXPORT ALL CSV
-========================================= */
-
-function exportAllCSVs(){
-
-    exportOrdersCSV();
-
-    setTimeout(
-        function(){
-
-            exportRawCSV();
-
-        },
-        500
-    );
-
-}
-
-
-/* =========================================
+/* =========================================================
    CSV PARSER
-========================================= */
-
+========================================================= */
 function parseCSV(text){
-
     const rows = [];
-
     let row = [];
-
     let cell = "";
-
-    let quoted = false;
-
-
-    for(
-        let i=0;
-        i<text.length;
-        i++
-    ){
-
-        const character =
-            text[i];
-
-        const next =
-            text[i+1];
-
-
-        if(character === '"'){
-
-            if(
-                quoted &&
-                next === '"'
-            ){
-
-                cell += '"';
-
-                i++;
-
-            }else{
-
-                quoted = !quoted;
-
-            }
-
-        }
-
-        else if(
-            character === "," &&
-            !quoted
-        ){
-
+    let inQuotes = false;
+    for(let i=0;i<text.length;i++){
+        const char = text[i];
+        const next = text[i+1];
+        if(char === '"' && inQuotes && next === '"'){
+            cell += '"';
+            i++;
+        }else if(char === '"'){
+            inQuotes = !inQuotes;
+        }else if(char === "," && !inQuotes){
             row.push(cell);
-
             cell = "";
-
-        }
-
-        else if(
-            (
-                character === "\n" ||
-                character === "\r"
-            ) &&
-            !quoted
+        }else if(
+            (char === "\n" || char === "\r") &&
+            !inQuotes
         ){
-
-            if(
-                character === "\r" &&
-                next === "\n"
-            ){
-
+            if(char === "\r" && next === "\n"){
                 i++;
-
             }
-
-
             row.push(cell);
-
-
-            if(
-                row.some(
-                    function(x){
-                        return x !== "";
-                    }
-                )
-            ){
-
+            if(row.some(v => v !== "")){
                 rows.push(row);
-
             }
-
-
             row = [];
-
             cell = "";
-
+        }else{
+            cell += char;
         }
-
-        else{
-
-            cell += character;
-
-        }
-
     }
-
-
-    if(
-        cell !== "" ||
-        row.length
-    ){
-
-        row.push(cell);
-
+    row.push(cell);
+    if(row.some(v => v !== "")){
         rows.push(row);
-
     }
-
-
     return rows;
-
 }
-
-
-/* =========================================
-   IMPORT ORDERS CSV
-========================================= */
-
+/* =========================================================
+   ORDERS CSV
+========================================================= */
+function exportOrdersCSV(){
+    const header = [
+        "Date",
+        "Customer",
+        "Item",
+        "Quantity",
+        "Price",
+        "Notes"
+    ];
+    const lines = [
+        header.map(csvEscape).join(",")
+    ];
+    orders.forEach(o => {
+        lines.push([
+            o.date,
+            o.customer,
+            o.item,
+            o.qty,
+            o.price,
+            o.notes || ""
+        ].map(csvEscape).join(","));
+    });
+    downloadText(
+        "orders.csv",
+        lines.join("\n"),
+        "text/csv;charset=utf-8"
+    );
+}
 function importOrdersCSV(input){
-
-    const file =
-        input.files[0];
-
-
+    const file = input.files[0];
     if(!file){
-
         return;
-
     }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(){
-
-            const rows =
-                parseCSV(
-                    reader.result
-                )
-                .slice(1);
-
-
-            orders =
-                rows
-                .filter(
-                    function(row){
-
-                        return row.length >= 5;
-
-                    }
-                )
-                .map(
-                    function(row){
-
-                        return {
-
-                            id:uid(),
-
-                            date:
-                                row[0] ||
-                                today(),
-
-                            house:
-                                row[1] || "",
-
-                            item:
-                                row[2] || "",
-
-                            qty:
-                                Number(row[3]) || 0,
-
-                            price:
-                                Number(row[4]) || 0,
-
-                            notes:
-                                row[5] || ""
-
-                        };
-
-                    }
-                );
-
-
-            save(
-                KEYS.orders,
-                orders
-            );
-
-
+    const reader = new FileReader();
+    reader.onload = function(){
+        try{
+            const rows = parseCSV(reader.result);
+            if(rows.length < 2){
+                alert("CSV contains no orders.");
+                return;
+            }
+            const imported = [];
+            for(let i=1;i<rows.length;i++){
+                const r = rows[i];
+                if(!r.length){
+                    continue;
+                }
+                const date = r[0]?.trim();
+                const customer = r[1]?.trim();
+                const item = r[2]?.trim();
+                const qty = Number(r[3]);
+                const price = Number(r[4]);
+                const notes = r[5]?.trim() || "";
+                if(!date || !customer || !item || !qty){
+                    continue;
+                }
+                imported.push({
+                    id:crypto.randomUUID(),
+                    date,
+                    customer,
+                    item,
+                    qty,
+                    price,
+                    notes,
+                    createdAt:new Date().toISOString()
+                });
+            }
+            if(!imported.length){
+                alert("No valid orders found in CSV.");
+                return;
+            }
+            /*
+              Import ADDS records to existing orders.
+              Use Clear All Orders first if you want
+              the CSV to replace the existing order list.
+            */
+            orders.push(...imported);
+            saveAll();
             renderAll();
-
-            input.value = "";
-
-        };
-
-
-    reader.readAsText(file);
-
-}
-
-
-/* =========================================
-   IMPORT RAW CSV
-========================================= */
-
-function importRawCSV(input){
-
-    const file =
-        input.files[0];
-
-
-    if(!file){
-
-        return;
-
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(){
-
-            const rows =
-                parseCSV(
-                    reader.result
-                )
-                .slice(1);
-
-
-            raws =
-                rows
-                .filter(
-                    function(row){
-
-                        return row.length >= 6;
-
-                    }
-                )
-                .map(
-                    function(row){
-
-                        return {
-
-                            id:uid(),
-
-                            date:
-                                row[0] ||
-                                today(),
-
-                            mat:
-                                row[1] || "",
-
-                            qty:
-                                Number(row[2]) || 0,
-
-                            unit:
-                                row[3] || "kg",
-
-                            kg:
-                                Number(row[4]) || 0,
-
-                            paid:
-                                Number(row[5]) || 0,
-
-                            cost:
-                                Number(row[6]) || 0
-
-                        };
-
-                    }
-                );
-
-
-            save(
-                KEYS.raws,
-                raws
+            alert(
+                imported.length +
+                " orders imported successfully."
             );
-
-
-            renderAll();
-
-            input.value = "";
-
-        };
-
-
-    reader.readAsText(file);
-
-}
-
-
-/* =========================================
-   BACKUP ALL DATA
-========================================= */
-
-function backupAllData(){
-
-    const backup = {
-
-        app:"Orders Log",
-
-        version:2,
-
-        backupDate:
-            new Date()
-                .toISOString(),
-
-        orders:orders,
-
-        raws:raws,
-
-        prices:prices,
-
-        recipes:recipes
-
+        }catch(e){
+            alert("Unable to import CSV.");
+        }
+        input.value = "";
     };
-
-
-    const filename =
-        "OrdersLog_Backup_" +
-        today() +
-        ".json";
-
-
-    download(
-        filename,
-
-        JSON.stringify(
-            backup,
-            null,
-            2
-        ),
-
+    reader.readAsText(file);
+}
+/* =========================================================
+   RAW CSV
+========================================================= */
+function exportRawCSV(){
+    const header = [
+        "Date",
+        "Material",
+        "Quantity",
+        "Unit",
+        "Total Paid",
+        "Quantity KG",
+        "Cost Per KG"
+    ];
+    const lines = [
+        header.map(csvEscape).join(",")
+    ];
+    raws.forEach(r => {
+        lines.push([
+            r.date,
+            r.material,
+            r.qty,
+            r.unit,
+            r.paid,
+            r.kg,
+            r.costPerKg
+        ].map(csvEscape).join(","));
+    });
+    downloadText(
+        "raw-materials.csv",
+        lines.join("\n"),
+        "text/csv;charset=utf-8"
+    );
+}
+function importRawCSV(input){
+    const file = input.files[0];
+    if(!file){
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(){
+        try{
+            const rows = parseCSV(reader.result);
+            const imported = [];
+            for(let i=1;i<rows.length;i++){
+                const r = rows[i];
+                if(!r.length){
+                    continue;
+                }
+                const date = r[0]?.trim();
+                const material = r[1]?.trim();
+                const qty = Number(r[2]);
+                const unit = r[3]?.trim() || "kg";
+                const paid = Number(r[4]);
+                if(!date || !material || !qty || !paid){
+                    continue;
+                }
+                const kg =
+                    unit === "g"
+                    ? qty/1000
+                    : qty;
+                imported.push({
+                    id:crypto.randomUUID(),
+                    date,
+                    material,
+                    qty,
+                    unit,
+                    paid,
+                    kg,
+                    costPerKg:paid/kg
+                });
+            }
+            raws.push(...imported);
+            saveAll();
+            renderAll();
+            alert(
+                imported.length +
+                " raw material records imported."
+            );
+        }catch(e){
+            alert("Unable to import raw material CSV.");
+        }
+        input.value = "";
+    };
+    reader.readAsText(file);
+}
+/* =========================================================
+   BACKUP
+========================================================= */
+function backupAllData(){
+    const backup = {
+        app:"KPK Batter House Orders",
+        version:3,
+        backupDate:new Date().toISOString(),
+        orders,
+        raws,
+        prices,
+        recipes
+    };
+    const json = JSON.stringify(
+        backup,
+        null,
+        2
+    );
+    const datePart =
+        today();
+    downloadText(
+        `KPK_Batter_Backup_${datePart}.json`,
+        json,
         "application/json"
     );
-
-
     localStorage.setItem(
-        "b_last_backup",
+        LAST_BACKUP_KEY,
         new Date().toISOString()
     );
-
-
-    renderFinance();
-
+    renderLastBackup();
 }
-
-
-/* =========================================
-   RESTORE
-========================================= */
-
-function restoreAllData(input){
-
-    const file =
-        input.files[0];
-
-
-    if(!file){
-
+function renderLastBackup(){
+    const value =
+        localStorage.getItem(LAST_BACKUP_KEY);
+    const el =
+        document.getElementById("lastBackup");
+    if(!value){
+        el.textContent =
+            "Last backup: Not created yet.";
         return;
-
     }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload =
-        function(){
-
-            try{
-
-                const data =
-                    JSON.parse(
-                        reader.result
-                    );
-
-
-                if(
-                    !data ||
-                    !Array.isArray(data.orders) ||
-                    !Array.isArray(data.raws) ||
-                    !Array.isArray(data.prices) ||
-                    !Array.isArray(data.recipes)
-                ){
-
-                    throw new Error(
-                        "Invalid backup"
-                    );
-
-                }
-
-
-                if(
-                    !confirm(
-                        "Restore this backup? Current data will be replaced."
-                    )
-                ){
-
-                    return;
-
-                }
-
-
-                orders =
-                    data.orders;
-
-                raws =
-                    data.raws;
-
-                prices =
-                    data.prices;
-
-                recipes =
-                    data.recipes;
-
-
-                save(
-                    KEYS.orders,
-                    orders
-                );
-
-
-                save(
-                    KEYS.raws,
-                    raws
-                );
-
-
-                save(
-                    KEYS.prices,
-                    prices
-                );
-
-
-                save(
-                    KEYS.recipes,
-                    recipes
-                );
-
-
-                renderAll();
-
-
+    try{
+        el.textContent =
+            "Last backup: " +
+            new Date(value).toLocaleString();
+    }catch(e){
+        el.textContent =
+            "Last backup: Available";
+    }
+}
+/* =========================================================
+   RESTORE
+========================================================= */
+function restoreAllData(input){
+    const file = input.files[0];
+    if(!file){
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(){
+        try{
+            const data =
+                JSON.parse(reader.result);
+            if(
+                !data ||
+                !Array.isArray(data.orders) ||
+                !Array.isArray(data.raws) ||
+                !Array.isArray(data.prices) ||
+                !Array.isArray(data.recipes)
+            ){
                 alert(
-                    "Backup restored successfully."
+                    "Invalid backup file."
                 );
-
-
-            }catch(error){
-
-                alert(
-                    "Could not restore: invalid backup file."
-                );
-
+                return;
             }
-
-
-            input.value = "";
-
-        };
-
-
-    reader.readAsText(file);
-
-}
-
-
-/* =========================================
-   TAB NAVIGATION
-========================================= */
-
-document
-    .querySelectorAll("[data-tab]")
-    .forEach(
-        function(button){
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    const tab =
-                        button.dataset.tab;
-
-
-                    document
-                        .querySelectorAll(
-                            ".tabpage"
-                        )
-                        .forEach(
-                            function(page){
-
-                                page.classList.toggle(
-                                    "active",
-                                    page.id === tab
-                                );
-
-                            }
-                        );
-
-
-                    document
-                        .querySelectorAll(
-                            ".tab"
-                        )
-                        .forEach(
-                            function(item){
-
-                                item.classList.toggle(
-                                    "active",
-                                    item.dataset.tab === tab
-                                );
-
-                            }
-                        );
-
-
-                    document
-                        .querySelectorAll(
-                            ".bottomnav button"
-                        )
-                        .forEach(
-                            function(item){
-
-                                item.classList.toggle(
-                                    "active",
-                                    item.dataset.tab === tab
-                                );
-
-                            }
-                        );
-
-
-                    window.scrollTo({
-                        top:0,
-                        behavior:"smooth"
-                    });
-
-                }
+            const confirmed = confirm(
+                "Restore this backup?\n\n" +
+                "Current Orders, Raw Materials, Prices and Recipes will be replaced."
             );
-
+            if(!confirmed){
+                return;
+            }
+            orders = data.orders;
+            raws = data.raws;
+            prices = data.prices;
+            recipes = data.recipes;
+            saveAll();
+            localStorage.setItem(
+                LAST_BACKUP_KEY,
+                new Date().toISOString()
+            );
+            renderAll();
+            alert(
+                "Backup restored successfully."
+            );
+        }catch(e){
+            alert(
+                "Unable to restore backup."
+            );
         }
-    );
-
-
-/* =========================================
-   RENDER EVERYTHING
-========================================= */
-
-function renderAll(){
-
-    renderItems();
-
-    renderOrders();
-
-    renderPrices();
-
-    renderRaw();
-
-    renderFinance();
-
-    renderPrep();
-
+        input.value = "";
+    };
+    reader.readAsText(file);
 }
-
-
-renderAll();
-
+/* =========================================================
+   EXPORT ALL CSVs
+========================================================= */
+function exportAllCSVs(){
+    exportOrdersCSV();
+    setTimeout(() => {
+        exportRawCSV();
+    },300);
+}
+/* =========================================================
+   END
+========================================================= */
 </script>
-
 </body>
 </html>
