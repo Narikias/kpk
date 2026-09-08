@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#008080">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Orders Log">
+<link rel="manifest" href="manifest.json">
+<title>Orders Log</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+body {
+  background: #f4f7f6;
+  padding-bottom: 70px;
+  color: #333;
+}
+header {
+  background: #008080;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+.tab-content {
+  padding: 15px;
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+h3 {
+  margin-bottom: 12px;
+  color: #008080;
+}
+.form-group {
+  margin-bottom: 12px;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+input, select {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+}
+.row .form-group {
+  flex: 1;
+}
+button {
+  width: 100%;
+  min-height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  background: #008080;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+nav .nav-item {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  margin: 0;
+  border-radius: 0;
+  width: auto;
+  background: white;
+  color: #666;
+  padding: 10px 0;
+}
+button.sec {
+  background: #e0f2f1;
+  color: #008080;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.del-btn {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+  width: auto;
+  display: inline-block;
+}
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-card {
+  display: flex;
+  justify-content: 
+  space-between;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+.profit {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.loss {
+  background: #ffebee;
+  color: #c62828;
+}
+.neutral {
+  background: #efebe9;
+  color: #4e342e;
+}
+.low-stock {
+  background: #fff3e0 !important;
+  color: #e65100;
+}
+ul {
+  list-style: none;
+}
+li {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: 
+  space-between;
+  align-items: center;
+}
+.item-details {
+  font-size: 0.85rem;
+  color: #666;
+}
+.badge {
+  background: #e0f2f1;
+  color: #008080;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+nav {
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  display: flex;
+  border-top: 1px solid #ddd;
+  min-height: 60px;
+  height: calc(60px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: constant(safe-area-inset-bottom);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+body {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+.nav-item {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.8rem;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.nav-item.active {
+  color: #008080;
+  font-weight: bold;
+  background: #f0fdfa;
+}
+</style>
+</head>
+<body>
+<header id="app-title">Orders Log</header>
+<div id="orders-tab" 
+class="tab-content active">
+  <div class="card">
+    <h3>Add Order</h3>
+    <div class="form-group">
+      <label>Item Name</label>
+      <select id="order-item" 
+      onchange="autoCalc()">
+      </select>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" 
+        id="order-qty" 
+        step="any" 
+        value="1" 
+        oninput="autoCalc()">
+      </div>
+      <div class="form-group">
+        <label>Total Price (₹)</label>
+        <input type="number" 
+        id="order-price" 
+        step="any">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>House No</label>
+      <input type="text" 
+      id="order-house">
+    </div>
+    <button onclick="saveOrder()">
+      Save Order
+    </button>
+  </div>
+  <button class="sec" 
+  onclick="exportExcel()">
+    Export (.csv) 📊
+  </button>
+  <h3>Orders</h3>
+  <ul id="orders-list"></ul>
+</div>
+
+<div id="raw-tab" 
+class="tab-content">
+  <div class="card">
+    <h3>Setup Quantities & Prices</h3>
+    <div class="form-group">
+      <label>Item Name</label>
+      <input type="text" 
+      id="price-name" 
+      placeholder="e.g. Vanilla Cake">
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>Target Qty</label>
+        <input type="number" 
+        id="price-qty" 
+        value="1">
+      </div>
+      <div class="form-group">
+        <label>Total Price (₹)</label>
+        <input type="number" 
+        id="price-val" 
+        placeholder="e.g. 500">
+      </div>
+    </div>
+    <button onclick="savePrice()">
+      Add / Update Rate Combo
+    </button>
+  </div>
+  <h3>Quantity Price Matrix</h3>
+  <ul id="price-list" 
+      style="margin-bottom:20px;"></ul>
+
+  <div class="card">
+    <h3>Raw Cost Entry</h3>
+    <div class="form-group">
+      <label>Purchase Date</label>
+      <input type="date" 
+      id="raw-date">
+    </div>
+    <div class="form-group">
+      <label>Material Name</label>
+      <input type="text" 
+      id="raw-name"
+      placeholder="e.g. Flour">
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>Weight</label>
+        <input type="number" 
+        id="raw-qty" 
+        step="any"
+        placeholder="5">
+      </div>
+      <div class="form-group">
+        <label>Unit</label>
+        <select id="raw-unit">
+          <option value="kg">Kg</option>
+          <option value="g">g</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Total Paid (₹)</label>
+      <input type="number" 
+      id="raw-cost"
+      placeholder="150">
+    </div>
+    <div class="stat-card neutral" 
+    id="kg-preview" 
+    style="display:none;">
+      Cost/Kg: ₹0.00
+    </div>
+    <button onclick="saveRaw()">
+      Save Material
+    </button>
+  </div>
+  
+  <h3>Raw Inventory</h3>
+  <div style="overflow-x:auto; 
+              background:white; 
+              border-radius:8px; 
+              margin-top:10px;">
+    <table style="width:100%; 
+                  border-collapse:collapse; 
+                  font-size:0.85rem; 
+                  text-align:left;">
+      <thead>
+        <tr style="background:#efebe9; 
+                   color:#4e342e; 
+                   border-bottom:2px solid #ddd;">
+          <th style="padding:10px;">Date</th>
+          <th style="padding:10px;">Item</th>
+          <th style="padding:10px;">Cost/Kg</th>
+          <th style="padding:10px;">Total</th>
+          <th style="padding:10px;">Stock Left</th>
+          <th style="padding:10px;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="raw-table-body">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="financials-tab" 
+class="tab-content">
+  <div class="card">
+    <h3>Business Stats</h3>
+    <div class="stat-card profit">
+      <span>Earned:</span>
+      <span id="fin-earned">₹0.00</span>
+    </div>
+    <div class="stat-card loss">
+      <span>Spent:</span>
+      <span id="fin-spent">₹0.00</span>
+    </div>
+    <div class="stat-card" 
+    id="fin-card">
+      <span>Balance:</span>
+      <span id="fin-balance">₹0.00</span>
+    </div>
+  </div>
+</div>
+
+<div id="prep-tab" 
+class="tab-content">
+  <div class="card">
+    <h3>Items to Prepare Today</h3>
+    <ul id="prep-list"></ul>
+  </div>
+</div>
+
+<nav id="bottom-nav" aria-label="Main navigation">
+  <button type="button" class="nav-item active" data-tab="orders" aria-selected="true">
+    📋<br>Orders
+  </button>
+  <button type="button" class="nav-item" data-tab="raw" aria-selected="false">
+    ⚖️<br>Prices/Raw
+  </button>
+  <button type="button" class="nav-item" data-tab="financials" aria-selected="false">
+    📊<br>Finance
+  </button>
+  <button type="button" class="nav-item" data-tab="prep" aria-selected="false">
+    🍳<br>Prep List
+  </button>
+</nav>
+<script>
+let orders = JSON.parse(
+  localStorage.getItem('b_ord')
+) || [];
+let raws = JSON.parse(
+  localStorage.getItem('b_raw')
+) || [];
+let prices = JSON.parse(
+  localStorage.getItem('b_prc2')
+) || [];
+
+function tab(tabId, el) {
+  document.querySelectorAll('.tab-content').forEach(function(t) {
+    t.classList.remove('active');
+  });
+
+  document.querySelectorAll('.nav-item').forEach(function(i) {
+    i.classList.remove('active');
+    i.setAttribute('aria-selected', 'false');
+  });
+
+  var target = document.getElementById(tabId + '-tab');
+  if (!target) return;
+
+  target.classList.add('active');
+
+  if (el) {
+    el.classList.add('active');
+    el.setAttribute('aria-selected', 'true');
+  }
+
+  var titles = {
+    orders: 'Orders Log',
+    raw: 'Prices & Materials',
+    financials: 'Stats',
+    prep: 'Prep List'
+  };
+
+  document.getElementById('app-title').textContent = titles[tabId] || 'Orders Log';
+
+  if (tabId === 'orders') popDropdown();
+  if (tabId === 'raw') renderPrices();
+  if (tabId === 'financials') calcFin();
+  if (tabId === 'prep') buildPrep();
+
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#bottom-nav .nav-item').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      tab(this.getAttribute('data-tab'), this);
+    }, false);
+  });
+
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    navigator.serviceWorker.register('./sw.js').catch(function(err) {
+      console.log('Service worker registration skipped:', err);
+    });
+  }
+});
+
+function popDropdown() {
+  let s = document.getElementById(
+    'order-item'
+  );
+  s.innerHTML = 
+  '<option value="">' +
+  '-- Choose Item --' +
+  '</option>';
+  
+  let names = [];
+  prices.forEach(p => {
+    if(!names.includes(p.name)) {
+      names.push(p.name);
+    }
+  });
+  
+  names.sort().forEach(n => {
+    s.innerHTML += 
+    `<option value="${n}">${n}</option>`;
+  });
+}
+
+function autoCalc() {
+  let item = document.getElementById(
+    'order-item'
+  ).value;
+  let qty = parseFloat(
+    document.getElementById(
+      'order-qty'
+    ).value
+  ) || 0;
+  let pInput = 
+  document.getElementById(
+    'order-price'
+  );
+
+  if(!item || qty <= 0) {
+    pInput.value = '';
+    return;
+  }
+
+  let match = prices.find(p => 
+    p.name === item && 
+    parseFloat(p.qty) === qty
+  );
+
+  if(match) {
+    pInput.value = match.price.toFixed(2);
+  } else {
+    let baseItem = prices.find(p => 
+      p.name === item && 
+      parseFloat(p.qty) === 1
+    );
+    if(baseItem) {
+      let unitCost = baseItem.price;
+      pInput.value = (unitCost * qty).toFixed(2);
+    } else {
+      let fallback = prices.find(p => p.name === item);
+      if(fallback) {
+        let unitCost = fallback.price / fallback.qty;
+        pInput.value = (unitCost * qty).toFixed(2);
+      } else {
+        pInput.value = '';
+      }
+    }
+  }
+}
+
+function savePrice() {
+  let n = document.getElementById(
+    'price-name'
+  ).value.trim();
+  let q = parseFloat(
+    document.getElementById(
+      'price-qty'
+    ).value
+  ) || 0;
+  let p = parseFloat(
+    document.getElementById(
+      'price-val'
+    ).value
+  ) || 0;
+
+  if(!n || q <= 0 || p <= 0) {
+    return alert('Enter details.');
+  }
+
+  prices = prices.filter(item => 
+    !(item.name === n && item.qty === q)
+  );
+
+  prices.push({ name: n, qty: q, price: p });
+  localStorage.setItem(
+    'b_prc2', 
+    JSON.stringify(prices)
+  );
+
+  document.getElementById(
+    'price-name'
+  ).value = '';
+  document.getElementById(
+    'price-qty'
+  ).value = '1';
+  document.getElementById(
+    'price-val'
+  ).value = '';
+  
+  alert('Saved.');
+  renderPrices();
+  popDropdown();
+}
+
+function removePrice(index) {
+  if(confirm("Delete this?")) {
+    prices.splice(index, 1);
+    localStorage.setItem(
+      'b_prc2',
+      JSON.stringify(prices)
+    );
+    renderPrices();
+    popDropdown();
+  }
+}
+
+function renderPrices() {
+  let list = document.getElementById(
+    'price-list'
+  );
+  list.innerHTML = '';
+  
+  prices.sort((a, b) => 
+    a.name.localeCompare(b.name)
+  )
+  .forEach((p, index) => {
+    list.innerHTML += `<li>
+      <div>
+        <strong>${p.name}</strong>
+        <div class="item-details">
+          For Qty: ${p.qty}
+        </div>
+      </div>
+      <div class="actions-right">
+        <span class="badge">
+          ₹${p.price}
+        </span>
+        <button class="del-btn" 
+        onclick="removePrice(${index})">
+          X
+        </button>
+      </div>
+    </li>`;
+  });
+}
+let fields = [
+  'raw-qty', 
+  'raw-unit', 
+  'raw-cost'
+];
+fields.forEach(id => {
+  document.getElementById(id)
+  .addEventListener('input', () => {
+    let q = parseFloat(
+      document.getElementById(
+        'raw-qty'
+      ).value
+    ) || 0;
+    let c = parseFloat(
+      document.getElementById(
+        'raw-cost'
+      ).value
+    ) || 0;
+    let u = document.getElementById(
+      'raw-unit'
+    ).value;
+    let prev = document.getElementById(
+      'kg-preview'
+    );
+    if (q > 0 && c > 0) {
+      let pkg = (u === 'g') 
+        ? (c / q) * 1000 
+        : (c / q);
+      prev.style.display = 'block';
+      prev.innerText = 
+        'Cost/Kg: ₹' + 
+        pkg.toFixed(2);
+    } else {
+      prev.style.display = 'none';
+    }
+  });
+});
+
+document.getElementById('raw-date').valueAsDate = new Date();
+
+function saveOrder() {
+  let item = document.getElementById(
+    'order-item'
+  ).value;
+  let qty = parseFloat(
+    document.getElementById(
+      'order-qty'
+    ).value
+  ) || 0;
+  let price = parseFloat(
+    document.getElementById(
+      'order-price'
+    ).value
+  ) || 0;
+  let house = document.getElementById(
+    'order-house'
+  ).value.trim();
+  let today = new Date()
+    .toLocaleDateString();
+  if(!item || qty <= 0 || !house) {
+    return alert('Fill entries');
+  }
+  orders.push({ 
+    id: Date.now(),
+    item, qty, price, house, 
+    date: today 
+  });
+  localStorage.setItem(
+    'b_ord', 
+    JSON.stringify(orders)
+  );
+  document.getElementById(
+    'order-item'
+  ).value = '';
+  document.getElementById(
+    'order-qty'
+  ).value = '1';
+  document.getElementById(
+    'order-price'
+  ).value = '';
+  document.getElementById(
+    'order-house'
+  ).value = '';
+  renderOrders();
+}
+
+function removeOrder(id) {
+  if(confirm("Delete this order?")) {
+    orders = orders.filter(
+      o => o.id !== id
+    );
+    localStorage.setItem(
+      'b_ord',
+      JSON.stringify(orders)
+    );
+    renderOrders();
+  }
+}
+
+function saveRaw() {
+  let d = document.getElementById('raw-date').value;
+  let n = document.getElementById('raw-name').value.trim();
+  let q = parseFloat(document.getElementById('raw-qty').value) || 0;
+  let u = document.getElementById('raw-unit').value;
+  let c = parseFloat(document.getElementById('raw-cost').value) || 0;
+
+  if(!d || !n || q <= 0 || c <= 0) {
+    return alert('Fill all fields correctly.');
+  }
+  let pkg = (u === 'g') ? (c / q) * 1000 : (c / q);
+  
+  raws.push({ 
+    id: Date.now(),
+    name: n, 
+    qty: q, 
+    unit: u, 
+    cost: c, 
+    perKg: pkg, 
+    date: new Date(d).toLocaleDateString(),
+    availQty: q
+  });
+  
+  localStorage.setItem('b_raw', JSON.stringify(raws));
+  document.getElementById('raw-name').value = '';
+  document.getElementById('raw-qty').value = '';
+  document.getElementById('raw-cost').value = '';
+  document.getElementById('raw-date').valueAsDate = new Date();
+  document.getElementById('kg-preview').style.display = 'none';
+  renderRaws();
+}
+
+function updateStock(id, newStockVal) {
+  let target = raws.find(r => r.id === id);
+  if(target) {
+    let stockNum = parseFloat(newStockVal);
+    target.availQty = isNaN(stockNum) || stockNum <= 0 ? 0 : stockNum;
+    localStorage.setItem('b_raw', JSON.stringify(raws));
+    renderRaws();
+  }
+}
+
+function markCompleted(id) {
+  let target = raws.find(r => r.id === id);
+  if(target) {
+    target.availQty = 0;
+    localStorage.setItem('b_raw', JSON.stringify(raws));
+    renderRaws();
+  }
+}
+
+function removeRaw(id) {
+  if(confirm("Delete this entry?")) {
+    raws = raws.filter(
+      r => r.id !== id
+    );
+    localStorage.setItem(
+      'b_raw',
+      JSON.stringify(raws)
+    );
+    renderRaws();
+  }
+}
+
+function renderOrders() {
+  let list = document.getElementById(
+    'orders-list'
+  );
+  list.innerHTML = '';
+  orders.slice().reverse()
+  .forEach(o => {
+    let orderId = o.id || 0;
+    list.innerHTML += `<li>
+      <div>
+        <strong>${o.item}</strong> 
+        (Qty: ${o.qty})
+        <div class="item-details">
+          H: ${o.house} | ${o.date}
+        </div>
+      </div>
+      <div class="actions-right">
+        <span class="badge">
+          ₹${o.price.toFixed(2)}
+        </span>
+        <button class="del-btn" 
+        onclick="removeOrder(${orderId})">
+          X
+        </button>
+      </div>
+    </li>`;
+  });
+}
+
+function renderRaws() {
+  let tbody = document.getElementById('raw-table-body');
+  tbody.innerHTML = '';
+  
+  raws.slice().reverse().forEach(r => {
+    let rawId = r.id || 0;
+    let currentStock = r.availQty !== undefined ? r.availQty : r.qty;
+    
+    // Warning Color check if item drops below 1 unit scale (1kg or 1g base depending on purchase)
+    let trClass = (currentStock > 0 && currentStock < 1) ? 'class="low-stock"' : '';
+    
+    let statusDisplay = '';
+    if(currentStock <= 0) {
+      statusDisplay = '<span style="color:#2e7d32; font-weight:bold;">Done ✅</span>';
+    } else {
+      statusDisplay = `<input type="number" step="any" value="${currentStock}" 
+                     style="width:55px; padding:2px; font-size:0.8rem; display:inline;" 
+                     onchange="updateStock(${rawId}, this.value)"> ${r.unit}`;
+    }
+
+    tbody.innerHTML += `<tr ${trClass} style="border-bottom:1px solid #eee;">
+      <td style="padding:10px; color:#666;">${r.date}</td>
+      <td style="padding:10px;"><strong>${r.name}</strong><br><span style="color:#888; font-size:0.7rem;">Total: ${r.qty}${r.unit}</span></td>
+      <td style="padding:10px;">₹${r.perKg.toFixed(2)}</td>
+      <td style="padding:10px;">₹${r.cost}</td>
+      <td style="padding:10px;">${statusDisplay}</td>
+      <td style="padding:10px;">
+        ${currentStock > 0 ? `<button onclick="markCompleted(${rawId})" style="padding:2px 4px; font-size:0.7rem; background:#efebe9; color:#4e342e; width:auto; margin-bottom:4px; border:1px solid #ccc; border-radius:4px;">Finish</button><br>` : ''}
+        <button class="del-btn" onclick="removeRaw(${rawId})" style="padding:0; font-size:0.75rem;">Del</button>
+      </td>
+    </tr>`;
+  });
+}
+
+function calcFin() {
+  let earned = orders.reduce(
+    (s, o) => s + o.price, 0
+  );
+  let spent = raws.reduce(
+    (s, r) => s + r.cost, 0
+  );
+  let bal = earned - spent;
+  document.getElementById(
+    'fin-earned'
+  ).innerText = `₹${earned.toFixed(2)}`;
+  document.getElementById(
+    'fin-spent'
+  ).innerText = `₹${spent.toFixed(2)}`;
+  document.getElementById(
+    'fin-balance'
+  ).innerText = 
+  `₹${Math.abs(bal).toFixed(2)}`;
+  let card = document.getElementById(
+    'fin-card'
+  );
+  card.className = 'stat-card ' + 
+  (bal >= 0 ? 'profit' : 'loss');
+}
+
+function buildPrep() {
+  let pMap = {};
+  orders.forEach(o => {
+    let k = `${o.date} | ${o.item}`;
+    pMap[k] = (pMap[k] || 0) + o.qty;
+  });
+  let list = document.getElementById(
+    'prep-list'
+  );
+  list.innerHTML = '';
+  
+  Object.keys(pMap)
+  .sort((a, b) => b.localeCompare(a))
+  .forEach(k => {
+    let parts = k.split(' | ');
+    let dateVal = parts[0];
+    let itemVal = parts[1];
+    let qtyVal = pMap[k];
+    
+    list.innerHTML += `<li>
+      <div>
+        <strong style="color:#008080;">
+          ${itemVal}
+        </strong>
+        <div class="item-details">
+          Date: ${dateVal}
+        </div>
+      </div>
+      <span class="badge" 
+      style="background:#f3e5f5; 
+      color:#7b1fa2;
+      font-size: 0.95rem;">
+        Qty: ${qtyVal}
+      </span>
+    </li>`;
+  });
+}
+
+function exportExcel() {
+  if (orders.length === 0) {
+    return alert('No data.');
+  }
+
+  var csv = "Date,Item,Qty,House,Price\n";
+  orders.forEach(function(o) {
+    csv += '"' + String(o.date).replace(/"/g, '""') + '",' +
+           '"' + String(o.item).replace(/"/g, '""') + '",' +
+           o.qty + ',' +
+           '"' + String(o.house).replace(/"/g, '""') + '",' +
+           o.price + '\n';
+  });
+
+  var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+  var filename = 'Orders_' + new Date().toISOString().slice(0,10) + '.csv';
+
+  if (navigator.share && navigator.canShare) {
+    try {
+      var file = new File([blob], filename, {type: 'text/csv'});
+      if (navigator.canShare({files: [file]})) {
+        navigator.share({
+          files: [file],
+          title: 'Orders Export',
+          text: 'Orders CSV'
+        }).catch(function(){});
+        return;
+      }
+    } catch (e) {}
+  }
+
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  setTimeout(function() {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, 1000);
+}
+
+popDropdown();
+renderOrders();
+renderPrices();
+renderRaws();
+</script>
+
+<script>
+(function () {
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone === true ||
+                     window.matchMedia('(display-mode: standalone)').matches;
+
+  if (isIOS && !isStandalone) {
+    var tip = document.createElement('div');
+    tip.id = 'ios-install-tip';
+    tip.innerHTML = '<strong>📱 Add to Home Screen</strong><br>In Safari, tap <b>Share</b> → <b>Add to Home Screen</b>.';
+    tip.style.cssText =
+      'position:fixed;left:10px;right:10px;bottom:calc(70px + env(safe-area-inset-bottom));' +
+      'z-index:10000;background:#fff;padding:12px 14px;border-radius:10px;' +
+      'box-shadow:0 3px 15px rgba(0,0,0,.2);font-size:14px;line-height:1.4;';
+    document.body.appendChild(tip);
+    setTimeout(function(){ if (tip.parentNode) tip.remove(); }, 10000);
+  }
+})();
+</script>
+
+</body>
+</html>
