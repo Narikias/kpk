@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               viewport-fit=cover">
 <meta name="theme-color" content="#0d6efd">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Orders Log">
-<title>KPK Batter House - Orders List</title>
+<title>KPK Batter House - Orders</title>
 <style>
+/* =========================================================
+   COMPACT MOBILE-FIRST DESIGN
+========================================================= */
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -19,9 +26,10 @@ html,body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     background:#f5f7fa;
     color:#222;
+    font-size:14px;
 }
 body{
-    padding-bottom:80px;
+    padding-bottom:58px;
 }
 header{
     position:sticky;
@@ -30,24 +38,24 @@ header{
     background:#0d6efd;
     color:white;
     padding:
-        calc(12px + env(safe-area-inset-top))
-        16px
-        12px;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
+        calc(7px + env(safe-area-inset-top))
+        10px
+        7px;
+    box-shadow:0 1px 5px rgba(0,0,0,.15);
 }
 header h1{
     margin:0;
-    font-size:20px;
+    font-size:17px;
 }
 header p{
-    margin:3px 0 0;
-    font-size:12px;
+    margin:1px 0 0;
+    font-size:10px;
     opacity:.9;
 }
 .container{
     max-width:1100px;
     margin:auto;
-    padding:14px;
+    padding:7px;
 }
 .tab{
     display:none;
@@ -57,24 +65,24 @@ header p{
 }
 .card{
     background:white;
-    border-radius:12px;
-    padding:15px;
-    margin-bottom:14px;
-    box-shadow:0 1px 5px rgba(0,0,0,.08);
+    border-radius:8px;
+    padding:9px;
+    margin-bottom:7px;
+    box-shadow:0 1px 3px rgba(0,0,0,.07);
 }
 h2{
-    font-size:18px;
-    margin:0 0 14px;
+    font-size:15px;
+    margin:0 0 8px;
 }
 h3{
-    font-size:16px;
-    margin:15px 0 10px;
+    font-size:14px;
+    margin:8px 0 5px;
 }
 label{
     display:block;
     font-weight:600;
-    font-size:13px;
-    margin-bottom:5px;
+    font-size:11px;
+    margin-bottom:3px;
 }
 input,
 select,
@@ -86,26 +94,32 @@ input,
 select,
 textarea{
     width:100%;
-    min-height:46px;
-    padding:10px 12px;
+    min-height:38px;
+    height:38px;
+    padding:6px 8px;
     border:1px solid #ccd2d8;
-    border-radius:8px;
+    border-radius:6px;
     background:white;
-    font-size:16px;
+    font-size:14px;
 }
 textarea{
-    min-height:80px;
+    height:65px;
+    min-height:65px;
     resize:vertical;
 }
 button{
-    min-height:44px;
+    min-height:36px;
     border:0;
-    border-radius:8px;
-    padding:9px 14px;
+    border-radius:6px;
+    padding:6px 10px;
     background:#0d6efd;
     color:white;
     font-weight:600;
     cursor:pointer;
+    font-size:12px;
+}
+button:active{
+    transform:scale(.98);
 }
 button.secondary{
     background:#6c757d;
@@ -124,30 +138,26 @@ button.light{
     background:#e9ecef;
     color:#222;
 }
-button:active{
-    transform:scale(.98);
-}
 .grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    gap:7px;
 }
 .grid3{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:12px;
+    gap:7px;
 }
 @media(max-width:600px){
-    .grid,
     .grid3{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,1fr);
     }
 }
 .actions{
     display:flex;
     flex-wrap:wrap;
-    gap:8px;
-    margin-top:12px;
+    gap:5px;
+    margin-top:7px;
 }
 .actions button{
     flex:1 1 auto;
@@ -155,39 +165,42 @@ button:active{
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:10px;
+    gap:5px;
+    margin-top:7px;
 }
 .stat{
     background:#f1f5f9;
-    padding:12px;
-    border-radius:10px;
+    padding:6px 4px;
+    border-radius:6px;
     text-align:center;
 }
 .stat .number{
-    font-size:20px;
+    font-size:16px;
     font-weight:700;
 }
 .stat .label{
-    font-size:11px;
+    font-size:9px;
     color:#666;
-    margin-top:3px;
+    margin-top:1px;
 }
 .table-wrap{
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
+    margin-top:6px;
 }
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:650px;
+    min-width:600px;
 }
 th,
 td{
-    padding:9px 8px;
+    padding:5px 5px;
     border-bottom:1px solid #e2e6ea;
     text-align:left;
-    font-size:13px;
+    font-size:11px;
     vertical-align:middle;
+    line-height:1.25;
 }
 th{
     background:#f1f3f5;
@@ -195,8 +208,13 @@ th{
     position:sticky;
     top:0;
 }
+td button{
+    min-height:28px;
+    padding:3px 7px;
+    font-size:10px;
+}
 .price-table{
-    min-width:400px;
+    min-width:360px;
 }
 .price-table th,
 .price-table td{
@@ -206,24 +224,38 @@ th{
 .price-table td:first-child{
     text-align:left;
 }
+.prep-table{
+    min-width:360px;
+}
+.prep-table th:last-child,
+.prep-table td:last-child{
+    text-align:right;
+}
 .empty{
-    padding:20px;
+    padding:12px;
     text-align:center;
     color:#777;
 }
 .small{
-    font-size:12px;
+    font-size:10px;
     color:#666;
+    margin-top:5px;
 }
-.highlight{
-    background:#fff8dc;
+.notice{
+    padding:6px 8px;
+    border-radius:6px;
+    background:#e7f1ff;
+    color:#064b9b;
+    font-size:11px;
+    margin-bottom:7px;
+    line-height:1.3;
 }
-.prep-table{
-    min-width:420px;
+.danger-note{
+    background:#fff0f0;
+    color:#a30000;
 }
-.prep-table td:last-child,
-.prep-table th:last-child{
-    text-align:right;
+.file-input{
+    display:none;
 }
 .bottom-nav{
     position:fixed;
@@ -236,15 +268,15 @@ th{
     background:white;
     border-top:1px solid #ddd;
     padding-bottom:env(safe-area-inset-bottom);
-    box-shadow:0 -2px 8px rgba(0,0,0,.08);
+    box-shadow:0 -1px 5px rgba(0,0,0,.08);
 }
 .bottom-nav button{
-    min-height:58px;
+    min-height:48px;
     border-radius:0;
     background:white;
     color:#555;
-    font-size:11px;
-    padding:5px;
+    font-size:9px;
+    padding:3px;
 }
 .bottom-nav button.active{
     color:#0d6efd;
@@ -252,43 +284,33 @@ th{
 }
 .bottom-nav span{
     display:block;
-    font-size:20px;
-    line-height:22px;
-}
-.notice{
-    padding:10px 12px;
-    border-radius:8px;
-    background:#e7f1ff;
-    color:#064b9b;
-    font-size:13px;
-    margin-bottom:12px;
-}
-.danger-note{
-    background:#fff0f0;
-    color:#a30000;
-}
-.file-input{
-    display:none;
-}
-.badge{
-    display:inline-block;
-    padding:3px 7px;
-    border-radius:20px;
-    background:#e9ecef;
-    font-size:11px;
+    font-size:17px;
+    line-height:18px;
 }
 .right{
     text-align:right;
+}
+.highlight{
+    background:#fff8dc;
+}
+.badge{
+    display:inline-block;
+    padding:2px 5px;
+    border-radius:12px;
+    background:#e9ecef;
+    font-size:9px;
 }
 </style>
 </head>
 <body>
 <header>
-    <h1>KPK Batter House</h1>
-    <p>Orders • Prices • Finance • Preparation</p>
+<h1>KPK Batter House</h1>
+<p>Orders • Prices • Finance • Preparation</p>
 </header>
 <div class="container">
-<!-- ================= ORDERS ================= -->
+<!-- ======================================================
+     ORDERS
+====================================================== -->
 <section id="ordersTab" class="tab active">
 <div class="card">
 <h2>Add Order</h2>
@@ -299,7 +321,9 @@ th{
 </div>
 <div>
 <label>House / Customer</label>
-<input type="text" id="orderCustomer" placeholder="Customer / House">
+<input type="text"
+       id="orderCustomer"
+       placeholder="Customer / House">
 </div>
 <div>
 <label>Item</label>
@@ -316,32 +340,42 @@ th{
 </div>
 <div>
 <label>Price</label>
-<input type="number" id="orderPrice" readonly>
+<input type="number"
+       id="orderPrice"
+       readonly>
 </div>
 <div>
 <label>Notes</label>
-<input type="text" id="orderNotes" placeholder="Optional">
+<input type="text"
+       id="orderNotes"
+       placeholder="Optional">
 </div>
 </div>
 <div class="actions">
-<button onclick="addOrder()">Add Order</button>
+<button onclick="addOrder()">
+Add Order
+</button>
 </div>
 </div>
+<!-- ORDERS TABLE -->
 <div class="card">
 <h2>Orders</h2>
 <div class="grid">
 <div>
 <label>View Date</label>
-<input type="date" id="ordersViewDate" onchange="renderOrders()">
+<input type="date"
+       id="ordersViewDate"
+       onchange="renderOrders()">
 </div>
 <div>
 <label>Filter Item</label>
-<select id="ordersFilterItem" onchange="renderOrders()">
+<select id="ordersFilterItem"
+        onchange="renderOrders()">
 <option value="">All Items</option>
 </select>
 </div>
 </div>
-<div class="stats" style="margin-top:12px">
+<div class="stats">
 <div class="stat">
 <div class="number" id="orderCount">0</div>
 <div class="label">Orders</div>
@@ -356,27 +390,36 @@ th{
 </div>
 </div>
 <div class="actions">
-<button class="success" onclick="exportOrdersCSV()">Export Orders CSV</button>
+<button class="success"
+        onclick="exportOrdersCSV()">
+Export CSV
+</button>
 <label style="margin:0;flex:1">
-<input class="file-input" type="file" accept=".csv,text/csv" onchange="importOrdersCSV(this)">
-<button class="secondary" type="button"
-onclick="this.previousElementSibling.click()">
-Import Orders CSV
+<input class="file-input"
+       type="file"
+       accept=".csv,text/csv"
+       onchange="importOrdersCSV(this)">
+<button class="secondary"
+        type="button"
+        onclick="this.previousElementSibling.click()">
+Import CSV
 </button>
 </label>
-<button class="danger" onclick="clearAllOrders()">
+<button class="danger"
+        onclick="clearAllOrders()">
 Clear All Orders
 </button>
 </div>
 <div class="notice danger-note">
-<strong>Clear All Orders</strong> removes only orders. Prices, raw materials and recipes will not be affected.
+<strong>Clear All Orders</strong>
+deletes only orders. Prices, Raw Materials and Recipes remain.
 </div>
 <div class="table-wrap">
 <table>
 <thead>
 <tr>
 <th>Date</th>
-<th>Customer / House</th>
+<th>Customer</th>
 <th>Item</th>
 <th>Qty</th>
 <th>Price</th>
@@ -389,7 +432,9 @@ Clear All Orders
 </div>
 </div>
 </section>
-<!-- ================= PRICES ================= -->
+<!-- ======================================================
+     PRICES
+====================================================== -->
 <section id="pricesTab" class="tab">
 <div class="card">
 <h2>Price List</h2>
@@ -409,13 +454,14 @@ Clear All Orders
 <div class="card">
 <h2>Price Setup</h2>
 <div class="notice">
-The same item can have separate prices for different quantities.
-For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 kg.
+Each item and quantity has its own price entry.
 </div>
 <div class="grid">
 <div>
 <label>Item</label>
-<input type="text" id="priceItem" placeholder="Item name">
+<input type="text"
+       id="priceItem"
+       placeholder="Item name">
 </div>
 <div>
 <label>Quantity</label>
@@ -426,18 +472,22 @@ For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 
 </div>
 <div>
 <label>Price</label>
-<input type="number" id="priceValue" placeholder="Price">
+<input type="number"
+       id="priceValue"
+       placeholder="Price">
 </div>
 </div>
 <div class="actions">
-<button onclick="savePrice()">Add / Update Price</button>
+<button onclick="savePrice()">
+Add / Update
+</button>
 </div>
 <div class="table-wrap">
 <table>
 <thead>
 <tr>
 <th>Item</th>
-<th>Quantity</th>
+<th>Qty</th>
 <th>Price</th>
 <th>Action</th>
 </tr>
@@ -447,22 +497,39 @@ For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 
 </div>
 </div>
 </section>
-<!-- ================= FINANCE ================= -->
+<!-- ======================================================
+     FINANCE
+====================================================== -->
 <section id="financeTab" class="tab">
 <div class="card">
 <h2>Finance</h2>
 <div class="stats">
 <div class="stat">
-<div class="number" id="financeEarned">₹0</div>
-<div class="label">Earned</div>
+<div class="number"
+     id="financeEarned">
+₹0
+</div>
+<div class="label">
+Earned
+</div>
 </div>
 <div class="stat">
-<div class="number" id="financeSpent">₹0</div>
-<div class="label">Spent</div>
+<div class="number"
+     id="financeSpent">
+₹0
+</div>
+<div class="label">
+Spent
+</div>
 </div>
 <div class="stat">
-<div class="number" id="financeBalance">₹0</div>
-<div class="label">Balance</div>
+<div class="number"
+     id="financeBalance">
+₹0
+</div>
+<div class="label">
+Balance
+</div>
 </div>
 </div>
 </div>
@@ -471,15 +538,20 @@ For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 
 <div class="grid">
 <div>
 <label>Date</label>
-<input type="date" id="rawDate">
+<input type="date"
+       id="rawDate">
 </div>
 <div>
 <label>Material</label>
-<input type="text" id="rawMaterial" placeholder="Rice / Dal / etc.">
+<input type="text"
+       id="rawMaterial"
+       placeholder="Rice / Dal / etc.">
 </div>
 <div>
 <label>Quantity</label>
-<input type="number" id="rawQty" step="0.001">
+<input type="number"
+       id="rawQty"
+       step="0.001">
 </div>
 <div>
 <label>Unit</label>
@@ -490,22 +562,33 @@ For example, Idly / Dosa batter can have one price for 0.5 kg and another for 1 
 </div>
 <div>
 <label>Total Paid</label>
-<input type="number" id="rawPaid" step="0.01">
+<input type="number"
+       id="rawPaid"
+       step="0.01">
 </div>
 </div>
 <div class="actions">
-<button onclick="addRaw()">Add Purchase</button>
+<button onclick="addRaw()">
+Add Purchase
+</button>
 </div>
 </div>
 <div class="card">
 <h2>Raw Material Purchases</h2>
 <div class="actions">
-<button class="success" onclick="exportRawCSV()">Export Raw Materials CSV</button>
+<button class="success"
+        onclick="exportRawCSV()">
+Export CSV
+</button>
 <label style="margin:0;flex:1">
-<input class="file-input" type="file" accept=".csv,text/csv" onchange="importRawCSV(this)">
-<button class="secondary" type="button"
-onclick="this.previousElementSibling.click()">
-Import Raw CSV
+<input class="file-input"
+       type="file"
+       accept=".csv,text/csv"
+       onchange="importRawCSV(this)">
+<button class="secondary"
+        type="button"
+        onclick="this.previousElementSibling.click()">
+Import CSV
 </button>
 </label>
 </div>
@@ -517,7 +600,7 @@ Import Raw CSV
 <th>Material</th>
 <th>Qty</th>
 <th>Paid</th>
-<th>Cost / kg</th>
+<th>Cost/kg</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -526,19 +609,24 @@ Import Raw CSV
 </div>
 </div>
 </section>
-<!-- ================= PREPARATION ================= -->
+<!-- ======================================================
+     PREPARATION
+====================================================== -->
 <section id="prepTab" class="tab">
 <div class="card">
 <h2>Preparation List</h2>
 <div class="grid">
 <div>
 <label>Preparation Date</label>
-<input type="date" id="prepDate" onchange="renderPrep()">
+<input type="date"
+       id="prepDate"
+       onchange="renderPrep()">
 </div>
 </div>
-<div class="notice" style="margin-top:12px">
-All orders for the selected day are automatically combined by item.
-If multiple customers order the same batter, their quantities are added together.
+<div class="notice">
+Orders for the selected date are automatically combined by item.
+Example: If 3 customers order Idly batter
+1 kg + 0.5 kg + 1 kg = <strong>2.5 kg</strong> preparation.
 </div>
 <div class="table-wrap">
 <table class="prep-table">
@@ -557,19 +645,26 @@ If multiple customers order the same batter, their quantities are added together
 <div class="grid">
 <div>
 <label>Item</label>
-<input type="text" id="recipeItem" placeholder="Item">
+<input type="text"
+       id="recipeItem"
+       placeholder="Item">
 </div>
 <div>
 <label>Base Quantity (kg)</label>
-<input type="number" id="recipeBaseKg" step="0.1">
+<input type="number"
+       id="recipeBaseKg"
+       step="0.1">
 </div>
 <div>
 <label>Ingredients / Instructions</label>
-<textarea id="recipeText" placeholder="Rice, dal, water, fermentation etc."></textarea>
+<textarea id="recipeText"
+          placeholder="Rice, dal, water, fermentation etc."></textarea>
 </div>
 </div>
 <div class="actions">
-<button onclick="saveRecipe()">Add / Update Recipe</button>
+<button onclick="saveRecipe()">
+Add / Update Recipe
+</button>
 </div>
 <div class="table-wrap">
 <table>
@@ -585,34 +680,44 @@ If multiple customers order the same batter, their quantities are added together
 </table>
 </div>
 </div>
+<!-- BACKUP -->
 <div class="card">
 <h2>Backup & Restore</h2>
 <div class="notice">
 Backup contains Orders, Raw Materials, Prices and Recipes.
-Keep a backup before major changes or before clearing/importing orders.
 </div>
 <div class="actions">
-<button class="success" onclick="backupAllData()">
+<button class="success"
+        onclick="backupAllData()">
 Backup All Data
 </button>
 <label style="margin:0;flex:1">
-<input class="file-input" type="file" accept=".json,application/json" onchange="restoreAllData(this)">
-<button class="secondary" type="button"
-onclick="this.previousElementSibling.click()">
+<input class="file-input"
+       type="file"
+       accept=".json,application/json"
+       onchange="restoreAllData(this)">
+<button class="secondary"
+        type="button"
+        onclick="this.previousElementSibling.click()">
 Restore Backup
 </button>
 </label>
-<button class="light" onclick="exportAllCSVs()">
+<button class="light"
+        onclick="exportAllCSVs()">
 Export All CSVs
 </button>
 </div>
-<div class="small" id="lastBackup"></div>
+<div class="small"
+     id="lastBackup"></div>
 </div>
 </section>
 </div>
-<!-- ================= BOTTOM NAV ================= -->
+<!-- ======================================================
+     BOTTOM NAV
+====================================================== -->
 <nav class="bottom-nav">
-<button class="active" onclick="showTab('ordersTab',this)">
+<button class="active"
+        onclick="showTab('ordersTab',this)">
 <span>📋</span>
 Orders
 </button>
@@ -638,53 +743,29 @@ const RAW_KEY = "b_raw";
 const PRICE_KEY = "b_prc2";
 const RECIPE_KEY = "b_recipes";
 const LAST_BACKUP_KEY = "b_last_backup";
-let orders = loadJSON(ORDERS_KEY, []);
-let raws = loadJSON(RAW_KEY, []);
-let prices = loadJSON(PRICE_KEY, [
-    {
-        id: crypto.randomUUID(),
-        item: "Idly / Dosa batter",
-        qty: 0.5,
-        price: 59
-    },
-    {
-        id: crypto.randomUUID(),
-        item: "Idly / Dosa batter",
-        qty: 1,
-        price: 99
-    },
-    {
-        id: crypto.randomUUID(),
-        item: "Vada batter",
-        qty: 0.5,
-        price: 95
-    },
-    {
-        id: crypto.randomUUID(),
-        item: "Vada batter",
-        qty: 1,
-        price: 175
-    },
-    {
-        id: crypto.randomUUID(),
-        item: "Pesarettu batter",
-        qty: 0.5,
-        price: 89
-    },
-    {
-        id: crypto.randomUUID(),
-        item: "Pesarettu batter",
-        qty: 1,
-        price: 159
-    }
-]);
-let recipes = loadJSON(RECIPE_KEY, []);
+let orders = loadJSON(
+    ORDERS_KEY,
+    []
+);
+let raws = loadJSON(
+    RAW_KEY,
+    []
+);
+let prices = loadJSON(
+    PRICE_KEY,
+    []
+);
+let recipes = loadJSON(
+    RECIPE_KEY,
+    []
+);
 /* =========================================================
-   HELPERS
+   LOAD JSON
 ========================================================= */
-function loadJSON(key, fallback){
+function loadJSON(key,fallback){
     try{
-        const value = localStorage.getItem(key);
+        const value =
+            localStorage.getItem(key);
         if(!value){
             return fallback;
         }
@@ -693,12 +774,147 @@ function loadJSON(key, fallback){
         return fallback;
     }
 }
+/* =========================================================
+   SAVE
+========================================================= */
 function saveAll(){
-    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-    localStorage.setItem(RAW_KEY, JSON.stringify(raws));
-    localStorage.setItem(PRICE_KEY, JSON.stringify(prices));
-    localStorage.setItem(RECIPE_KEY, JSON.stringify(recipes));
+    localStorage.setItem(
+        ORDERS_KEY,
+        JSON.stringify(orders)
+    );
+    localStorage.setItem(
+        RAW_KEY,
+        JSON.stringify(raws)
+    );
+    localStorage.setItem(
+        PRICE_KEY,
+        JSON.stringify(prices)
+    );
+    localStorage.setItem(
+        RECIPE_KEY,
+        JSON.stringify(recipes)
+    );
 }
+/* =========================================================
+   MIGRATE OLD IDLY / DOSA PRICE
+========================================================= */
+function migrateOldPrices(){
+    let changed = false;
+    /*
+      If old version contains:
+      Idly / Dosa batter
+      convert it into:
+      Idly batter
+      Dosa batter
+    */
+    const oldPrices =
+        prices.filter(
+            p =>
+            String(p.item).toLowerCase()
+            === "idly / dosa batter"
+        );
+    if(oldPrices.length){
+        oldPrices.forEach(old => {
+            const names = [
+                "Idly batter",
+                "Dosa batter"
+            ];
+            names.forEach(name => {
+                const exists =
+                    prices.some(p =>
+                        p.item === name &&
+                        Number(p.qty) === Number(old.qty)
+                    );
+                if(!exists){
+                    prices.push({
+                        id:crypto.randomUUID(),
+                        item:name,
+                        qty:Number(old.qty),
+                        price:Number(old.price)
+                    });
+                    changed = true;
+                }
+            });
+            /*
+              Remove old combined price entry
+            */
+            prices =
+                prices.filter(
+                    p =>
+                    String(p.item).toLowerCase()
+                    !== "idly / dosa batter"
+                );
+            changed = true;
+        });
+    }
+    /*
+      If there are no prices at all,
+      create the default price list.
+    */
+    if(!prices.length){
+        prices = [
+            {
+                id:crypto.randomUUID(),
+                item:"Idly batter",
+                qty:0.5,
+                price:59
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Idly batter",
+                qty:1,
+                price:99
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Dosa batter",
+                qty:0.5,
+                price:59
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Dosa batter",
+                qty:1,
+                price:99
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Vada batter",
+                qty:0.5,
+                price:95
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Vada batter",
+                qty:1,
+                price:175
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Pesarettu batter",
+                qty:0.5,
+                price:89
+            },
+            {
+                id:crypto.randomUUID(),
+                item:"Pesarettu batter",
+                qty:1,
+                price:159
+            }
+        ];
+        changed = true;
+    }
+    if(changed){
+        localStorage.setItem(
+            PRICE_KEY,
+            JSON.stringify(prices)
+        );
+    }
+}
+migrateOldPrices();
+/* =========================================================
+   HELPERS
+========================================================= */
 function esc(value){
     return String(value ?? "")
         .replace(/&/g,"&amp;")
@@ -708,45 +924,82 @@ function esc(value){
         .replace(/'/g,"&#039;");
 }
 function today(){
-    const d = new Date();
-    const month = String(d.getMonth()+1).padStart(2,"0");
-    const day = String(d.getDate()).padStart(2,"0");
+    const d =
+        new Date();
+    const month =
+        String(
+            d.getMonth()+1
+        ).padStart(2,"0");
+    const day =
+        String(
+            d.getDate()
+        ).padStart(2,"0");
     return `${d.getFullYear()}-${month}-${day}`;
 }
 function money(value){
-    return "₹" + Number(value || 0).toFixed(0);
+    return "₹" +
+        Number(value || 0)
+        .toFixed(0);
 }
-function getPrice(item, qty){
-    const exact = prices.find(p =>
-        p.item === item &&
-        Number(p.qty) === Number(qty)
-    );
+/* =========================================================
+   PRICE LOOKUP
+========================================================= */
+function getPrice(item,qty){
+    /*
+      Exact quantity price first.
+    */
+    const exact =
+        prices.find(
+            p =>
+            p.item === item &&
+            Number(p.qty) === Number(qty)
+        );
     if(exact){
-        return Number(exact.price);
+        return Number(
+            exact.price
+        );
     }
     /*
-      For quantities such as 1.5kg and 2kg:
-      use the 1kg price proportionally if available.
+      For 1.5 kg and 2 kg,
+      calculate using 1kg price.
     */
-    const oneKg = prices.find(p =>
-        p.item === item &&
-        Number(p.qty) === 1
-    );
+    const oneKg =
+        prices.find(
+            p =>
+            p.item === item &&
+            Number(p.qty) === 1
+        );
     if(oneKg){
-        return Number(oneKg.price) * Number(qty);
+        return Number(
+            oneKg.price
+        ) * Number(qty);
     }
     return 0;
 }
 /* =========================================================
    INITIALIZE
 ========================================================= */
-document.addEventListener("DOMContentLoaded", function(){
-    document.getElementById("orderDate").value = today();
-    document.getElementById("ordersViewDate").value = today();
-    document.getElementById("rawDate").value = today();
-    document.getElementById("prepDate").value = today();
-    renderAll();
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+        document.getElementById(
+            "orderDate"
+        ).value = today();
+        document.getElementById(
+            "ordersViewDate"
+        ).value = today();
+        document.getElementById(
+            "rawDate"
+        ).value = today();
+        document.getElementById(
+            "prepDate"
+        ).value = today();
+        renderAll();
+    }
+);
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
 function renderAll(){
     populateItemSelectors();
     updateOrderPrice();
@@ -762,14 +1015,27 @@ function renderAll(){
 /* =========================================================
    TABS
 ========================================================= */
-function showTab(tabId, button){
-    document.querySelectorAll(".tab").forEach(tab =>
-        tab.classList.remove("active")
-    );
-    document.getElementById(tabId).classList.add("active");
-    document.querySelectorAll(".bottom-nav button").forEach(btn =>
-        btn.classList.remove("active")
-    );
+function showTab(
+    tabId,
+    button
+){
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            tab =>
+            tab.classList.remove("active")
+        );
+    document
+        .getElementById(tabId)
+        .classList.add("active");
+    document
+        .querySelectorAll(
+            ".bottom-nav button"
+        )
+        .forEach(
+            btn =>
+            btn.classList.remove("active")
+        );
     button.classList.add("active");
     window.scrollTo({
         top:0,
@@ -777,142 +1043,297 @@ function showTab(tabId, button){
     });
 }
 /* =========================================================
-   ITEMS / PRICE
+   ITEM SELECTORS
 ========================================================= */
 function getItems(){
-    return [...new Set(
-        prices
+    return [
+        ...new Set(
+            prices
             .map(p => p.item)
             .filter(Boolean)
-    )].sort();
+        )
+    ].sort();
 }
 function populateItemSelectors(){
-    const items = getItems();
-    const orderItem = document.getElementById("orderItem");
-    const filter = document.getElementById("ordersFilterItem");
-    const currentOrder = orderItem.value;
-    const currentFilter = filter.value;
-    orderItem.innerHTML = items.map(item =>
-        `<option value="${esc(item)}">${esc(item)}</option>`
-    ).join("");
-    filter.innerHTML =
-        `<option value="">All Items</option>` +
-        items.map(item =>
-            `<option value="${esc(item)}">${esc(item)}</option>`
+    const items =
+        getItems();
+    const orderItem =
+        document.getElementById(
+            "orderItem"
+        );
+    const filter =
+        document.getElementById(
+            "ordersFilterItem"
+        );
+    const currentOrder =
+        orderItem.value;
+    const currentFilter =
+        filter.value;
+    orderItem.innerHTML =
+        items.map(
+            item =>
+            `<option value="${esc(item)}">
+            ${esc(item)}
+            </option>`
         ).join("");
-    if(items.includes(currentOrder)){
-        orderItem.value = currentOrder;
+    filter.innerHTML =
+        `<option value="">
+        All Items
+        </option>` +
+        items.map(
+            item =>
+            `<option value="${esc(item)}">
+            ${esc(item)}
+            </option>`
+        ).join("");
+    if(
+        items.includes(
+            currentOrder
+        )
+    ){
+        orderItem.value =
+            currentOrder;
     }
-    if(items.includes(currentFilter)){
-        filter.value = currentFilter;
+    if(
+        items.includes(
+            currentFilter
+        )
+    ){
+        filter.value =
+            currentFilter;
     }
 }
-document.getElementById("orderItem").addEventListener("change",updateOrderPrice);
-document.getElementById("orderQty").addEventListener("change",updateOrderPrice);
+/* =========================================================
+   ORDER PRICE
+========================================================= */
+document.getElementById(
+    "orderItem"
+).addEventListener(
+    "change",
+    updateOrderPrice
+);
+document.getElementById(
+    "orderQty"
+).addEventListener(
+    "change",
+    updateOrderPrice
+);
 function updateOrderPrice(){
-    const item = document.getElementById("orderItem").value;
-    const qty = Number(document.getElementById("orderQty").value);
-    document.getElementById("orderPrice").value =
+    const item =
+        document.getElementById(
+            "orderItem"
+        ).value;
+    const qty =
+        Number(
+            document.getElementById(
+                "orderQty"
+            ).value
+        );
+    document.getElementById(
+        "orderPrice"
+    ).value =
         getPrice(item,qty);
 }
 /* =========================================================
    ADD ORDER
 ========================================================= */
 function addOrder(){
-    const date = document.getElementById("orderDate").value;
-    const customer = document.getElementById("orderCustomer").value.trim();
-    const item = document.getElementById("orderItem").value;
-    const qty = Number(document.getElementById("orderQty").value);
-    const price = Number(document.getElementById("orderPrice").value);
-    const notes = document.getElementById("orderNotes").value.trim();
+    const date =
+        document.getElementById(
+            "orderDate"
+        ).value;
+    const customer =
+        document.getElementById(
+            "orderCustomer"
+        ).value.trim();
+    const item =
+        document.getElementById(
+            "orderItem"
+        ).value;
+    const qty =
+        Number(
+            document.getElementById(
+                "orderQty"
+            ).value
+        );
+    const price =
+        Number(
+            document.getElementById(
+                "orderPrice"
+            ).value
+        );
+    const notes =
+        document.getElementById(
+            "orderNotes"
+        ).value.trim();
     if(!date){
-        alert("Please select order date.");
+        alert(
+            "Please select order date."
+        );
         return;
     }
     if(!customer){
-        alert("Please enter customer / house.");
+        alert(
+            "Please enter customer / house."
+        );
         return;
     }
     if(!item){
-        alert("Please select item.");
+        alert(
+            "Please select item."
+        );
         return;
     }
     orders.push({
-        id: crypto.randomUUID(),
+        id:crypto.randomUUID(),
         date,
         customer,
         item,
         qty,
         price,
         notes,
-        createdAt:new Date().toISOString()
+        createdAt:
+            new Date().toISOString()
     });
     saveAll();
-    document.getElementById("orderCustomer").value = "";
-    document.getElementById("orderNotes").value = "";
+    document.getElementById(
+        "orderCustomer"
+    ).value = "";
+    document.getElementById(
+        "orderNotes"
+    ).value = "";
     renderAll();
-    alert("Order added successfully.");
 }
 /* =========================================================
-   RENDER ORDERS
+   ORDERS TABLE
 ========================================================= */
 function renderOrders(){
-    const date = document.getElementById("ordersViewDate").value;
-    const filterItem = document.getElementById("ordersFilterItem").value;
-    let list = orders.filter(o => {
-        if(date && o.date !== date){
-            return false;
-        }
-        if(filterItem && o.item !== filterItem){
-            return false;
-        }
-        return true;
-    });
-    list.sort((a,b) =>
-        String(a.createdAt || "").localeCompare(
-            String(b.createdAt || "")
+    const date =
+        document.getElementById(
+            "ordersViewDate"
+        ).value;
+    const filterItem =
+        document.getElementById(
+            "ordersFilterItem"
+        ).value;
+    let list =
+        orders.filter(
+            o => {
+                if(
+                    date &&
+                    o.date !== date
+                ){
+                    return false;
+                }
+                if(
+                    filterItem &&
+                    o.item !== filterItem
+                ){
+                    return false;
+                }
+                return true;
+            }
+        );
+    list.sort(
+        (a,b) =>
+        String(
+            a.createdAt || ""
+        ).localeCompare(
+            String(
+                b.createdAt || ""
+            )
         )
     );
-    const body = document.getElementById("ordersBody");
+    const body =
+        document.getElementById(
+            "ordersBody"
+        );
     if(!list.length){
         body.innerHTML =
-            `<tr><td colspan="7" class="empty">No orders found.</td></tr>`;
+            `<tr>
+            <td colspan="7"
+                class="empty">
+            No orders found.
+            </td>
+            </tr>`;
     }else{
-        body.innerHTML = list.map(o => `
-        <tr>
-        <td>${esc(o.date)}</td>
-        <td>${esc(o.customer)}</td>
-        <td>${esc(o.item)}</td>
-        <td>${Number(o.qty).toFixed(2).replace(/\.00$/,"")} kg</td>
-        <td>${money(o.price)}</td>
-        <td>${esc(o.notes || "")}</td>
-        <td>
-        <button class="danger" onclick="deleteOrder('${o.id}')">
-        Delete
-        </button>
-        </td>
-        </tr>
-        `).join("");
+        body.innerHTML =
+            list.map(
+                o => `
+                <tr>
+                <td>
+                ${esc(o.date)}
+                </td>
+                <td>
+                ${esc(o.customer)}
+                </td>
+                <td>
+                ${esc(o.item)}
+                </td>
+                <td>
+                ${formatKg(o.qty)}
+                </td>
+                <td>
+                ${money(o.price)}
+                </td>
+                <td>
+                ${esc(o.notes || "")}
+                </td>
+                <td>
+                <button
+                    class="danger"
+                    onclick="deleteOrder('${o.id}')">
+                    Delete
+                </button>
+                </td>
+                </tr>
+                `
+            ).join("");
     }
-    const totalKg = list.reduce(
-        (sum,o)=>sum + Number(o.qty || 0),
-        0
-    );
-    const revenue = list.reduce(
-        (sum,o)=>sum + Number(o.price || 0),
-        0
-    );
-    document.getElementById("orderCount").textContent = list.length;
-    document.getElementById("orderKg").textContent =
-        totalKg.toFixed(2).replace(/\.00$/,"");
-    document.getElementById("orderRevenue").textContent =
+    const totalKg =
+        list.reduce(
+            (sum,o) =>
+            sum +
+            Number(o.qty || 0),
+            0
+        );
+    const revenue =
+        list.reduce(
+            (sum,o) =>
+            sum +
+            Number(o.price || 0),
+            0
+        );
+    document.getElementById(
+        "orderCount"
+    ).textContent =
+        list.length;
+    document.getElementById(
+        "orderKg"
+    ).textContent =
+        Number(totalKg)
+        .toFixed(2)
+        .replace(/\.00$/,"");
+    document.getElementById(
+        "orderRevenue"
+    ).textContent =
         money(revenue);
 }
+/* =========================================================
+   DELETE ONE ORDER
+========================================================= */
 function deleteOrder(id){
-    if(!confirm("Delete this order?")){
+    if(
+        !confirm(
+            "Delete this order?"
+        )
+    ){
         return;
     }
-    orders = orders.filter(o => o.id !== id);
+    orders =
+        orders.filter(
+            o => o.id !== id
+        );
     saveAll();
     renderAll();
 }
@@ -921,52 +1342,85 @@ function deleteOrder(id){
 ========================================================= */
 function clearAllOrders(){
     if(!orders.length){
-        alert("There are no orders to clear.");
+        alert(
+            "There are no orders to clear."
+        );
         return;
     }
-    const confirmed = confirm(
-        "Are you sure you want to DELETE ALL ORDERS?\n\n" +
-        "This will remove all order records from this device.\n\n" +
-        "Prices, Raw Materials and Recipes will NOT be deleted.\n\n" +
-        "Please make a Backup first if you may need these orders later."
-    );
-    if(!confirmed){
+    const first =
+        confirm(
+            "Are you sure you want to DELETE ALL ORDERS?\n\n" +
+            "All order records will be removed.\n\n" +
+            "Prices, Raw Materials and Recipes will NOT be deleted.\n\n" +
+            "Please Backup first if you may need these orders."
+        );
+    if(!first){
         return;
     }
-    const secondConfirm = confirm(
-        "FINAL CONFIRMATION\n\n" +
-        "Delete ALL " + orders.length + " orders?"
-    );
-    if(!secondConfirm){
+    const second =
+        confirm(
+            "FINAL CONFIRMATION\n\n" +
+            "Delete ALL " +
+            orders.length +
+            " orders?"
+        );
+    if(!second){
         return;
     }
     orders = [];
     saveAll();
     renderAll();
-    alert("All orders have been cleared.");
+    alert(
+        "All orders have been cleared."
+    );
 }
 /* =========================================================
    PRICE SETUP
 ========================================================= */
 function savePrice(){
-    const item = document.getElementById("priceItem").value.trim();
-    const qty = Number(document.getElementById("priceQty").value);
-    const price = Number(document.getElementById("priceValue").value);
+    const item =
+        document.getElementById(
+            "priceItem"
+        ).value.trim();
+    const qty =
+        Number(
+            document.getElementById(
+                "priceQty"
+            ).value
+        );
+    const price =
+        Number(
+            document.getElementById(
+                "priceValue"
+            ).value
+        );
     if(!item){
-        alert("Please enter item.");
+        alert(
+            "Please enter item."
+        );
         return;
     }
-    if(!price || price < 0){
-        alert("Please enter a valid price.");
+    if(
+        isNaN(price) ||
+        price < 0
+    ){
+        alert(
+            "Please enter a valid price."
+        );
         return;
     }
-    const existing = prices.find(p =>
-        p.item.toLowerCase() === item.toLowerCase() &&
-        Number(p.qty) === qty
-    );
+    const existing =
+        prices.find(
+            p =>
+            p.item.toLowerCase()
+            === item.toLowerCase() &&
+            Number(p.qty) === qty
+        );
     if(existing){
-        existing.item = item;
-        existing.price = price;
+        existing.item =
+            item;
+        existing.price =
+            price;
     }else{
         prices.push({
             id:crypto.randomUUID(),
@@ -976,99 +1430,210 @@ function savePrice(){
         });
     }
     saveAll();
-    document.getElementById("priceItem").value = "";
-    document.getElementById("priceValue").value = "";
+    document.getElementById(
+        "priceItem"
+    ).value = "";
+    document.getElementById(
+        "priceValue"
+    ).value = "";
     renderAll();
 }
+/* =========================================================
+   EDIT PRICE
+========================================================= */
 function editPrice(id){
-    const p = prices.find(x => x.id === id);
+    const p =
+        prices.find(
+            x => x.id === id
+        );
     if(!p){
         return;
     }
-    document.getElementById("priceItem").value = p.item;
-    document.getElementById("priceQty").value = p.qty;
-    document.getElementById("priceValue").value = p.price;
+    document.getElementById(
+        "priceItem"
+    ).value =
+        p.item;
+    document.getElementById(
+        "priceQty"
+    ).value =
+        p.qty;
+    document.getElementById(
+        "priceValue"
+    ).value =
+        p.price;
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
 }
+/* =========================================================
+   DELETE PRICE
+========================================================= */
 function deletePrice(id){
-    if(!confirm("Delete this price entry?")){
+    if(
+        !confirm(
+            "Delete this price entry?"
+        )
+    ){
         return;
     }
-    prices = prices.filter(p => p.id !== id);
+    prices =
+        prices.filter(
+            p => p.id !== id
+        );
     saveAll();
     renderAll();
 }
+/* =========================================================
+   RENDER PRICE SETUP
+========================================================= */
 function renderPrices(){
-    const body = document.getElementById("pricesBody");
-    const list = [...prices].sort((a,b)=>{
-        const itemCompare =
-            a.item.localeCompare(b.item);
-        if(itemCompare !== 0){
-            return itemCompare;
-        }
-        return Number(a.qty)-Number(b.qty);
-    });
+    const body =
+        document.getElementById(
+            "pricesBody"
+        );
+    const list =
+        [...prices].sort(
+            (a,b) => {
+                const itemCompare =
+                    a.item.localeCompare(
+                        b.item
+                    );
+                if(
+                    itemCompare !== 0
+                ){
+                    return itemCompare;
+                }
+                return Number(a.qty)
+                    -
+                    Number(b.qty);
+            }
+        );
     if(!list.length){
         body.innerHTML =
-            `<tr><td colspan="4" class="empty">No prices configured.</td></tr>`;
+            `<tr>
+            <td colspan="4"
+                class="empty">
+            No prices configured.
+            </td>
+            </tr>`;
         return;
     }
-    body.innerHTML = list.map(p => `
-    <tr>
-    <td>${esc(p.item)}</td>
-    <td>${Number(p.qty)} kg</td>
-    <td>${money(p.price)}</td>
-    <td>
-    <button class="light"
-    onclick="editPrice('${p.id}')">
-    Edit
-    </button>
-    <button class="danger"
-    onclick="deletePrice('${p.id}')">
-    Delete
-    </button>
-    </td>
-    </tr>
-    `).join("");
+    body.innerHTML =
+        list.map(
+            p => `
+            <tr>
+            <td>
+            ${esc(p.item)}
+            </td>
+            <td>
+            ${Number(p.qty)} kg
+            </td>
+            <td>
+            ${money(p.price)}
+            </td>
+            <td>
+            <button
+                class="light"
+                onclick="editPrice('${p.id}')">
+                Edit
+            </button>
+            <button
+                class="danger"
+                onclick="deletePrice('${p.id}')">
+                Delete
+            </button>
+            </td>
+            </tr>
+            `
+        ).join("");
 }
 /* =========================================================
    PRICE LIST
 ========================================================= */
 function renderPriceList(){
-    const items = getItems();
-    const body = document.getElementById("priceListBody");
-    body.innerHTML = items.map(item => {
-        const half = prices.find(p =>
-            p.item === item &&
-            Number(p.qty) === 0.5
+    const items =
+        getItems();
+    const body =
+        document.getElementById(
+            "priceListBody"
         );
-        const one = prices.find(p =>
-            p.item === item &&
-            Number(p.qty) === 1
-        );
-        return `
-        <tr>
-        <td><strong>${esc(item)}</strong></td>
-        <td>${half ? money(half.price) : "-"}</td>
-        <td>${one ? money(one.price) : "-"}</td>
-        </tr>
-        `;
-    }).join("");
+    body.innerHTML =
+        items.map(
+            item => {
+                const half =
+                    prices.find(
+                        p =>
+                        p.item === item &&
+                        Number(p.qty) === 0.5
+                    );
+                const one =
+                    prices.find(
+                        p =>
+                        p.item === item &&
+                        Number(p.qty) === 1
+                    );
+                return `
+                <tr>
+                <td>
+                <strong>
+                ${esc(item)}
+                </strong>
+                </td>
+                <td>
+                ${half
+                    ? money(half.price)
+                    : "-"
+                }
+                </td>
+                <td>
+                ${one
+                    ? money(one.price)
+                    : "-"
+                }
+                </td>
+                </tr>
+                `;
+            }
+        ).join("");
 }
 /* =========================================================
-   RAW MATERIALS
+   RAW MATERIAL
 ========================================================= */
 function addRaw(){
-    const date = document.getElementById("rawDate").value;
-    const material = document.getElementById("rawMaterial").value.trim();
-    const qty = Number(document.getElementById("rawQty").value);
-    const unit = document.getElementById("rawUnit").value;
-    const paid = Number(document.getElementById("rawPaid").value);
-    if(!date || !material || !qty || !paid){
-        alert("Please enter all purchase details.");
+    const date =
+        document.getElementById(
+            "rawDate"
+        ).value;
+    const material =
+        document.getElementById(
+            "rawMaterial"
+        ).value.trim();
+    const qty =
+        Number(
+            document.getElementById(
+                "rawQty"
+            ).value
+        );
+    const unit =
+        document.getElementById(
+            "rawUnit"
+        ).value;
+    const paid =
+        Number(
+            document.getElementById(
+                "rawPaid"
+            ).value
+        );
+    if(
+        !date ||
+        !material ||
+        !qty ||
+        !paid
+    ){
+        alert(
+            "Please enter all purchase details."
+        );
         return;
     }
     const kg =
@@ -1083,140 +1648,265 @@ function addRaw(){
         unit,
         paid,
         kg,
-        costPerKg: paid / kg
+        costPerKg:
+            paid / kg
     });
     saveAll();
-    document.getElementById("rawMaterial").value = "";
-    document.getElementById("rawQty").value = "";
-    document.getElementById("rawPaid").value = "";
+    document.getElementById(
+        "rawMaterial"
+    ).value = "";
+    document.getElementById(
+        "rawQty"
+    ).value = "";
+    document.getElementById(
+        "rawPaid"
+    ).value = "";
     renderAll();
 }
+/* =========================================================
+   DELETE RAW
+========================================================= */
 function deleteRaw(id){
-    if(!confirm("Delete this purchase?")){
+    if(
+        !confirm(
+            "Delete this purchase?"
+        )
+    ){
         return;
     }
-    raws = raws.filter(r => r.id !== id);
+    raws =
+        raws.filter(
+            r => r.id !== id
+        );
     saveAll();
     renderAll();
 }
+/* =========================================================
+   RENDER RAW
+========================================================= */
 function renderRaw(){
-    const body = document.getElementById("rawBody");
+    const body =
+        document.getElementById(
+            "rawBody"
+        );
     if(!raws.length){
         body.innerHTML =
-            `<tr><td colspan="6" class="empty">No purchases recorded.</td></tr>`;
+            `<tr>
+            <td colspan="6"
+                class="empty">
+            No purchases recorded.
+            </td>
+            </tr>`;
         return;
     }
-    const list = [...raws].sort((a,b) =>
-        String(b.date).localeCompare(String(a.date))
-    );
-    body.innerHTML = list.map(r => `
-    <tr>
-    <td>${esc(r.date)}</td>
-    <td>${esc(r.material)}</td>
-    <td>${r.qty} ${esc(r.unit)}</td>
-    <td>${money(r.paid)}</td>
-    <td>${money(r.costPerKg)}</td>
-    <td>
-    <button class="danger"
-    onclick="deleteRaw('${r.id}')">
-    Delete
-    </button>
-    </td>
-    </tr>
-    `).join("");
+    const list =
+        [...raws].sort(
+            (a,b) =>
+            String(b.date)
+            .localeCompare(
+                String(a.date)
+            )
+        );
+    body.innerHTML =
+        list.map(
+            r => `
+            <tr>
+            <td>
+            ${esc(r.date)}
+            </td>
+            <td>
+            ${esc(r.material)}
+            </td>
+            <td>
+            ${r.qty}
+            ${esc(r.unit)}
+            </td>
+            <td>
+            ${money(r.paid)}
+            </td>
+            <td>
+            ${money(r.costPerKg)}
+            </td>
+            <td>
+            <button
+                class="danger"
+                onclick="deleteRaw('${r.id}')">
+                Delete
+            </button>
+            </td>
+            </tr>
+            `
+        ).join("");
 }
 /* =========================================================
    FINANCE
 ========================================================= */
 function renderFinance(){
-    const earned = orders.reduce(
-        (sum,o)=>sum + Number(o.price || 0),
-        0
-    );
-    const spent = raws.reduce(
-        (sum,r)=>sum + Number(r.paid || 0),
-        0
-    );
-    const balance = earned - spent;
-    document.getElementById("financeEarned").textContent =
+    const earned =
+        orders.reduce(
+            (sum,o) =>
+            sum +
+            Number(o.price || 0),
+            0
+        );
+    const spent =
+        raws.reduce(
+            (sum,r) =>
+            sum +
+            Number(r.paid || 0),
+            0
+        );
+    const balance =
+        earned - spent;
+    document.getElementById(
+        "financeEarned"
+    ).textContent =
         money(earned);
-    document.getElementById("financeSpent").textContent =
+    document.getElementById(
+        "financeSpent"
+    ).textContent =
         money(spent);
-    document.getElementById("financeBalance").textContent =
+    document.getElementById(
+        "financeBalance"
+    ).textContent =
         money(balance);
 }
 /* =========================================================
    PREPARATION LIST
 ========================================================= */
 function renderPrep(){
-    const date = document.getElementById("prepDate").value;
-    const list = orders.filter(o =>
-        !date || o.date === date
-    );
+    const date =
+        document.getElementById(
+            "prepDate"
+        ).value;
+    const list =
+        orders.filter(
+            o =>
+            !date ||
+            o.date === date
+        );
     /*
-      Combine all orders having the same item.
+      Group by ITEM.
+      Idly batter and Dosa batter
+      are now completely separate.
       Example:
-      Customer A -> Idly/Dosa -> 1kg
-      Customer B -> Idly/Dosa -> 0.5kg
-      Customer C -> Idly/Dosa -> 1kg
-      Result:
-      Idly/Dosa -> 2.5kg
+      Customer 1:
+      Idly 1 kg
+      Customer 2:
+      Idly 0.5 kg
+      Customer 3:
+      Idly 1 kg
+      Preparation:
+      Idly batter = 2.5 kg
     */
     const grouped = {};
-    list.forEach(o => {
-        const item = o.item;
-        if(!grouped[item]){
-            grouped[item] = 0;
+    list.forEach(
+        o => {
+            const item =
+                o.item;
+            if(
+                !grouped[item]
+            ){
+                grouped[item] =
+                    0;
+            }
+            grouped[item] +=
+                Number(
+                    o.qty || 0
+                );
         }
-        grouped[item] += Number(o.qty || 0);
-    });
-    const body = document.getElementById("prepBody");
-    const items = Object.keys(grouped).sort();
+    );
+    const body =
+        document.getElementById(
+            "prepBody"
+        );
+    const items =
+        Object.keys(
+            grouped
+        ).sort();
     if(!items.length){
         body.innerHTML =
-            `<tr><td colspan="2" class="empty">
+            `<tr>
+            <td colspan="2"
+                class="empty">
             No orders for this date.
-            </td></tr>`;
+            </td>
+            </tr>`;
         return;
     }
-    body.innerHTML = items.map(item => `
-    <tr>
-    <td>
-    <strong>${esc(item)}</strong>
-    </td>
-    <td>
-    <strong>
-    ${formatKg(grouped[item])}
-    </strong>
-    </td>
-    </tr>
-    `).join("");
+    body.innerHTML =
+        items.map(
+            item => `
+            <tr>
+            <td>
+            <strong>
+            ${esc(item)}
+            </strong>
+            </td>
+            <td>
+            <strong>
+            ${formatKg(
+                grouped[item]
+            )}
+            </strong>
+            </td>
+            </tr>
+            `
+        ).join("");
 }
+/* =========================================================
+   FORMAT KG
+========================================================= */
 function formatKg(value){
     return Number(value)
         .toFixed(2)
-        .replace(/\.00$/,"")
-        .replace(/(\.\d)0$/,"$1")
+        .replace(
+            /\.00$/,
+            ""
+        )
+        .replace(
+            /(\.\d)0$/,
+            "$1"
+        )
         + " kg";
 }
 /* =========================================================
    RECIPES
 ========================================================= */
 function saveRecipe(){
-    const item = document.getElementById("recipeItem").value.trim();
-    const baseKg = Number(document.getElementById("recipeBaseKg").value);
-    const text = document.getElementById("recipeText").value.trim();
+    const item =
+        document.getElementById(
+            "recipeItem"
+        ).value.trim();
+    const baseKg =
+        Number(
+            document.getElementById(
+                "recipeBaseKg"
+            ).value
+        );
+    const text =
+        document.getElementById(
+            "recipeText"
+        ).value.trim();
     if(!item){
-        alert("Please enter recipe item.");
+        alert(
+            "Please enter recipe item."
+        );
         return;
     }
-    const existing = recipes.find(r =>
-        r.item.toLowerCase() === item.toLowerCase()
-    );
+    const existing =
+        recipes.find(
+            r =>
+            r.item.toLowerCase()
+            === item.toLowerCase()
+        );
     if(existing){
-        existing.item = item;
-        existing.baseKg = baseKg;
-        existing.text = text;
+        existing.item =
+            item;
+        existing.baseKg =
+            baseKg;
+        existing.text =
+            text;
     }else{
         recipes.push({
             id:crypto.randomUUID(),
@@ -1226,83 +1916,161 @@ function saveRecipe(){
         });
     }
     saveAll();
-    document.getElementById("recipeItem").value = "";
-    document.getElementById("recipeBaseKg").value = "";
-    document.getElementById("recipeText").value = "";
+    document.getElementById(
+        "recipeItem"
+    ).value = "";
+    document.getElementById(
+        "recipeBaseKg"
+    ).value = "";
+    document.getElementById(
+        "recipeText"
+    ).value = "";
     renderRecipes();
 }
+/* =========================================================
+   EDIT RECIPE
+========================================================= */
 function editRecipe(id){
-    const r = recipes.find(x => x.id === id);
+    const r =
+        recipes.find(
+            x => x.id === id
+        );
     if(!r){
         return;
     }
-    document.getElementById("recipeItem").value = r.item;
-    document.getElementById("recipeBaseKg").value = r.baseKg;
-    document.getElementById("recipeText").value = r.text;
+    document.getElementById(
+        "recipeItem"
+    ).value =
+        r.item;
+    document.getElementById(
+        "recipeBaseKg"
+    ).value =
+        r.baseKg;
+    document.getElementById(
+        "recipeText"
+    ).value =
+        r.text;
 }
+/* =========================================================
+   DELETE RECIPE
+========================================================= */
 function deleteRecipe(id){
-    if(!confirm("Delete this recipe?")){
+    if(
+        !confirm(
+            "Delete this recipe?"
+        )
+    ){
         return;
     }
-    recipes = recipes.filter(r => r.id !== id);
+    recipes =
+        recipes.filter(
+            r => r.id !== id
+        );
     saveAll();
     renderRecipes();
 }
+/* =========================================================
+   RENDER RECIPES
+========================================================= */
 function renderRecipes(){
-    const body = document.getElementById("recipesBody");
+    const body =
+        document.getElementById(
+            "recipesBody"
+        );
     if(!recipes.length){
         body.innerHTML =
-            `<tr><td colspan="4" class="empty">No recipes configured.</td></tr>`;
+            `<tr>
+            <td colspan="4"
+                class="empty">
+            No recipes configured.
+            </td>
+            </tr>`;
         return;
     }
-    body.innerHTML = recipes.map(r => `
-    <tr>
-    <td>${esc(r.item)}</td>
-    <td>${esc(r.baseKg)}</td>
-    <td>${esc(r.text)}</td>
-    <td>
-    <button class="light"
-    onclick="editRecipe('${r.id}')">
-    Edit
-    </button>
-    <button class="danger"
-    onclick="deleteRecipe('${r.id}')">
-    Delete
-    </button>
-    </td>
-    </tr>
-    `).join("");
+    body.innerHTML =
+        recipes.map(
+            r => `
+            <tr>
+            <td>
+            ${esc(r.item)}
+            </td>
+            <td>
+            ${esc(r.baseKg)}
+            </td>
+            <td>
+            ${esc(r.text)}
+            </td>
+            <td>
+            <button
+                class="light"
+                onclick="editRecipe('${r.id}')">
+                Edit
+            </button>
+            <button
+                class="danger"
+                onclick="deleteRecipe('${r.id}')">
+                Delete
+            </button>
+            </td>
+            </tr>
+            `
+        ).join("");
 }
 /* =========================================================
-   CSV HELPERS
+   CSV ESCAPE
 ========================================================= */
 function csvEscape(value){
-    const str = String(value ?? "");
+    const str =
+        String(
+            value ?? ""
+        );
     if(
         str.includes(",") ||
         str.includes('"') ||
         str.includes("\n")
     ){
         return '"' +
-            str.replace(/"/g,'""') +
+            str.replace(
+                /"/g,
+                '""'
+            ) +
             '"';
     }
     return str;
 }
-function downloadText(filename,text,type){
-    const blob = new Blob(
-        [text],
-        {type}
-    );
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+function downloadText(
+    filename,
+    text,
+    type
+){
+    const blob =
+        new Blob(
+            [text],
+            {type}
+        );
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+    const a =
+        document.createElement(
+            "a"
+        );
+    a.href =
+        url;
+    a.download =
+        filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
-    setTimeout(() =>
-        URL.revokeObjectURL(url),
+    setTimeout(
+        () =>
+        URL.revokeObjectURL(
+            url
+        ),
         1000
     );
 }
@@ -1314,42 +2082,76 @@ function parseCSV(text){
     let row = [];
     let cell = "";
     let inQuotes = false;
-    for(let i=0;i<text.length;i++){
-        const char = text[i];
-        const next = text[i+1];
-        if(char === '"' && inQuotes && next === '"'){
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+        const char =
+            text[i];
+        const next =
+            text[i+1];
+        if(
+            char === '"' &&
+            inQuotes &&
+            next === '"'
+        ){
             cell += '"';
             i++;
-        }else if(char === '"'){
-            inQuotes = !inQuotes;
-        }else if(char === "," && !inQuotes){
-            row.push(cell);
-            cell = "";
-        }else if(
-            (char === "\n" || char === "\r") &&
+        }
+        else if(
+            char === '"'
+        ){
+            inQuotes =
+                !inQuotes;
+        }
+        else if(
+            char === "," &&
             !inQuotes
         ){
-            if(char === "\r" && next === "\n"){
+            row.push(cell);
+            cell = "";
+        }
+        else if(
+            (
+                char === "\n" ||
+                char === "\r"
+            ) &&
+            !inQuotes
+        ){
+            if(
+                char === "\r" &&
+                next === "\n"
+            ){
                 i++;
             }
             row.push(cell);
-            if(row.some(v => v !== "")){
+            if(
+                row.some(
+                    v => v !== ""
+                )
+            ){
                 rows.push(row);
             }
             row = [];
             cell = "";
-        }else{
+        }
+        else{
             cell += char;
         }
     }
     row.push(cell);
-    if(row.some(v => v !== "")){
+    if(
+        row.some(
+            v => v !== ""
+        )
+    ){
         rows.push(row);
     }
     return rows;
 }
 /* =========================================================
-   ORDERS CSV
+   EXPORT ORDERS CSV
 ========================================================= */
 function exportOrdersCSV(){
     const header = [
@@ -1361,88 +2163,149 @@ function exportOrdersCSV(){
         "Notes"
     ];
     const lines = [
-        header.map(csvEscape).join(",")
+        header
+        .map(csvEscape)
+        .join(",")
     ];
-    orders.forEach(o => {
-        lines.push([
-            o.date,
-            o.customer,
-            o.item,
-            o.qty,
-            o.price,
-            o.notes || ""
-        ].map(csvEscape).join(","));
-    });
+    orders.forEach(
+        o => {
+            lines.push(
+                [
+                    o.date,
+                    o.customer,
+                    o.item,
+                    o.qty,
+                    o.price,
+                    o.notes || ""
+                ]
+                .map(csvEscape)
+                .join(",")
+            );
+        }
+    );
     downloadText(
         "orders.csv",
         lines.join("\n"),
         "text/csv;charset=utf-8"
     );
 }
+/* =========================================================
+   IMPORT ORDERS CSV
+========================================================= */
 function importOrdersCSV(input){
-    const file = input.files[0];
+    const file =
+        input.files[0];
     if(!file){
         return;
     }
-    const reader = new FileReader();
-    reader.onload = function(){
-        try{
-            const rows = parseCSV(reader.result);
-            if(rows.length < 2){
-                alert("CSV contains no orders.");
-                return;
-            }
-            const imported = [];
-            for(let i=1;i<rows.length;i++){
-                const r = rows[i];
-                if(!r.length){
-                    continue;
+    const reader =
+        new FileReader();
+    reader.onload =
+        function(){
+            try{
+                const rows =
+                    parseCSV(
+                        reader.result
+                    );
+                if(
+                    rows.length < 2
+                ){
+                    alert(
+                        "CSV contains no orders."
+                    );
+                    return;
                 }
-                const date = r[0]?.trim();
-                const customer = r[1]?.trim();
-                const item = r[2]?.trim();
-                const qty = Number(r[3]);
-                const price = Number(r[4]);
-                const notes = r[5]?.trim() || "";
-                if(!date || !customer || !item || !qty){
-                    continue;
+                const imported = [];
+                for(
+                    let i=1;
+                    i<rows.length;
+                    i++
+                ){
+                    const r =
+                        rows[i];
+                    const date =
+                        r[0]?.trim();
+                    const customer =
+                        r[1]?.trim();
+                    const item =
+                        r[2]?.trim();
+                    const qty =
+                        Number(r[3]);
+                    let price =
+                        Number(r[4]);
+                    const notes =
+                        r[5]?.trim()
+                        || "";
+                    if(
+                        !date ||
+                        !customer ||
+                        !item ||
+                        !qty
+                    ){
+                        continue;
+                    }
+                    /*
+                      If CSV price is empty or zero,
+                      calculate from current Price Setup.
+                    */
+                    if(
+                        !price
+                    ){
+                        price =
+                            getPrice(
+                                item,
+                                qty
+                            );
+                    }
+                    imported.push({
+                        id:
+                            crypto.randomUUID(),
+                        date,
+                        customer,
+                        item,
+                        qty,
+                        price,
+                        notes,
+                        createdAt:
+                            new Date()
+                            .toISOString()
+                    });
                 }
-                imported.push({
-                    id:crypto.randomUUID(),
-                    date,
-                    customer,
-                    item,
-                    qty,
-                    price,
-                    notes,
-                    createdAt:new Date().toISOString()
-                });
+                if(
+                    !imported.length
+                ){
+                    alert(
+                        "No valid orders found in CSV."
+                    );
+                    return;
+                }
+                /*
+                  IMPORT ADDS orders.
+                  To replace all existing orders:
+                  Clear All Orders first.
+                */
+                orders.push(
+                    ...imported
+                );
+                saveAll();
+                renderAll();
+                alert(
+                    imported.length +
+                    " orders imported successfully."
+                );
+            }catch(e){
+                alert(
+                    "Unable to import CSV."
+                );
             }
-            if(!imported.length){
-                alert("No valid orders found in CSV.");
-                return;
-            }
-            /*
-              Import ADDS records to existing orders.
-              Use Clear All Orders first if you want
-              the CSV to replace the existing order list.
-            */
-            orders.push(...imported);
-            saveAll();
-            renderAll();
-            alert(
-                imported.length +
-                " orders imported successfully."
-            );
-        }catch(e){
-            alert("Unable to import CSV.");
-        }
-        input.value = "";
-    };
-    reader.readAsText(file);
+            input.value = "";
+        };
+    reader.readAsText(
+        file
+    );
 }
 /* =========================================================
-   RAW CSV
+   EXPORT RAW CSV
 ========================================================= */
 function exportRawCSV(){
     const header = [
@@ -1455,113 +2318,162 @@ function exportRawCSV(){
         "Cost Per KG"
     ];
     const lines = [
-        header.map(csvEscape).join(",")
+        header
+        .map(csvEscape)
+        .join(",")
     ];
-    raws.forEach(r => {
-        lines.push([
-            r.date,
-            r.material,
-            r.qty,
-            r.unit,
-            r.paid,
-            r.kg,
-            r.costPerKg
-        ].map(csvEscape).join(","));
-    });
+    raws.forEach(
+        r => {
+            lines.push(
+                [
+                    r.date,
+                    r.material,
+                    r.qty,
+                    r.unit,
+                    r.paid,
+                    r.kg,
+                    r.costPerKg
+                ]
+                .map(csvEscape)
+                .join(",")
+            );
+        }
+    );
     downloadText(
         "raw-materials.csv",
         lines.join("\n"),
         "text/csv;charset=utf-8"
     );
 }
+/* =========================================================
+   IMPORT RAW CSV
+========================================================= */
 function importRawCSV(input){
-    const file = input.files[0];
+    const file =
+        input.files[0];
     if(!file){
         return;
     }
-    const reader = new FileReader();
-    reader.onload = function(){
-        try{
-            const rows = parseCSV(reader.result);
-            const imported = [];
-            for(let i=1;i<rows.length;i++){
-                const r = rows[i];
-                if(!r.length){
-                    continue;
+    const reader =
+        new FileReader();
+    reader.onload =
+        function(){
+            try{
+                const rows =
+                    parseCSV(
+                        reader.result
+                    );
+                const imported = [];
+                for(
+                    let i=1;
+                    i<rows.length;
+                    i++
+                ){
+                    const r =
+                        rows[i];
+                    const date =
+                        r[0]?.trim();
+                    const material =
+                        r[1]?.trim();
+                    const qty =
+                        Number(r[2]);
+                    const unit =
+                        r[3]?.trim()
+                        || "kg";
+                    const paid =
+                        Number(r[4]);
+                    if(
+                        !date ||
+                        !material ||
+                        !qty ||
+                        !paid
+                    ){
+                        continue;
+                    }
+                    const kg =
+                        unit === "g"
+                        ? qty / 1000
+                        : qty;
+                    imported.push({
+                        id:
+                            crypto.randomUUID(),
+                        date,
+                        material,
+                        qty,
+                        unit,
+                        paid,
+                        kg,
+                        costPerKg:
+                            paid / kg
+                    });
                 }
-                const date = r[0]?.trim();
-                const material = r[1]?.trim();
-                const qty = Number(r[2]);
-                const unit = r[3]?.trim() || "kg";
-                const paid = Number(r[4]);
-                if(!date || !material || !qty || !paid){
-                    continue;
-                }
-                const kg =
-                    unit === "g"
-                    ? qty/1000
-                    : qty;
-                imported.push({
-                    id:crypto.randomUUID(),
-                    date,
-                    material,
-                    qty,
-                    unit,
-                    paid,
-                    kg,
-                    costPerKg:paid/kg
-                });
+                raws.push(
+                    ...imported
+                );
+                saveAll();
+                renderAll();
+                alert(
+                    imported.length +
+                    " raw material records imported."
+                );
+            }catch(e){
+                alert(
+                    "Unable to import raw material CSV."
+                );
             }
-            raws.push(...imported);
-            saveAll();
-            renderAll();
-            alert(
-                imported.length +
-                " raw material records imported."
-            );
-        }catch(e){
-            alert("Unable to import raw material CSV.");
-        }
-        input.value = "";
-    };
-    reader.readAsText(file);
+            input.value = "";
+        };
+    reader.readAsText(
+        file
+    );
 }
 /* =========================================================
    BACKUP
 ========================================================= */
 function backupAllData(){
     const backup = {
-        app:"KPK Batter House Orders",
-        version:3,
-        backupDate:new Date().toISOString(),
+        app:
+            "KPK Batter House Orders",
+        version:
+            4,
+        backupDate:
+            new Date()
+            .toISOString(),
         orders,
         raws,
         prices,
         recipes
     };
-    const json = JSON.stringify(
-        backup,
-        null,
-        2
-    );
-    const datePart =
-        today();
+    const json =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
     downloadText(
-        `KPK_Batter_Backup_${datePart}.json`,
+        `KPK_Batter_Backup_${today()}.json`,
         json,
         "application/json"
     );
     localStorage.setItem(
         LAST_BACKUP_KEY,
-        new Date().toISOString()
+        new Date()
+        .toISOString()
     );
     renderLastBackup();
 }
+/* =========================================================
+   LAST BACKUP
+========================================================= */
 function renderLastBackup(){
     const value =
-        localStorage.getItem(LAST_BACKUP_KEY);
+        localStorage.getItem(
+            LAST_BACKUP_KEY
+        );
     const el =
-        document.getElementById("lastBackup");
+        document.getElementById(
+            "lastBackup"
+        );
     if(!value){
         el.textContent =
             "Last backup: Not created yet.";
@@ -1570,7 +2482,9 @@ function renderLastBackup(){
     try{
         el.textContent =
             "Last backup: " +
-            new Date(value).toLocaleString();
+            new Date(
+                value
+            ).toLocaleString();
     }catch(e){
         el.textContent =
             "Last backup: Available";
@@ -1580,68 +2494,94 @@ function renderLastBackup(){
    RESTORE
 ========================================================= */
 function restoreAllData(input){
-    const file = input.files[0];
+    const file =
+        input.files[0];
     if(!file){
         return;
     }
-    const reader = new FileReader();
-    reader.onload = function(){
-        try{
-            const data =
-                JSON.parse(reader.result);
-            if(
-                !data ||
-                !Array.isArray(data.orders) ||
-                !Array.isArray(data.raws) ||
-                !Array.isArray(data.prices) ||
-                !Array.isArray(data.recipes)
-            ){
-                alert(
-                    "Invalid backup file."
+    const reader =
+        new FileReader();
+    reader.onload =
+        function(){
+            try{
+                const data =
+                    JSON.parse(
+                        reader.result
+                    );
+                if(
+                    !data ||
+                    !Array.isArray(
+                        data.orders
+                    ) ||
+                    !Array.isArray(
+                        data.raws
+                    ) ||
+                    !Array.isArray(
+                        data.prices
+                    ) ||
+                    !Array.isArray(
+                        data.recipes
+                    )
+                ){
+                    alert(
+                        "Invalid backup file."
+                    );
+                    return;
+                }
+                const confirmed =
+                    confirm(
+                        "Restore this backup?\n\n" +
+                        "Current Orders, Raw Materials, Prices and Recipes will be replaced."
+                    );
+                if(!confirmed){
+                    return;
+                }
+                orders =
+                    data.orders;
+                raws =
+                    data.raws;
+                prices =
+                    data.prices;
+                recipes =
+                    data.recipes;
+                /*
+                  Convert old combined price
+                  after restore too.
+                */
+                migrateOldPrices();
+                saveAll();
+                localStorage.setItem(
+                    LAST_BACKUP_KEY,
+                    new Date()
+                    .toISOString()
                 );
-                return;
+                renderAll();
+                alert(
+                    "Backup restored successfully."
+                );
+            }catch(e){
+                alert(
+                    "Unable to restore backup."
+                );
             }
-            const confirmed = confirm(
-                "Restore this backup?\n\n" +
-                "Current Orders, Raw Materials, Prices and Recipes will be replaced."
-            );
-            if(!confirmed){
-                return;
-            }
-            orders = data.orders;
-            raws = data.raws;
-            prices = data.prices;
-            recipes = data.recipes;
-            saveAll();
-            localStorage.setItem(
-                LAST_BACKUP_KEY,
-                new Date().toISOString()
-            );
-            renderAll();
-            alert(
-                "Backup restored successfully."
-            );
-        }catch(e){
-            alert(
-                "Unable to restore backup."
-            );
-        }
-        input.value = "";
-    };
-    reader.readAsText(file);
+            input.value = "";
+        };
+    reader.readAsText(
+        file
+    );
 }
 /* =========================================================
    EXPORT ALL CSVs
 ========================================================= */
 function exportAllCSVs(){
     exportOrdersCSV();
-    setTimeout(() => {
-        exportRawCSV();
-    },300);
+    setTimeout(
+        () => {
+            exportRawCSV();
+        },
+        300
+    );
 }
-/* =========================================================
-   END
-========================================================= */
 </script>
 </body>
 </html>
