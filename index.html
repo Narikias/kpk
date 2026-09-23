@@ -2,436 +2,321 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
       content="width=device-width,
                initial-scale=1,
                maximum-scale=1,
                viewport-fit=cover">
-
 <meta name="theme-color" content="#0d6efd">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Orders Log">
-
 <title>KPK Batter House - Orders</title>
-
 <style>
-
 /* =========================================================
    COMPACT MOBILE-FIRST DESIGN
 ========================================================= */
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
-
 html,body{
     margin:0;
     padding:0;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     background:#f5f7fa;
     color:#222;
-    font-size:13px;
+    font-size:14px;
 }
-
 body{
     padding-bottom:58px;
 }
-
 header{
     position:sticky;
     top:0;
     z-index:100;
     background:#0d6efd;
     color:white;
-
     padding:
-        calc(6px + env(safe-area-inset-top))
-        9px
-        6px;
-
-    box-shadow:0 1px 4px rgba(0,0,0,.15);
+        calc(7px + env(safe-area-inset-top))
+        10px
+        7px;
+    box-shadow:0 1px 5px rgba(0,0,0,.15);
 }
-
 header h1{
     margin:0;
-    font-size:16px;
+    font-size:17px;
 }
-
 header p{
     margin:1px 0 0;
-    font-size:9px;
+    font-size:10px;
     opacity:.9;
 }
-
 .container{
     max-width:1100px;
     margin:auto;
-    padding:6px;
+    padding:7px;
 }
-
 .tab{
     display:none;
 }
-
 .tab.active{
     display:block;
 }
-
 .card{
     background:white;
-    border-radius:7px;
-    padding:8px;
-    margin-bottom:6px;
-    box-shadow:0 1px 3px rgba(0,0,0,.06);
+    border-radius:8px;
+    padding:9px;
+    margin-bottom:7px;
+    box-shadow:0 1px 3px rgba(0,0,0,.07);
 }
-
 h2{
-    font-size:14px;
-    margin:0 0 6px;
+    font-size:15px;
+    margin:0 0 8px;
 }
-
 h3{
-    font-size:13px;
-    margin:7px 0 4px;
+    font-size:14px;
+    margin:8px 0 5px;
 }
-
 label{
     display:block;
     font-weight:600;
-    font-size:10px;
-    margin-bottom:2px;
+    font-size:11px;
+    margin-bottom:3px;
 }
-
 input,
 select,
 textarea,
 button{
     font:inherit;
 }
-
 input,
 select,
 textarea{
     width:100%;
-    min-height:35px;
-    height:35px;
-    padding:5px 7px;
+    min-height:38px;
+    height:38px;
+    padding:6px 8px;
     border:1px solid #ccd2d8;
-    border-radius:5px;
+    border-radius:6px;
     background:white;
-    font-size:13px;
+    font-size:14px;
 }
-
 textarea{
-    height:60px;
-    min-height:60px;
+    height:65px;
+    min-height:65px;
     resize:vertical;
 }
-
-/* =========================================================
-   SMALL DATE PICKERS
-========================================================= */
-
-input[type="date"]{
-    height:31px;
-    min-height:31px;
-    padding:3px 5px;
-    font-size:12px;
-    width:auto;
-    max-width:145px;
-}
-
 button{
-    min-height:34px;
+    min-height:36px;
     border:0;
-    border-radius:5px;
-    padding:5px 9px;
+    border-radius:6px;
+    padding:6px 10px;
     background:#0d6efd;
     color:white;
     font-weight:600;
     cursor:pointer;
-    font-size:11px;
+    font-size:12px;
 }
-
 button:active{
     transform:scale(.98);
 }
-
 button.secondary{
     background:#6c757d;
 }
-
 button.success{
     background:#198754;
 }
-
 button.warning{
     background:#f0ad00;
     color:#111;
 }
-
 button.danger{
     background:#dc3545;
 }
-
 button.light{
     background:#e9ecef;
     color:#222;
 }
-
-button.delivered{
-    background:#198754;
-}
-
-button.undo{
-    background:#f0ad00;
-    color:#111;
-}
-
 .grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:6px;
+    gap:7px;
 }
-
 .grid3{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:6px;
+    gap:7px;
 }
-
 @media(max-width:600px){
-
     .grid3{
         grid-template-columns:repeat(2,1fr);
     }
-
 }
-
 .actions{
     display:flex;
     flex-wrap:wrap;
-    gap:4px;
-    margin-top:6px;
+    gap:5px;
+    margin-top:7px;
 }
-
 .actions button{
     flex:1 1 auto;
 }
-
 .stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:4px;
-    margin-top:6px;
+    grid-template-columns:repeat(3,1fr);
+    gap:5px;
+    margin-top:7px;
 }
-
 .stat{
     background:#f1f5f9;
-    padding:5px 3px;
-    border-radius:5px;
+    padding:6px 4px;
+    border-radius:6px;
     text-align:center;
 }
-
 .stat .number{
-    font-size:14px;
+    font-size:16px;
     font-weight:700;
 }
-
 .stat .label{
-    font-size:8px;
+    font-size:9px;
     color:#666;
     margin-top:1px;
 }
-
 .table-wrap{
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
-    margin-top:5px;
+    margin-top:6px;
 }
-
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:720px;
+    min-width:600px;
 }
-
 th,
 td{
-    padding:4px 4px;
+    padding:5px 5px;
     border-bottom:1px solid #e2e6ea;
     text-align:left;
-    font-size:10px;
+    font-size:11px;
     vertical-align:middle;
-    line-height:1.2;
+    line-height:1.25;
 }
-
 th{
     background:#f1f3f5;
     font-weight:700;
     position:sticky;
     top:0;
 }
-
 td button{
-    min-height:27px;
-    padding:3px 6px;
-    font-size:9px;
-    margin:1px;
+    min-height:28px;
+    padding:3px 7px;
+    font-size:10px;
 }
-
 .price-table{
     min-width:360px;
 }
-
 .price-table th,
 .price-table td{
     text-align:center;
 }
-
 .price-table th:first-child,
 .price-table td:first-child{
     text-align:left;
 }
-
 .prep-table{
     min-width:360px;
 }
-
 .prep-table th:last-child,
 .prep-table td:last-child{
     text-align:right;
 }
-
 .empty{
-    padding:10px;
+    padding:12px;
     text-align:center;
     color:#777;
 }
-
 .small{
-    font-size:9px;
+    font-size:10px;
     color:#666;
-    margin-top:4px;
+    margin-top:5px;
 }
-
 .notice{
-    padding:5px 7px;
-    border-radius:5px;
+    padding:6px 8px;
+    border-radius:6px;
     background:#e7f1ff;
     color:#064b9b;
-    font-size:10px;
-    margin-bottom:6px;
+    font-size:11px;
+    margin-bottom:7px;
     line-height:1.3;
 }
-
 .danger-note{
     background:#fff0f0;
     color:#a30000;
 }
-
-.success-note{
-    background:#eaf7ee;
-    color:#146c35;
-}
-
 .file-input{
     display:none;
 }
-
 .bottom-nav{
     position:fixed;
     z-index:200;
     left:0;
     right:0;
     bottom:0;
-
     display:grid;
     grid-template-columns:repeat(4,1fr);
-
     background:white;
     border-top:1px solid #ddd;
-
     padding-bottom:env(safe-area-inset-bottom);
-
     box-shadow:0 -1px 5px rgba(0,0,0,.08);
 }
-
 .bottom-nav button{
-    min-height:47px;
+    min-height:48px;
     border-radius:0;
     background:white;
     color:#555;
     font-size:9px;
     padding:3px;
 }
-
 .bottom-nav button.active{
     color:#0d6efd;
     font-weight:700;
 }
-
 .bottom-nav span{
     display:block;
-    font-size:16px;
-    line-height:17px;
+    font-size:17px;
+    line-height:18px;
 }
-
 .right{
     text-align:right;
 }
-
-.status-pending{
-    color:#b26a00;
-    font-weight:700;
+.highlight{
+    background:#fff8dc;
 }
-
-.status-delivered{
-    color:#198754;
-    font-weight:700;
-}
-
-.order-delivered{
-    background:#f1faf4;
-}
-
 .badge{
     display:inline-block;
     padding:2px 5px;
-    border-radius:10px;
+    border-radius:12px;
     background:#e9ecef;
-    font-size:8px;
+    font-size:9px;
 }
-
 </style>
 </head>
-
 <body>
 
 <header>
-
 <h1>KPK Batter House</h1>
-
 <p>Orders • Prices • Finance • Preparation</p>
-
 </header>
 
-
 <div class="container">
-
 
 <!-- ======================================================
      ORDERS
 ====================================================== -->
-
 <section id="ordersTab" class="tab active">
 
 <div class="card">
-
 <h2>Add Order</h2>
 
 <div class="grid">
@@ -455,16 +340,12 @@ td button{
 
 <div>
 <label>Quantity</label>
-
 <select id="orderQty">
-
 <option value="0.5">0.5 kg</option>
 <option value="1">1 kg</option>
 <option value="1.5">1.5 kg</option>
 <option value="2">2 kg</option>
-
 </select>
-
 </div>
 
 <div>
@@ -484,20 +365,13 @@ td button{
 </div>
 
 <div class="actions">
-
 <button onclick="addOrder()">
 Add Order
 </button>
-
+</div>
 </div>
 
-</div>
-
-
-<!-- ======================================================
-     ORDERS LIST
-====================================================== -->
-
+<!-- ORDERS TABLE -->
 <div class="card">
 
 <h2>Orders</h2>
@@ -513,18 +387,13 @@ Add Order
 
 <div>
 <label>Filter Item</label>
-
 <select id="ordersFilterItem"
         onchange="renderOrders()">
-
 <option value="">All Items</option>
-
 </select>
-
 </div>
 
 </div>
-
 
 <div class="stats">
 
@@ -533,23 +402,18 @@ Add Order
 <div class="label">Orders</div>
 </div>
 
+<!-- CHANGED: Total KG -> Total Price -->
 <div class="stat">
-<div class="number" id="orderKg">0</div>
-<div class="label">Total KG</div>
-</div>
-
-<div class="stat">
-<div class="number" id="pendingCount">0</div>
-<div class="label">Pending</div>
+<div class="number" id="orderKg">₹0</div>
+<div class="label">Total Price</div>
 </div>
 
 <div class="stat">
-<div class="number" id="deliveredCount">0</div>
-<div class="label">Delivered</div>
+<div class="number" id="orderRevenue">₹0</div>
+<div class="label">Revenue</div>
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -559,7 +423,6 @@ Export CSV
 </button>
 
 <label style="margin:0;flex:1">
-
 <input class="file-input"
        type="file"
        accept=".csv,text/csv"
@@ -570,7 +433,6 @@ Export CSV
         onclick="this.previousElementSibling.click()">
 Import CSV
 </button>
-
 </label>
 
 <button class="danger"
@@ -580,34 +442,25 @@ Clear All Orders
 
 </div>
 
-
 <div class="notice danger-note">
-
 <strong>Clear All Orders</strong>
 deletes only orders. Prices, Raw Materials and Recipes remain.
-
 </div>
-
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
-
 <th>Date</th>
 <th>Customer</th>
 <th>Item</th>
 <th>Qty</th>
 <th>Price</th>
 <th>Notes</th>
-<th>Status</th>
-<th>Actions</th>
-
+<th>Action</th>
 </tr>
-
 </thead>
 
 <tbody id="ordersBody"></tbody>
@@ -615,19 +468,14 @@ deletes only orders. Prices, Raw Materials and Recipes remain.
 </table>
 
 </div>
-
 </div>
 
 </section>
 
-
-
 <!-- ======================================================
      PRICES
 ====================================================== -->
-
 <section id="pricesTab" class="tab">
-
 
 <div class="card">
 
@@ -638,15 +486,11 @@ deletes only orders. Prices, Raw Materials and Recipes remain.
 <table class="price-table">
 
 <thead>
-
 <tr>
-
 <th>Item</th>
 <th>1/2 kg</th>
 <th>1 kg</th>
-
 </tr>
-
 </thead>
 
 <tbody id="priceListBody"></tbody>
@@ -654,82 +498,59 @@ deletes only orders. Prices, Raw Materials and Recipes remain.
 </table>
 
 </div>
-
 </div>
-
 
 <div class="card">
 
 <h2>Price Setup</h2>
 
 <div class="notice">
-
 Each item and quantity has its own price entry.
-
 </div>
-
 
 <div class="grid">
 
 <div>
 <label>Item</label>
-
 <input type="text"
        id="priceItem"
        placeholder="Item name">
-
 </div>
 
-
 <div>
-
 <label>Quantity</label>
-
 <select id="priceQty">
-
 <option value="0.5">0.5 kg</option>
 <option value="1">1 kg</option>
-
 </select>
-
 </div>
 
-
 <div>
-
 <label>Price</label>
-
 <input type="number"
        id="priceValue"
        placeholder="Price">
-
 </div>
 
 </div>
-
 
 <div class="actions">
-
 <button onclick="savePrice()">
 Add / Update
 </button>
-
 </div>
-
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
 <th>Item</th>
 <th>Qty</th>
 <th>Price</th>
 <th>Action</th>
 </tr>
-
 </thead>
 
 <tbody id="pricesBody"></tbody>
@@ -737,19 +558,14 @@ Add / Update
 </table>
 
 </div>
-
 </div>
 
 </section>
 
-
-
 <!-- ======================================================
      FINANCE
 ====================================================== -->
-
 <section id="financeTab" class="tab">
-
 
 <div class="card">
 
@@ -758,63 +574,37 @@ Add / Update
 <div class="stats">
 
 <div class="stat">
-
 <div class="number"
      id="financeEarned">
 ₹0
 </div>
-
 <div class="label">
 Earned
 </div>
-
 </div>
 
-
 <div class="stat">
-
 <div class="number"
      id="financeSpent">
 ₹0
 </div>
-
 <div class="label">
 Spent
 </div>
-
 </div>
 
-
 <div class="stat">
-
 <div class="number"
      id="financeBalance">
 ₹0
 </div>
-
 <div class="label">
 Balance
 </div>
-
-</div>
-
-<div class="stat">
-
-<div class="number"
-     id="financeOrders">
-0
-</div>
-
-<div class="label">
-Orders
 </div>
 
 </div>
-
 </div>
-
-</div>
-
 
 <div class="card">
 
@@ -823,74 +613,49 @@ Orders
 <div class="grid">
 
 <div>
-
 <label>Date</label>
-
 <input type="date"
        id="rawDate">
-
 </div>
 
-
 <div>
-
 <label>Material</label>
-
 <input type="text"
        id="rawMaterial"
        placeholder="Rice / Dal / etc.">
-
 </div>
 
-
 <div>
-
 <label>Quantity</label>
-
 <input type="number"
        id="rawQty"
        step="0.001">
-
 </div>
 
-
 <div>
-
 <label>Unit</label>
-
 <select id="rawUnit">
-
 <option value="kg">kg</option>
 <option value="g">g</option>
-
 </select>
-
 </div>
 
-
 <div>
-
 <label>Total Paid</label>
-
 <input type="number"
        id="rawPaid"
        step="0.01">
-
 </div>
 
 </div>
-
 
 <div class="actions">
-
 <button onclick="addRaw()">
 Add Purchase
 </button>
-
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -920,24 +685,19 @@ Import CSV
 
 </div>
 
-
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
-
 <th>Date</th>
 <th>Material</th>
 <th>Qty</th>
 <th>Paid</th>
 <th>Cost/kg</th>
 <th>Action</th>
-
 </tr>
-
 </thead>
 
 <tbody id="rawBody"></tbody>
@@ -945,63 +705,45 @@ Import CSV
 </table>
 
 </div>
-
 </div>
 
 </section>
 
-
-
 <!-- ======================================================
      PREPARATION
 ====================================================== -->
-
 <section id="prepTab" class="tab">
-
 
 <div class="card">
 
 <h2>Preparation List</h2>
 
-
 <div class="grid">
 
 <div>
-
 <label>Preparation Date</label>
-
 <input type="date"
        id="prepDate"
        onchange="renderPrep()">
-
 </div>
 
 </div>
-
 
 <div class="notice">
-
 Orders for the selected date are automatically combined by item.
-
-Example: 3 customers order Idly batter:
+Example: If 3 customers order Idly batter
 1 kg + 0.5 kg + 1 kg = <strong>2.5 kg</strong> preparation.
-
 </div>
-
 
 <div class="table-wrap">
 
 <table class="prep-table">
 
 <thead>
-
 <tr>
-
 <th>Item</th>
 <th>Total Quantity</th>
-
 </tr>
-
 </thead>
 
 <tbody id="prepBody"></tbody>
@@ -1009,75 +751,53 @@ Example: 3 customers order Idly batter:
 </table>
 
 </div>
-
 </div>
-
 
 <div class="card">
 
 <h2>Recipe Setup</h2>
 
-
 <div class="grid">
 
 <div>
-
 <label>Item</label>
-
 <input type="text"
        id="recipeItem"
        placeholder="Item">
-
 </div>
 
-
 <div>
-
 <label>Base Quantity (kg)</label>
-
 <input type="number"
        id="recipeBaseKg"
        step="0.1">
-
 </div>
-
 
 <div>
-
 <label>Ingredients / Instructions</label>
-
 <textarea id="recipeText"
           placeholder="Rice, dal, water, fermentation etc."></textarea>
-
 </div>
 
 </div>
-
 
 <div class="actions">
-
 <button onclick="saveRecipe()">
 Add / Update Recipe
 </button>
-
 </div>
-
 
 <div class="table-wrap">
 
 <table>
 
 <thead>
-
 <tr>
-
 <th>Item</th>
 <th>Base KG</th>
 <th>Recipe</th>
 <th>Action</th>
-
 </tr>
-
 </thead>
 
 <tbody id="recipesBody"></tbody>
@@ -1085,26 +805,16 @@ Add / Update Recipe
 </table>
 
 </div>
-
 </div>
 
-
-
-<!-- ======================================================
-     BACKUP
-====================================================== -->
-
+<!-- BACKUP -->
 <div class="card">
 
 <h2>Backup & Restore</h2>
 
-
 <div class="notice">
-
 Backup contains Orders, Raw Materials, Prices and Recipes.
-
 </div>
-
 
 <div class="actions">
 
@@ -1112,7 +822,6 @@ Backup contains Orders, Raw Materials, Prices and Recipes.
         onclick="backupAllData()">
 Backup All Data
 </button>
-
 
 <label style="margin:0;flex:1">
 
@@ -1129,14 +838,12 @@ Restore Backup
 
 </label>
 
-
 <button class="light"
         onclick="exportAllCSVs()">
 Export All CSVs
 </button>
 
 </div>
-
 
 <div class="small"
      id="lastBackup"></div>
@@ -1147,51 +854,33 @@ Export All CSVs
 
 </div>
 
-
-
 <!-- ======================================================
      BOTTOM NAV
 ====================================================== -->
-
 <nav class="bottom-nav">
-
 
 <button class="active"
         onclick="showTab('ordersTab',this)">
-
 <span>📋</span>
 Orders
-
 </button>
-
 
 <button onclick="showTab('pricesTab',this)">
-
 <span>💰</span>
 Prices
-
 </button>
-
 
 <button onclick="showTab('financeTab',this)">
-
 <span>₹</span>
 Finance
-
 </button>
-
 
 <button onclick="showTab('prepTab',this)">
-
 <span>🍚</span>
 Preparation
-
 </button>
 
-
 </nav>
-
-
 
 <script>
 
@@ -1205,30 +894,25 @@ const PRICE_KEY = "b_prc2";
 const RECIPE_KEY = "b_recipes";
 const LAST_BACKUP_KEY = "b_last_backup";
 
-
 let orders = loadJSON(
     ORDERS_KEY,
     []
 );
-
 
 let raws = loadJSON(
     RAW_KEY,
     []
 );
 
-
 let prices = loadJSON(
     PRICE_KEY,
     []
 );
 
-
 let recipes = loadJSON(
     RECIPE_KEY,
     []
 );
-
 
 /* =========================================================
    LOAD JSON
@@ -1254,7 +938,6 @@ function loadJSON(key,fallback){
     }
 
 }
-
 
 /* =========================================================
    SAVE
@@ -1284,15 +967,13 @@ function saveAll(){
 
 }
 
-
 /* =========================================================
-   MIGRATE OLD PRICES
+   MIGRATE OLD IDLY / DOSA PRICE
 ========================================================= */
 
 function migrateOldPrices(){
 
     let changed = false;
-
 
     const oldPrices =
         prices.filter(
@@ -1300,7 +981,6 @@ function migrateOldPrices(){
             String(p.item).toLowerCase()
             === "idly / dosa batter"
         );
-
 
     if(oldPrices.length){
 
@@ -1311,7 +991,6 @@ function migrateOldPrices(){
                 "Dosa batter"
             ];
 
-
             names.forEach(name => {
 
                 const exists =
@@ -1320,19 +999,13 @@ function migrateOldPrices(){
                         Number(p.qty) === Number(old.qty)
                     );
 
-
                 if(!exists){
 
                     prices.push({
-
                         id:crypto.randomUUID(),
-
                         item:name,
-
                         qty:Number(old.qty),
-
                         price:Number(old.price)
-
                     });
 
                     changed = true;
@@ -1340,7 +1013,6 @@ function migrateOldPrices(){
                 }
 
             });
-
 
             prices =
                 prices.filter(
@@ -1354,7 +1026,6 @@ function migrateOldPrices(){
         });
 
     }
-
 
     if(!prices.length){
 
@@ -1422,7 +1093,6 @@ function migrateOldPrices(){
 
     }
 
-
     if(changed){
 
         localStorage.setItem(
@@ -1434,9 +1104,7 @@ function migrateOldPrices(){
 
 }
 
-
 migrateOldPrices();
-
 
 /* =========================================================
    HELPERS
@@ -1452,7 +1120,6 @@ function esc(value){
         .replace(/'/g,"&#039;");
 
 }
-
 
 function today(){
 
@@ -1473,7 +1140,6 @@ function today(){
 
 }
 
-
 function money(value){
 
     return "₹" +
@@ -1481,24 +1147,6 @@ function money(value){
         .toFixed(0);
 
 }
-
-
-function formatKg(value){
-
-    return Number(value)
-        .toFixed(2)
-        .replace(
-            /\.00$/,
-            ""
-        )
-        .replace(
-            /(\.\d)0$/,
-            "$1"
-        )
-        + " kg";
-
-}
-
 
 /* =========================================================
    PRICE LOOKUP
@@ -1513,7 +1161,6 @@ function getPrice(item,qty){
             Number(p.qty) === Number(qty)
         );
 
-
     if(exact){
 
         return Number(
@@ -1522,14 +1169,12 @@ function getPrice(item,qty){
 
     }
 
-
     const oneKg =
         prices.find(
             p =>
             p.item === item &&
             Number(p.qty) === 1
         );
-
 
     if(oneKg){
 
@@ -1539,11 +1184,9 @@ function getPrice(item,qty){
 
     }
 
-
     return 0;
 
 }
-
 
 /* =========================================================
    INITIALIZE
@@ -1557,27 +1200,22 @@ document.addEventListener(
             "orderDate"
         ).value = today();
 
-
         document.getElementById(
             "ordersViewDate"
         ).value = today();
-
 
         document.getElementById(
             "rawDate"
         ).value = today();
 
-
         document.getElementById(
             "prepDate"
         ).value = today();
-
 
         renderAll();
 
     }
 );
-
 
 /* =========================================================
    RENDER EVERYTHING
@@ -1607,7 +1245,6 @@ function renderAll(){
 
 }
 
-
 /* =========================================================
    TABS
 ========================================================= */
@@ -1624,11 +1261,9 @@ function showTab(
             tab.classList.remove("active")
         );
 
-
     document
         .getElementById(tabId)
         .classList.add("active");
-
 
     document
         .querySelectorAll(
@@ -1639,9 +1274,7 @@ function showTab(
             btn.classList.remove("active")
         );
 
-
     button.classList.add("active");
-
 
     window.scrollTo({
         top:0,
@@ -1649,7 +1282,6 @@ function showTab(
     });
 
 }
-
 
 /* =========================================================
    ITEM SELECTORS
@@ -1667,32 +1299,26 @@ function getItems(){
 
 }
 
-
 function populateItemSelectors(){
 
     const items =
         getItems();
-
 
     const orderItem =
         document.getElementById(
             "orderItem"
         );
 
-
     const filter =
         document.getElementById(
             "ordersFilterItem"
         );
 
-
     const currentOrder =
         orderItem.value;
 
-
     const currentFilter =
         filter.value;
-
 
     orderItem.innerHTML =
         items.map(
@@ -1702,19 +1328,16 @@ function populateItemSelectors(){
             </option>`
         ).join("");
 
-
     filter.innerHTML =
         `<option value="">
         All Items
         </option>` +
-
         items.map(
             item =>
             `<option value="${esc(item)}">
             ${esc(item)}
             </option>`
         ).join("");
-
 
     if(
         items.includes(
@@ -1726,7 +1349,6 @@ function populateItemSelectors(){
             currentOrder;
 
     }
-
 
     if(
         items.includes(
@@ -1741,7 +1363,6 @@ function populateItemSelectors(){
 
 }
 
-
 /* =========================================================
    ORDER PRICE
 ========================================================= */
@@ -1753,14 +1374,12 @@ document.getElementById(
     updateOrderPrice
 );
 
-
 document.getElementById(
     "orderQty"
 ).addEventListener(
     "change",
     updateOrderPrice
 );
-
 
 function updateOrderPrice(){
 
@@ -1769,7 +1388,6 @@ function updateOrderPrice(){
             "orderItem"
         ).value;
 
-
     const qty =
         Number(
             document.getElementById(
@@ -1777,14 +1395,12 @@ function updateOrderPrice(){
             ).value
         );
 
-
     document.getElementById(
         "orderPrice"
     ).value =
         getPrice(item,qty);
 
 }
-
 
 /* =========================================================
    ADD ORDER
@@ -1797,18 +1413,15 @@ function addOrder(){
             "orderDate"
         ).value;
 
-
     const customer =
         document.getElementById(
             "orderCustomer"
         ).value.trim();
 
-
     const item =
         document.getElementById(
             "orderItem"
         ).value;
-
 
     const qty =
         Number(
@@ -1817,7 +1430,6 @@ function addOrder(){
             ).value
         );
 
-
     const price =
         Number(
             document.getElementById(
@@ -1825,12 +1437,10 @@ function addOrder(){
             ).value
         );
 
-
     const notes =
         document.getElementById(
             "orderNotes"
         ).value.trim();
-
 
     if(!date){
 
@@ -1842,7 +1452,6 @@ function addOrder(){
 
     }
 
-
     if(!customer){
 
         alert(
@@ -1853,7 +1462,6 @@ function addOrder(){
 
     }
 
-
     if(!item){
 
         alert(
@@ -1863,7 +1471,6 @@ function addOrder(){
         return;
 
     }
-
 
     orders.push({
 
@@ -1881,34 +1488,27 @@ function addOrder(){
 
         notes,
 
-        delivered:false,
-
         createdAt:
             new Date().toISOString()
 
     });
 
-
     saveAll();
-
 
     document.getElementById(
         "orderCustomer"
     ).value = "";
 
-
     document.getElementById(
         "orderNotes"
     ).value = "";
-
 
     renderAll();
 
 }
 
-
 /* =========================================================
-   RENDER ORDERS
+   ORDERS TABLE
 ========================================================= */
 
 function renderOrders(){
@@ -1918,12 +1518,10 @@ function renderOrders(){
             "ordersViewDate"
         ).value;
 
-
     const filterItem =
         document.getElementById(
             "ordersFilterItem"
         ).value;
-
 
     let list =
         orders.filter(
@@ -1938,7 +1536,6 @@ function renderOrders(){
 
                 }
 
-
                 if(
                     filterItem &&
                     o.item !== filterItem
@@ -1948,36 +1545,32 @@ function renderOrders(){
 
                 }
 
-
                 return true;
 
             }
         );
 
-
     list.sort(
         (a,b) =>
         String(
-            b.createdAt || ""
+            a.createdAt || ""
         ).localeCompare(
             String(
-                a.createdAt || ""
+                b.createdAt || ""
             )
         )
     );
-
 
     const body =
         document.getElementById(
             "ordersBody"
         );
 
-
     if(!list.length){
 
         body.innerHTML =
             `<tr>
-            <td colspan="8"
+            <td colspan="7"
                 class="empty">
             No orders found.
             </td>
@@ -1987,386 +1580,102 @@ function renderOrders(){
 
         body.innerHTML =
             list.map(
-                o => {
+                o => `
+                <tr>
 
-                    const delivered =
-                        o.delivered === true;
+                <td>
+                ${esc(o.date)}
+                </td>
 
+                <td>
+                ${esc(o.customer)}
+                </td>
 
-                    return `
+                <td>
+                ${esc(o.item)}
+                </td>
 
-                    <tr class="${delivered ? "order-delivered" : ""}">
+                <td>
+                ${formatKg(o.qty)}
+                </td>
 
-                    <td>
-                    ${esc(o.date)}
-                    </td>
+                <td>
+                ${money(o.price)}
+                </td>
 
-                    <td>
-                    ${esc(o.customer)}
-                    </td>
+                <td>
+                ${esc(o.notes || "")}
+                </td>
 
-                    <td>
-                    ${esc(o.item)}
-                    </td>
+                <td>
 
-                    <td>
-                    ${formatKg(o.qty)}
-                    </td>
+                <button
+                    class="danger"
+                    onclick="deleteOrder('${o.id}')">
+                    Delete
+                </button>
 
-                    <td>
-                    ${money(o.price)}
-                    </td>
+                </td>
 
-                    <td>
-                    ${esc(o.notes || "")}
-                    </td>
-
-                    <td>
-
-                    ${
-                        delivered
-
-                        ?
-
-                        `<span class="status-delivered">
-                        ✓ Delivered
-                        </span>`
-
-                        :
-
-                        `<span class="status-pending">
-                        Pending
-                        </span>`
-                    }
-
-                    </td>
-
-                    <td>
-
-                    <button
-                        class="light"
-                        onclick="editOrder('${o.id}')">
-                        Edit
-                    </button>
-
-                    ${
-                        delivered
-
-                        ?
-
-                        `<button
-                            class="undo"
-                            onclick="toggleDelivered('${o.id}')">
-                            Undo Delivery
-                        </button>`
-
-                        :
-
-                        `<button
-                            class="delivered"
-                            onclick="toggleDelivered('${o.id}')">
-                            Mark Delivered
-                        </button>`
-                    }
-
-                    <button
-                        class="danger"
-                        onclick="deleteOrder('${o.id}')">
-                        Delete
-                    </button>
-
-                    </td>
-
-                    </tr>
-
-                    `;
-
-                }
+                </tr>
+                `
             ).join("");
 
     }
 
+    /*
+      Total price for the selected day/filter.
 
-    const totalKg =
+      Every order already stores its actual price
+      in o.price.
+
+      Therefore we add the price of every order
+      in the filtered list.
+
+      Example:
+      ₹99 + ₹59 + ₹175 = ₹333
+    */
+    const totalPrice =
         list.reduce(
             (sum,o) =>
             sum +
-            Number(o.qty || 0),
+            Number(o.price || 0),
             0
         );
 
-
-    const pending =
-        list.filter(
-            o =>
-            o.delivered !== true
-        ).length;
-
-
-    const delivered =
-        list.filter(
-            o =>
-            o.delivered === true
-        ).length;
-
+    /*
+      Keep Revenue calculation separately.
+      It is currently the same daily order total.
+    */
+    const revenue =
+        list.reduce(
+            (sum,o) =>
+            sum +
+            Number(o.price || 0),
+            0
+        );
 
     document.getElementById(
         "orderCount"
     ).textContent =
         list.length;
 
-
+    /*
+      CHANGED:
+      Previously this displayed Total KG.
+      It now displays Total Price.
+    */
     document.getElementById(
         "orderKg"
     ).textContent =
-        Number(totalKg)
-        .toFixed(2)
-        .replace(
-            /\.00$/,
-            ""
-        );
-
+        money(totalPrice);
 
     document.getElementById(
-        "pendingCount"
+        "orderRevenue"
     ).textContent =
-        pending;
-
-
-    document.getElementById(
-        "deliveredCount"
-    ).textContent =
-        delivered;
+        money(revenue);
 
 }
-
-
-/* =========================================================
-   EDIT ORDER
-========================================================= */
-
-function editOrder(id){
-
-    const order =
-        orders.find(
-            o => o.id === id
-        );
-
-
-    if(!order){
-
-        return;
-
-    }
-
-
-    const customer =
-        prompt(
-            "Customer / House:",
-            order.customer || ""
-        );
-
-
-    if(customer === null){
-
-        return;
-
-    }
-
-
-    const notes =
-        prompt(
-            "Notes:",
-            order.notes || ""
-        );
-
-
-    if(notes === null){
-
-        return;
-
-    }
-
-
-    const date =
-        prompt(
-            "Date (YYYY-MM-DD):",
-            order.date || ""
-        );
-
-
-    if(date === null){
-
-        return;
-
-    }
-
-
-    const item =
-        prompt(
-            "Item:",
-            order.item || ""
-        );
-
-
-    if(item === null){
-
-        return;
-
-    }
-
-
-    const qtyInput =
-        prompt(
-            "Quantity in kg:",
-            order.qty || ""
-        );
-
-
-    if(qtyInput === null){
-
-        return;
-
-    }
-
-
-    const qty =
-        Number(
-            qtyInput
-        );
-
-
-    if(
-        !date ||
-        !item ||
-        !qty ||
-        qty <= 0
-    ){
-
-        alert(
-            "Invalid order details."
-        );
-
-        return;
-
-    }
-
-
-    /*
-      Keep existing price when possible,
-      but recalculate based on current
-      price setup if item/quantity changed.
-    */
-
-    let price =
-        getPrice(
-            item,
-            qty
-        );
-
-
-    if(!price){
-
-        price =
-            Number(
-                order.price || 0
-            );
-
-    }
-
-
-    order.customer =
-        customer.trim();
-
-
-    order.notes =
-        notes.trim();
-
-
-    order.date =
-        date.trim();
-
-
-    order.item =
-        item.trim();
-
-
-    order.qty =
-        qty;
-
-
-    order.price =
-        price;
-
-
-    /*
-      Delivery status is deliberately
-      preserved during editing.
-    */
-
-
-    saveAll();
-
-    renderAll();
-
-}
-
-
-/* =========================================================
-   MARK DELIVERED / UNDO DELIVERY
-========================================================= */
-
-function toggleDelivered(id){
-
-    const order =
-        orders.find(
-            o => o.id === id
-        );
-
-
-    if(!order){
-
-        return;
-
-    }
-
-
-    if(
-        order.delivered === true
-    ){
-
-        /*
-          Undo delivery.
-        */
-
-        order.delivered =
-            false;
-
-        order.deliveredAt =
-            null;
-
-    }else{
-
-        /*
-          Mark delivered.
-        */
-
-        order.delivered =
-            true;
-
-        order.deliveredAt =
-            new Date()
-            .toISOString();
-
-    }
-
-
-    saveAll();
-
-    renderAll();
-
-}
-
 
 /* =========================================================
    DELETE ONE ORDER
@@ -2384,19 +1693,16 @@ function deleteOrder(id){
 
     }
 
-
     orders =
         orders.filter(
             o => o.id !== id
         );
-
 
     saveAll();
 
     renderAll();
 
 }
-
 
 /* =========================================================
    CLEAR ALL ORDERS
@@ -2414,7 +1720,6 @@ function clearAllOrders(){
 
     }
 
-
     const first =
         confirm(
             "Are you sure you want to DELETE ALL ORDERS?\n\n" +
@@ -2423,13 +1728,11 @@ function clearAllOrders(){
             "Please Backup first if you may need these orders."
         );
 
-
     if(!first){
 
         return;
 
     }
-
 
     const second =
         confirm(
@@ -2439,29 +1742,23 @@ function clearAllOrders(){
             " orders?"
         );
 
-
     if(!second){
 
         return;
 
     }
 
-
     orders = [];
-
 
     saveAll();
 
-
     renderAll();
-
 
     alert(
         "All orders have been cleared."
     );
 
 }
-
 
 /* =========================================================
    PRICE SETUP
@@ -2474,7 +1771,6 @@ function savePrice(){
             "priceItem"
         ).value.trim();
 
-
     const qty =
         Number(
             document.getElementById(
@@ -2482,14 +1778,12 @@ function savePrice(){
             ).value
         );
 
-
     const price =
         Number(
             document.getElementById(
                 "priceValue"
             ).value
         );
-
 
     if(!item){
 
@@ -2500,7 +1794,6 @@ function savePrice(){
         return;
 
     }
-
 
     if(
         isNaN(price) ||
@@ -2515,7 +1808,6 @@ function savePrice(){
 
     }
 
-
     const existing =
         prices.find(
             p =>
@@ -2523,7 +1815,6 @@ function savePrice(){
             === item.toLowerCase() &&
             Number(p.qty) === qty
         );
-
 
     if(existing){
 
@@ -2549,24 +1840,19 @@ function savePrice(){
 
     }
 
-
     saveAll();
-
 
     document.getElementById(
         "priceItem"
     ).value = "";
 
-
     document.getElementById(
         "priceValue"
     ).value = "";
 
-
     renderAll();
 
 }
-
 
 /* =========================================================
    EDIT PRICE
@@ -2579,31 +1865,26 @@ function editPrice(id){
             x => x.id === id
         );
 
-
     if(!p){
 
         return;
 
     }
 
-
     document.getElementById(
         "priceItem"
     ).value =
         p.item;
-
 
     document.getElementById(
         "priceQty"
     ).value =
         p.qty;
 
-
     document.getElementById(
         "priceValue"
     ).value =
         p.price;
-
 
     window.scrollTo({
         top:0,
@@ -2611,7 +1892,6 @@ function editPrice(id){
     });
 
 }
-
 
 /* =========================================================
    DELETE PRICE
@@ -2629,19 +1909,16 @@ function deletePrice(id){
 
     }
 
-
     prices =
         prices.filter(
             p => p.id !== id
         );
-
 
     saveAll();
 
     renderAll();
 
 }
-
 
 /* =========================================================
    RENDER PRICE SETUP
@@ -2654,7 +1931,6 @@ function renderPrices(){
             "pricesBody"
         );
 
-
     const list =
         [...prices].sort(
             (a,b) => {
@@ -2664,7 +1940,6 @@ function renderPrices(){
                         b.item
                     );
 
-
                 if(
                     itemCompare !== 0
                 ){
@@ -2673,14 +1948,12 @@ function renderPrices(){
 
                 }
 
-
                 return Number(a.qty)
                     -
                     Number(b.qty);
 
             }
         );
-
 
     if(!list.length){
 
@@ -2696,11 +1969,9 @@ function renderPrices(){
 
     }
 
-
     body.innerHTML =
         list.map(
             p => `
-
             <tr>
 
             <td>
@@ -2732,12 +2003,10 @@ function renderPrices(){
             </td>
 
             </tr>
-
             `
         ).join("");
 
 }
-
 
 /* =========================================================
    PRICE LIST
@@ -2748,12 +2017,10 @@ function renderPriceList(){
     const items =
         getItems();
 
-
     const body =
         document.getElementById(
             "priceListBody"
         );
-
 
     body.innerHTML =
         items.map(
@@ -2766,7 +2033,6 @@ function renderPriceList(){
                         Number(p.qty) === 0.5
                     );
 
-
                 const one =
                     prices.find(
                         p =>
@@ -2774,9 +2040,7 @@ function renderPriceList(){
                         Number(p.qty) === 1
                     );
 
-
                 return `
-
                 <tr>
 
                 <td>
@@ -2800,14 +2064,12 @@ function renderPriceList(){
                 </td>
 
                 </tr>
-
                 `;
 
             }
         ).join("");
 
 }
-
 
 /* =========================================================
    RAW MATERIAL
@@ -2820,12 +2082,10 @@ function addRaw(){
             "rawDate"
         ).value;
 
-
     const material =
         document.getElementById(
             "rawMaterial"
         ).value.trim();
-
 
     const qty =
         Number(
@@ -2834,12 +2094,10 @@ function addRaw(){
             ).value
         );
 
-
     const unit =
         document.getElementById(
             "rawUnit"
         ).value;
-
 
     const paid =
         Number(
@@ -2847,7 +2105,6 @@ function addRaw(){
                 "rawPaid"
             ).value
         );
-
 
     if(
         !date ||
@@ -2864,12 +2121,10 @@ function addRaw(){
 
     }
 
-
     const kg =
         unit === "g"
         ? qty / 1000
         : qty;
-
 
     raws.push({
 
@@ -2892,29 +2147,23 @@ function addRaw(){
 
     });
 
-
     saveAll();
-
 
     document.getElementById(
         "rawMaterial"
     ).value = "";
 
-
     document.getElementById(
         "rawQty"
     ).value = "";
-
 
     document.getElementById(
         "rawPaid"
     ).value = "";
 
-
     renderAll();
 
 }
-
 
 /* =========================================================
    DELETE RAW
@@ -2932,19 +2181,16 @@ function deleteRaw(id){
 
     }
 
-
     raws =
         raws.filter(
             r => r.id !== id
         );
-
 
     saveAll();
 
     renderAll();
 
 }
-
 
 /* =========================================================
    RENDER RAW
@@ -2956,7 +2202,6 @@ function renderRaw(){
         document.getElementById(
             "rawBody"
         );
-
 
     if(!raws.length){
 
@@ -2972,7 +2217,6 @@ function renderRaw(){
 
     }
 
-
     const list =
         [...raws].sort(
             (a,b) =>
@@ -2982,11 +2226,9 @@ function renderRaw(){
             )
         );
 
-
     body.innerHTML =
         list.map(
             r => `
-
             <tr>
 
             <td>
@@ -3021,12 +2263,10 @@ function renderRaw(){
             </td>
 
             </tr>
-
             `
         ).join("");
 
 }
-
 
 /* =========================================================
    FINANCE
@@ -3042,7 +2282,6 @@ function renderFinance(){
             0
         );
 
-
     const spent =
         raws.reduce(
             (sum,r) =>
@@ -3051,36 +2290,25 @@ function renderFinance(){
             0
         );
 
-
     const balance =
         earned - spent;
-
 
     document.getElementById(
         "financeEarned"
     ).textContent =
         money(earned);
 
-
     document.getElementById(
         "financeSpent"
     ).textContent =
         money(spent);
-
 
     document.getElementById(
         "financeBalance"
     ).textContent =
         money(balance);
 
-
-    document.getElementById(
-        "financeOrders"
-    ).textContent =
-        orders.length;
-
 }
-
 
 /* =========================================================
    PREPARATION LIST
@@ -3093,7 +2321,6 @@ function renderPrep(){
             "prepDate"
         ).value;
 
-
     const list =
         orders.filter(
             o =>
@@ -3101,16 +2328,13 @@ function renderPrep(){
             o.date === date
         );
 
-
     const grouped = {};
-
 
     list.forEach(
         o => {
 
             const item =
                 o.item;
-
 
             if(
                 !grouped[item]
@@ -3121,7 +2345,6 @@ function renderPrep(){
 
             }
 
-
             grouped[item] +=
                 Number(
                     o.qty || 0
@@ -3130,18 +2353,15 @@ function renderPrep(){
         }
     );
 
-
     const body =
         document.getElementById(
             "prepBody"
         );
 
-
     const items =
         Object.keys(
             grouped
         ).sort();
-
 
     if(!items.length){
 
@@ -3157,11 +2377,9 @@ function renderPrep(){
 
     }
 
-
     body.innerHTML =
         items.map(
             item => `
-
             <tr>
 
             <td>
@@ -3179,12 +2397,30 @@ function renderPrep(){
             </td>
 
             </tr>
-
             `
         ).join("");
 
 }
 
+/* =========================================================
+   FORMAT KG
+========================================================= */
+
+function formatKg(value){
+
+    return Number(value)
+        .toFixed(2)
+        .replace(
+            /\.00$/,
+            ""
+        )
+        .replace(
+            /(\.\d)0$/,
+            "$1"
+        )
+        + " kg";
+
+}
 
 /* =========================================================
    RECIPES
@@ -3197,7 +2433,6 @@ function saveRecipe(){
             "recipeItem"
         ).value.trim();
 
-
     const baseKg =
         Number(
             document.getElementById(
@@ -3205,12 +2440,10 @@ function saveRecipe(){
             ).value
         );
 
-
     const text =
         document.getElementById(
             "recipeText"
         ).value.trim();
-
 
     if(!item){
 
@@ -3222,14 +2455,12 @@ function saveRecipe(){
 
     }
 
-
     const existing =
         recipes.find(
             r =>
             r.item.toLowerCase()
             === item.toLowerCase()
         );
-
 
     if(existing){
 
@@ -3258,29 +2489,23 @@ function saveRecipe(){
 
     }
 
-
     saveAll();
-
 
     document.getElementById(
         "recipeItem"
     ).value = "";
 
-
     document.getElementById(
         "recipeBaseKg"
     ).value = "";
-
 
     document.getElementById(
         "recipeText"
     ).value = "";
 
-
     renderRecipes();
 
 }
-
 
 /* =========================================================
    EDIT RECIPE
@@ -3293,25 +2518,21 @@ function editRecipe(id){
             x => x.id === id
         );
 
-
     if(!r){
 
         return;
 
     }
 
-
     document.getElementById(
         "recipeItem"
     ).value =
         r.item;
 
-
     document.getElementById(
         "recipeBaseKg"
     ).value =
         r.baseKg;
-
 
     document.getElementById(
         "recipeText"
@@ -3319,7 +2540,6 @@ function editRecipe(id){
         r.text;
 
 }
-
 
 /* =========================================================
    DELETE RECIPE
@@ -3337,19 +2557,16 @@ function deleteRecipe(id){
 
     }
 
-
     recipes =
         recipes.filter(
             r => r.id !== id
         );
-
 
     saveAll();
 
     renderRecipes();
 
 }
-
 
 /* =========================================================
    RENDER RECIPES
@@ -3361,7 +2578,6 @@ function renderRecipes(){
         document.getElementById(
             "recipesBody"
         );
-
 
     if(!recipes.length){
 
@@ -3377,11 +2593,9 @@ function renderRecipes(){
 
     }
 
-
     body.innerHTML =
         recipes.map(
             r => `
-
             <tr>
 
             <td>
@@ -3413,12 +2627,10 @@ function renderRecipes(){
             </td>
 
             </tr>
-
             `
         ).join("");
 
 }
-
 
 /* =========================================================
    CSV ESCAPE
@@ -3430,7 +2642,6 @@ function csvEscape(value){
         String(
             value ?? ""
         );
-
 
     if(
         str.includes(",") ||
@@ -3447,11 +2658,9 @@ function csvEscape(value){
 
     }
 
-
     return str;
 
 }
-
 
 /* =========================================================
    DOWNLOAD
@@ -3469,35 +2678,27 @@ function downloadText(
             {type}
         );
 
-
     const url =
         URL.createObjectURL(
             blob
         );
-
 
     const a =
         document.createElement(
             "a"
         );
 
-
     a.href =
         url;
-
 
     a.download =
         filename;
 
-
     document.body.appendChild(a);
-
 
     a.click();
 
-
     a.remove();
-
 
     setTimeout(
         () =>
@@ -3509,7 +2710,6 @@ function downloadText(
 
 }
 
-
 /* =========================================================
    CSV PARSER
 ========================================================= */
@@ -3519,9 +2719,10 @@ function parseCSV(text){
     const rows = [];
 
     let row = [];
-    let cell = "";
-    let inQuotes = false;
 
+    let cell = "";
+
+    let inQuotes = false;
 
     for(
         let i=0;
@@ -3532,10 +2733,8 @@ function parseCSV(text){
         const char =
             text[i];
 
-
         const next =
             text[i+1];
-
 
         if(
             char === '"' &&
@@ -3586,9 +2785,7 @@ function parseCSV(text){
 
             }
 
-
             row.push(cell);
-
 
             if(
                 row.some(
@@ -3599,7 +2796,6 @@ function parseCSV(text){
                 rows.push(row);
 
             }
-
 
             row = [];
 
@@ -3615,9 +2811,7 @@ function parseCSV(text){
 
     }
 
-
     row.push(cell);
-
 
     if(
         row.some(
@@ -3629,11 +2823,9 @@ function parseCSV(text){
 
     }
 
-
     return rows;
 
 }
-
 
 /* =========================================================
    EXPORT ORDERS CSV
@@ -3642,69 +2834,46 @@ function parseCSV(text){
 function exportOrdersCSV(){
 
     const header = [
-
         "Date",
         "Customer",
         "Item",
         "Quantity",
         "Price",
-        "Notes",
-        "Delivered",
-        "Delivered At"
-
+        "Notes"
     ];
 
-
     const lines = [
-
         header
         .map(csvEscape)
         .join(",")
-
     ];
-
 
     orders.forEach(
         o => {
 
             lines.push(
-
                 [
-
                     o.date,
                     o.customer,
                     o.item,
                     o.qty,
                     o.price,
-                    o.notes || "",
-                    o.delivered === true
-                        ? "Yes"
-                        : "No",
-                    o.deliveredAt || ""
-
+                    o.notes || ""
                 ]
-
                 .map(csvEscape)
                 .join(",")
-
             );
 
         }
     );
 
-
     downloadText(
-
         "orders.csv",
-
         lines.join("\n"),
-
         "text/csv;charset=utf-8"
-
     );
 
 }
-
 
 /* =========================================================
    IMPORT ORDERS CSV
@@ -3715,17 +2884,14 @@ function importOrdersCSV(input){
     const file =
         input.files[0];
 
-
     if(!file){
 
         return;
 
     }
 
-
     const reader =
         new FileReader();
-
 
     reader.onload =
         function(){
@@ -3736,7 +2902,6 @@ function importOrdersCSV(input){
                     parseCSV(
                         reader.result
                     );
-
 
                 if(
                     rows.length < 2
@@ -3750,9 +2915,7 @@ function importOrdersCSV(input){
 
                 }
 
-
                 const imported = [];
-
 
                 for(
                     let i=1;
@@ -3763,53 +2926,24 @@ function importOrdersCSV(input){
                     const r =
                         rows[i];
 
-
                     const date =
                         r[0]?.trim();
-
 
                     const customer =
                         r[1]?.trim();
 
-
-                    let item =
+                    const item =
                         r[2]?.trim();
-
 
                     const qty =
                         Number(r[3]);
 
-
                     let price =
                         Number(r[4]);
-
 
                     const notes =
                         r[5]?.trim()
                         || "";
-
-
-                    /*
-                      New CSV:
-                      column 6 = Delivered
-                      column 7 = Delivered At
-
-                      Older CSVs do not have
-                      these columns, so they
-                      automatically become Pending.
-                    */
-
-                    const delivered =
-                        String(
-                            r[6] || ""
-                        ).toLowerCase()
-                        === "yes";
-
-
-                    const deliveredAt =
-                        r[7]?.trim()
-                        || null;
-
 
                     if(
                         !date ||
@@ -3822,24 +2956,9 @@ function importOrdersCSV(input){
 
                     }
 
-
-                    /*
-                      Support old combined item
-                      in imported CSV.
-                    */
-
                     if(
-                        item.toLowerCase()
-                        === "idly / dosa batter"
+                        !price
                     ){
-
-                        item =
-                            "Idly batter";
-
-                    }
-
-
-                    if(!price){
 
                         price =
                             getPrice(
@@ -3848,7 +2967,6 @@ function importOrdersCSV(input){
                             );
 
                     }
-
 
                     imported.push({
 
@@ -3867,10 +2985,6 @@ function importOrdersCSV(input){
 
                         notes,
 
-                        delivered,
-
-                        deliveredAt,
-
                         createdAt:
                             new Date()
                             .toISOString()
@@ -3878,7 +2992,6 @@ function importOrdersCSV(input){
                     });
 
                 }
-
 
                 if(
                     !imported.length
@@ -3892,23 +3005,18 @@ function importOrdersCSV(input){
 
                 }
 
-
                 orders.push(
                     ...imported
                 );
 
-
                 saveAll();
 
-
                 renderAll();
-
 
                 alert(
                     imported.length +
                     " orders imported successfully."
                 );
-
 
             }catch(e){
 
@@ -3918,18 +3026,15 @@ function importOrdersCSV(input){
 
             }
 
-
             input.value = "";
 
         };
-
 
     reader.readAsText(
         file
     );
 
 }
-
 
 /* =========================================================
    EXPORT RAW CSV
@@ -3938,7 +3043,6 @@ function importOrdersCSV(input){
 function exportRawCSV(){
 
     const header = [
-
         "Date",
         "Material",
         "Quantity",
@@ -3946,26 +3050,19 @@ function exportRawCSV(){
         "Total Paid",
         "Quantity KG",
         "Cost Per KG"
-
     ];
 
-
     const lines = [
-
         header
         .map(csvEscape)
         .join(",")
-
     ];
-
 
     raws.forEach(
         r => {
 
             lines.push(
-
                 [
-
                     r.date,
                     r.material,
                     r.qty,
@@ -3973,30 +3070,21 @@ function exportRawCSV(){
                     r.paid,
                     r.kg,
                     r.costPerKg
-
                 ]
-
                 .map(csvEscape)
                 .join(",")
-
             );
 
         }
     );
 
-
     downloadText(
-
         "raw-materials.csv",
-
         lines.join("\n"),
-
         "text/csv;charset=utf-8"
-
     );
 
 }
-
 
 /* =========================================================
    IMPORT RAW CSV
@@ -4007,17 +3095,14 @@ function importRawCSV(input){
     const file =
         input.files[0];
 
-
     if(!file){
 
         return;
 
     }
 
-
     const reader =
         new FileReader();
-
 
     reader.onload =
         function(){
@@ -4029,9 +3114,7 @@ function importRawCSV(input){
                         reader.result
                     );
 
-
                 const imported = [];
-
 
                 for(
                     let i=1;
@@ -4042,27 +3125,21 @@ function importRawCSV(input){
                     const r =
                         rows[i];
 
-
                     const date =
                         r[0]?.trim();
-
 
                     const material =
                         r[1]?.trim();
 
-
                     const qty =
                         Number(r[2]);
-
 
                     const unit =
                         r[3]?.trim()
                         || "kg";
 
-
                     const paid =
                         Number(r[4]);
-
 
                     if(
                         !date ||
@@ -4075,12 +3152,10 @@ function importRawCSV(input){
 
                     }
 
-
                     const kg =
                         unit === "g"
                         ? qty / 1000
                         : qty;
-
 
                     imported.push({
 
@@ -4106,23 +3181,18 @@ function importRawCSV(input){
 
                 }
 
-
                 raws.push(
                     ...imported
                 );
 
-
                 saveAll();
 
-
                 renderAll();
-
 
                 alert(
                     imported.length +
                     " raw material records imported."
                 );
-
 
             }catch(e){
 
@@ -4132,18 +3202,15 @@ function importRawCSV(input){
 
             }
 
-
             input.value = "";
 
         };
-
 
     reader.readAsText(
         file
     );
 
 }
-
 
 /* =========================================================
    BACKUP
@@ -4157,10 +3224,11 @@ function backupAllData(){
             "KPK Batter House Orders",
 
         version:
-            5,
+            4,
 
         backupDate:
-            new Date().toISOString(),
+            new Date()
+            .toISOString(),
 
         orders,
 
@@ -4172,7 +3240,6 @@ function backupAllData(){
 
     };
 
-
     const json =
         JSON.stringify(
             backup,
@@ -4180,32 +3247,21 @@ function backupAllData(){
             2
         );
 
-
     downloadText(
-
         `KPK_Batter_Backup_${today()}.json`,
-
         json,
-
         "application/json"
-
     );
-
 
     localStorage.setItem(
-
         LAST_BACKUP_KEY,
-
         new Date()
         .toISOString()
-
     );
-
 
     renderLastBackup();
 
 }
-
 
 /* =========================================================
    LAST BACKUP
@@ -4218,12 +3274,10 @@ function renderLastBackup(){
             LAST_BACKUP_KEY
         );
 
-
     const el =
         document.getElementById(
             "lastBackup"
         );
-
 
     if(!value){
 
@@ -4233,7 +3287,6 @@ function renderLastBackup(){
         return;
 
     }
-
 
     try{
 
@@ -4252,7 +3305,6 @@ function renderLastBackup(){
 
 }
 
-
 /* =========================================================
    RESTORE
 ========================================================= */
@@ -4262,17 +3314,14 @@ function restoreAllData(input){
     const file =
         input.files[0];
 
-
     if(!file){
 
         return;
 
     }
 
-
     const reader =
         new FileReader();
-
 
     reader.onload =
         function(){
@@ -4283,7 +3332,6 @@ function restoreAllData(input){
                     JSON.parse(
                         reader.result
                     );
-
 
                 if(
                     !data ||
@@ -4309,13 +3357,11 @@ function restoreAllData(input){
 
                 }
 
-
                 const confirmed =
                     confirm(
                         "Restore this backup?\n\n" +
                         "Current Orders, Raw Materials, Prices and Recipes will be replaced."
                     );
-
 
                 if(!confirmed){
 
@@ -4323,80 +3369,33 @@ function restoreAllData(input){
 
                 }
 
-
                 orders =
                     data.orders;
-
 
                 raws =
                     data.raws;
 
-
                 prices =
                     data.prices;
-
 
                 recipes =
                     data.recipes;
 
-
-                /*
-                  Old backups may not contain
-                  delivered fields.
-
-                  Add them safely.
-                */
-
-                orders.forEach(
-                    o => {
-
-                        if(
-                            typeof o.delivered
-                            !== "boolean"
-                        ){
-
-                            o.delivered =
-                                false;
-
-                        }
-
-
-                        if(
-                            !("deliveredAt" in o)
-                        ){
-
-                            o.deliveredAt =
-                                null;
-
-                        }
-
-                    }
-                );
-
-
                 migrateOldPrices();
-
 
                 saveAll();
 
-
                 localStorage.setItem(
-
                     LAST_BACKUP_KEY,
-
                     new Date()
                     .toISOString()
-
                 );
 
-
                 renderAll();
-
 
                 alert(
                     "Backup restored successfully."
                 );
-
 
             }catch(e){
 
@@ -4406,18 +3405,15 @@ function restoreAllData(input){
 
             }
 
-
             input.value = "";
 
         };
-
 
     reader.readAsText(
         file
     );
 
 }
-
 
 /* =========================================================
    EXPORT ALL CSVs
@@ -4427,10 +3423,11 @@ function exportAllCSVs(){
 
     exportOrdersCSV();
 
-
     setTimeout(
         () => {
+
             exportRawCSV();
+
         },
         300
     );
